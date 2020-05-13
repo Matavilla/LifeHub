@@ -88,6 +88,11 @@ def ParamWindow(parameters):
         RandValue(numBots2, 0, 100)
         RandValue(numBots3, 0, 100)
 
+    def close(win):
+        global count
+        count = 0
+        win.destroy()
+
     global count
     count+=1
     if count > 1:
@@ -96,6 +101,7 @@ def ParamWindow(parameters):
 
     win = tkinter.Tk()
     win.title('Parameters window')
+    win.protocol("WM_DELETE_WINDOW", lambda: close(win))
 
     tik, chaos, randTik, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 0, 1000)
     food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 0, 1000)
@@ -162,6 +168,8 @@ def StartMenu(wPar):
     mainWindow = tkinter.Tk()
     mainWindow.configure(background='black')
     mainWindow.title('LIFEHUB')
+    mainWindow.protocol("WM_DELETE_WINDOW", lambda: mainWindow.quit())
+
     w = mainWindow.winfo_screenwidth()
     h = mainWindow.winfo_screenheight()
     mainWindow.geometry(f'{w // 2}x{h // 2}+{w // 2 - w // 4}+{h // 2 - h // 4}')
@@ -171,13 +179,11 @@ def StartMenu(wPar):
     mainWindow.rowconfigure(5, weight = 1)
     
 
-    startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
-
+    startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
-    startBtn.bind('<Button>', lambda event: PrintParam(wPar))
-    #startBtn.bind('<Button>', lambda event: mainWindow.quit())
+    startBtn.bind('<Button>', lambda event: mainWindow.quit())
 
-    paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
+    paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
     paramBtn.bind('<Button>', lambda event: ParamWindow(wPar))
 
