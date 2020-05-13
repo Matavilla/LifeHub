@@ -3,25 +3,23 @@ import tkinter
 
 class WorldParameters:
     '''Сохранение параметров вселенной'''
-    def __init__(self, tik = 0,    chaosMoment = 0,
-                 amountOfFood = 0, amountOfPoison = 0,
-                 biom1 = 0,        biom2 = 0,
-                 biom3 = 0):
-        self.tikOfUniverse = tik
-        self.chaosMoment = chaosMoment
-        self.amountOfFood = amountOfFood
-        self.amountOfPoison = amountOfPoison
+    def __init__(self):
+        self.update()
+
+    def update(self, tik = 0, chaos = 0, food = 0, poison = 0, b1 = 0, b2 = 0, b3 = 0):
+        self.TikUniverse = tik
+        self.ChaosMoment = chaos
+        self.AmountOfFood = food
+        self.AmountOfPoison = poison
         #generation period of food and poison
-        self.biom1 = biom1
-        self.biom2 = biom2
-        self.biom3 = biom3
+        self.Biom1 = b1
+        self.Biom2 = b2
+        self.Biom3 = b3
 
 
     def check(self):
         print("Проверка параметров")
 
-
-parameters = WorldParameters()
 
 def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     ''' Вспомогательная функция добавления строки
@@ -35,18 +33,19 @@ def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     winParam2.grid(row=_row, column=3, sticky='E', padx=10)
     return winParam1, winParam2
 
-def paramWindow(*args, **kwargs):
+def paramWindow(event, parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
-    def saveParameters(*args, **kwargs):
+
+    def saveParameters(event, parameters):
         '''Сохранить параметры'''
-        global parameters
-        parameters.tikOfUniverse = tik.get()
-        parameters.chaosMoment = chaos.get()
-        parameters.amountOfFood = food.get()
-        parameters.amountOfPoison = poison.get()
-        parameters.biom1 = biom1.get()
-        parameters.biom2 = biom2.get()
-        parameters.biom3 = biom3.get()
+
+        parameters.update(tik.get(), 
+                        chaos.get(),
+                        food.get(), 
+                        poison.get(), 
+                        biom1.get(), 
+                        biom2.get(), 
+                        biom3.get())
 
     win = tkinter.Tk()
     win.title('Parameters window')
@@ -63,27 +62,30 @@ def paramWindow(*args, **kwargs):
     biom3 = tkinter.Spinbox(win, width=7, from_=0, to=100)
     biom3.grid(row=4, column=1, padx=10)
     
-    button = tkinter.Button(win, text="Сохнанить")
+    button = tkinter.Button(win, text="Сохранить")
     button.grid(row=5, column=1, columnspan=2)
-    button.bind('<Button>', saveParameters)
+    button.bind('<Button>', lambda event: saveParameters(event, parameters))
 
 
 
-def printParam(*args, **kwargs):
+def printParam(event, parameters):
     ''' Вывести все параметры на экран (для проверки) '''
-    global parameters
-    print(f'tikOfUniverse = {parameters.tikOfUniverse}')
-    print(f'chaosMoment = {parameters.chaosMoment}')
-    print(f'amountOfFood = {parameters.amountOfFood}')
-    print(f'amountOfPoison = {parameters.amountOfPoison}')
-    print(f'biom1 = {parameters.biom1}')
-    print(f'biom2 = {parameters.biom2}')
-    print(f'biom3 = {parameters.biom3}')
+
+    print(f'tikOfUniverse = {parameters.TikUniverse}')
+    print(f'chaosMoment = {parameters.ChaosMoment}')
+    print(f'amountOfFood = {parameters.AmountOfFood}')
+    print(f'amountOfPoison = {parameters.AmountOfPoison}')
+    print(f'biom1 = {parameters.Biom1}')
+    print(f'biom2 = {parameters.Biom2}')
+    print(f'biom3 = {parameters.Biom3}')
     print('\n')
 
 
 def StartMenu():
+    wPar = WorldParameters()
+
     mainWindow = tkinter.Tk()
+    mainWindow.configure(background='black')
     mainWindow.title('LIFEHUB')
     w = mainWindow.winfo_screenwidth()
     h = mainWindow.winfo_screenheight()
@@ -94,17 +96,16 @@ def StartMenu():
     mainWindow.rowconfigure(5, weight = 1)
     
 
-    startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
+    startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
+    startBtn.bind('<Button>', lambda event: printParam(event, wPar))
 
 
-    ParamBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25)
-    ParamBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
-    ParamBtn.bind('<Button>', paramWindow)
+    paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
+    paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
+    paramBtn.bind('<Button>', lambda event: paramWindow(event, wPar))
 
-    Btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
-    Btn.grid(row = 4, column = 2, padx = 20, pady = 20)
-
-    startBtn.bind('<Button>', printParam)
+#    btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
+#    btn.grid(row = 4, column = 2, padx = 20, pady = 20)
 
     mainWindow.mainloop()
