@@ -1,6 +1,8 @@
 import tkinter
 from random import randint
 
+count = 0
+
 class WorldParameters:
     '''Сохранение параметров вселенной'''
     def __init__(self):
@@ -59,7 +61,6 @@ def RandValue(vidget, _from, to):
 
 def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
-
     def SaveParameters(parameters):
         '''Сохранить параметры'''
         parameters.update(tik.get(), 
@@ -72,7 +73,6 @@ def ParamWindow(parameters):
                         numBots1.get(),
                         numBots2.get(),
                         numBots3.get())
-
 
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных
@@ -88,6 +88,11 @@ def ParamWindow(parameters):
         RandValue(numBots2, 0, 100)
         RandValue(numBots3, 0, 100)
 
+    global count
+    count+=1
+    if count > 1:
+        count-=1
+        return
 
     win = tkinter.Tk()
     win.title('Parameters window')
@@ -137,7 +142,7 @@ def ParamWindow(parameters):
 
 
 
-def printParam(parameters):
+def PrintParam(parameters):
     ''' Вывести все параметры на экран (для проверки) '''
     print(f'tikOfUniverse = {parameters.TikUniverse}')
     print(f'chaosMoment = {parameters.ChaosMoment}')
@@ -153,6 +158,7 @@ def printParam(parameters):
 
 
 def StartMenu(wPar):
+    count = 0
     mainWindow = tkinter.Tk()
     mainWindow.configure(background='black')
     mainWindow.title('LIFEHUB')
@@ -168,7 +174,7 @@ def StartMenu(wPar):
     startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
 
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
-    startBtn.bind('<Button>', lambda event: printParam(wPar))
+    startBtn.bind('<Button>', lambda event: PrintParam(wPar))
     #startBtn.bind('<Button>', lambda event: mainWindow.quit())
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
@@ -177,6 +183,5 @@ def StartMenu(wPar):
 
 #    btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
 #    btn.grid(row = 4, column = 2, padx = 20, pady = 20)
-
 
     mainWindow.mainloop()
