@@ -1,5 +1,5 @@
 import tkinter
-
+import random
 
 class WorldParameters:
     '''Сохранение параметров вселенной'''
@@ -30,10 +30,11 @@ def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     tkinter.Label(win, text=_text1).grid(row=_row, column=0, sticky='W', padx=10, pady=10)
     winParam1 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
     winParam1.grid(row=_row, column=1, padx=10)
+    randButton1 = tkinter.Button(win, width=3)
     tkinter.Label(win, text=_text2).grid(row=_row, column=2, sticky='E')
     winParam2 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
     winParam2.grid(row=_row, column=3, sticky='E', padx=10)
-    return winParam1, winParam2
+    return winParam1, winParam2, randButton1, randButton2
 
 def paramWindow(*args, **kwargs):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
