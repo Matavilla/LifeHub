@@ -19,6 +19,7 @@ class WorldParameters:
 
     def check(self):
         print("Проверка параметров")
+        return True
 
 
 def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
@@ -33,10 +34,10 @@ def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     winParam2.grid(row=_row, column=3, sticky='E', padx=10)
     return winParam1, winParam2
 
-def paramWindow(event, parameters):
+def paramWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
 
-    def saveParameters(event, parameters):
+    def saveParameters(parameters):
         '''Сохранить параметры'''
 
         parameters.update(tik.get(), 
@@ -64,11 +65,11 @@ def paramWindow(event, parameters):
     
     button = tkinter.Button(win, text="Сохранить")
     button.grid(row=5, column=1, columnspan=2)
-    button.bind('<Button>', lambda event: saveParameters(event, parameters))
+    button.bind('<Button>', lambda event: saveParameters(parameters))
 
 
 
-def printParam(event, parameters):
+def printParam(parameters):
     ''' Вывести все параметры на экран (для проверки) '''
 
     print(f'tikOfUniverse = {parameters.TikUniverse}')
@@ -100,7 +101,7 @@ def StartMenu(wPar):
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
-    paramBtn.bind('<Button>', lambda event: paramWindow(event, wPar))
+    paramBtn.bind('<Button>', lambda event: paramWindow(wPar))
 
 #    btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
 #    btn.grid(row = 4, column = 2, padx = 20, pady = 20)
