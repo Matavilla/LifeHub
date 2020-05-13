@@ -4,6 +4,6 @@ wPar = GUI.WorldParameters()
 GUI.StartMenu(wPar)
 if not wPar.check():
    raise WrongParametersWorld
-GUI.printParam(wPar)
+GUI.PrintParam(wPar)
 #generate world
 #construct handler and run pygame
