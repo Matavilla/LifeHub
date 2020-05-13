@@ -25,7 +25,8 @@ parameters = WorldParameters()
 
 def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     ''' Вспомогательная функция добавления строки
-        таблицы в окно с параметрами'''
+        таблицы в окно с параметрами.
+        -> 2 spin бокса'''
     tkinter.Label(win, text=_text1).grid(row=_row, column=0, sticky='W', padx=10, pady=10)
     winParam1 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
     winParam1.grid(row=_row, column=1, padx=10)
@@ -37,6 +38,7 @@ def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
 def paramWindow(*args, **kwargs):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
     def saveParameters(*args, **kwargs):
+        '''Сохранить параметры'''
         global parameters
         parameters.tikOfUniverse = tik.get()
         parameters.chaosMoment = chaos.get()
@@ -66,11 +68,9 @@ def paramWindow(*args, **kwargs):
     button.bind('<Button>', saveParameters)
 
 
-# def saveParameters(*args, **kwargs):
-#     global parameters
-#     parameters.
 
 def printParam(*args, **kwargs):
+    ''' Вывести все параметры на экран (для проверки) '''
     global parameters
     print(f'tikOfUniverse = {parameters.tikOfUniverse}')
     print(f'chaosMoment = {parameters.chaosMoment}')
