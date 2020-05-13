@@ -13,7 +13,7 @@ class ScreenInfo:
         self.cell_width = self.width // self.cell_size
         self.cell_height = self.height // self.cell_size
 
-
+#Class Game will be deleted. Its temporary solve for testing
 class Game:
     def __init__(self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10) -> None:
         self.width = width
