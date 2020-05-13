@@ -33,7 +33,7 @@ def addStr(win, _text1, _text2, _row, _from = 0, _to = 100):
     winParam2.grid(row=_row, column=3, sticky='E', padx=10)
     return winParam1, winParam2
 
-def paramWindow(event, parameters):
+def paramWindow(event, parameters, mainWindow):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
 
     def saveParameters(event, parameters):
@@ -47,7 +47,7 @@ def paramWindow(event, parameters):
                         biom2.get(), 
                         biom3.get())
 
-    win = tkinter.Tk()
+    win = tkinter.Tk(mainWindow)
     win.title('Parameters window')
 
     tik, chaos = addStr(win, "Тик вселенной", "Момент хаоса", 0, 0, 1000)
@@ -103,7 +103,7 @@ def StartMenu():
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FF8C00", activebackground = "#FF8C00")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
-    paramBtn.bind('<Button>', lambda event: paramWindow(event, wPar))
+    paramBtn.bind('<Button>', lambda event: paramWindow(event, wPar, mainWindow))
 
 #    btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
 #    btn.grid(row = 4, column = 2, padx = 20, pady = 20)
