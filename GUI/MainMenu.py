@@ -28,6 +28,27 @@ class WorldParameters:
 
     def check(self):
         print("[LOG] Проверка параметров")
+        if not 0 < TikUniverse < 1000:
+            return False
+        if not 0 < ChaosMoment < 1000:
+            return False
+        if not 0 < AmountOfFood < 1000:
+            return False
+        if not 0 < AmountOfPoison < 1000:
+            return False
+        if not 0 < Biom1 < 1000:
+            return False
+        if not 0 < Biom2 < 1000:
+            return False
+        if not 0 < Biom3 < 1000:
+            return False
+        if not 0 < NumBots1 < 100:
+            return False
+        if not 0 < NumBots2 < 100:
+            return False
+        if not 0 < NumBots3 < 100:
+            return False
+        print("[LOG] OK")
         return True
 
 
