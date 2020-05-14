@@ -112,6 +112,7 @@ def ParamWindow(parameters):
         RandValue(numBots1, 0, 100)
         RandValue(numBots2, 0, 100)
         RandValue(numBots3, 0, 100)
+        SaveParameters(parameters)
 
     def close(win):
         global count
