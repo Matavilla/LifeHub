@@ -41,6 +41,7 @@ def get_color(param: int) -> pygame.color:
 
 
 def create_grid(game, w, h, cell_size, Map=None, randomize: bool = True) -> None:
+#handler.RunOnTick()
     if Map == None:
         Map = [[0 for j in range(w)] for i in range(h)]
     if randomize:
@@ -54,7 +55,7 @@ def create_grid(game, w, h, cell_size, Map=None, randomize: bool = True) -> None
             # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
-def StartGame(wPar):
+def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
 

@@ -3,3 +3,4 @@ class Handler:
         self.wPar = worldPar
 
     def RunOnTick():
+        '''Готовит изображение для вывода'''
