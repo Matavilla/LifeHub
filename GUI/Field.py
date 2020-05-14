@@ -5,7 +5,7 @@ from pygame.locals import *
 
 #Class Game will be deleted. Its temporary solve for testing
 class Game:
-    def __init__(self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10) -> None:
+    def __init__(self, width: int, height: int, cell_size: int) -> None:
         self.width = width
         self.height = height
         self.cell_size = cell_size
@@ -13,14 +13,12 @@ class Game:
         # Устанавливаем размер окна
         self.screen_size = width, height
         # Создание нового окна
+        pygame.display.set_caption('LifeHub')
         self.screen = pygame.display.set_mode(self.screen_size)
 
         # Вычисляем количество ячеек по вертикали и горизонтали
         self.cell_width = self.width // self.cell_size
         self.cell_height = self.height // self.cell_size
-
-        # Скорость протекания игры
-        self.speed = speed
 
     # Draw screen lines
     def draw_lines(self) -> None:
@@ -59,20 +57,18 @@ def create_grid(game, w, h, cell_size, Map=None, randomize: bool = True) -> None
 def StartGame(wPar):
     pygame.init()
     clock = pygame.time.Clock()
+
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
     w, h = w // 2, h // 2
-    pygame.display.set_caption('LifeHub')
-    pygame.display.set_mode((w, h))
 
     game = Game(w, h, 10)
-
     game.screen.fill(pygame.Color('white'))
 
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
-                running = False
+                raise SystemExit(0)
         game.draw_lines()
         create_grid(game, w, h, 10)
         # Display surface updating. We can use display.update() to update only a portion of a screen
