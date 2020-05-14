@@ -3,16 +3,6 @@ import random
 from pygame.locals import *
 
 
-class ScreenInfo:
-    def __init__(self, width: int, height: int, cell_size: int, screen) -> None:
-        self.width = width
-        self.height = height
-        self.cell_size = cell_size
-        self.screen = screen
-        # Width/Height cells amount
-        self.cell_width = self.width // self.cell_size
-        self.cell_height = self.height // self.cell_size
-
 #Class Game will be deleted. Its temporary solve for testing
 class Game:
     def __init__(self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10) -> None:
@@ -52,37 +42,42 @@ def get_color(param: int) -> pygame.color:
     return Colors[param]
 
 
-def create_grid(Inform, Map=None, randomize: bool = True) -> None:
+def create_grid(game, w, h, cell_size, Map=None, randomize: bool = True) -> None:
     if Map == None:
-        Map = [[0 for j in range(Inform.cell_width)] for i in range(Inform.cell_height)]
+        Map = [[0 for j in range(w)] for i in range(h)]
     if randomize:
-        for hei in range(Inform.cell_height):
-            for wei in range(Inform.cell_width):
+        for hei in range(h):
+            for wei in range(w):
                 Map[hei][wei] = random.randint(0, 4)  # 0 - poison, 1 - food, 2 - cold, 3 - normal, 4 - warm
-    for hei in range(Inform.cell_height):
-        for wei in range(Inform.cell_width):
-            Rect = (wei * Inform.cell_size, hei * Inform.cell_size, Inform.cell_size, Inform.cell_size)
-            pygame.draw.rect(Inform.screen, get_color(Map[hei][wei]), Rect)
+    for hei in range(h):
+        for wei in range(w):
+            Rect = (wei * cell_size, hei * cell_size, cell_size, cell_size)
+            pygame.draw.rect(game.screen, get_color(Map[hei][wei]), Rect)
             # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
-if __name__ == '__main__':
-    game = Game(600, 400, 10)
-    screen = ScreenInfo(600, 400, 10, game.screen)
+def Start_game(wPar):
     pygame.init()
     clock = pygame.time.Clock()
-    pygame.display.set_caption('Game of Life')
+    w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
+    w, h = w // 2, h // 2
+    pygame.display.set_caption('LifeHub')
+    pygame.display.set_mode((w, h))
+
+    game = Game(w, h, 10)
+
     game.screen.fill(pygame.Color('white'))
+
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
         game.draw_lines()
-        create_grid(screen)
+        create_grid(game, w, h, 10)
         # Display surface updating. We can use display.update() to update only a portion of a screen
         pygame.display.flip()
         # Limiting runtime speed of the game
-        clock.tick(game.speed)
+        clock.tick(wPar.TikUniverse)
     pygame.quit()
     clock = pygame.time.Clock()
