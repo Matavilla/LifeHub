@@ -196,7 +196,7 @@ def StartMenu(wPar):
     mainWindow = tkinter.Tk()
     mainWindow.configure(background='black')
     mainWindow.title('LifeHub')
-    mainWindow.protocol("WM_DELETE_WINDOW", lambda: mainWindow.quit())
+    mainWindow.protocol("WM_DELETE_WINDOW", lambda: (_ for _ in ()).throw(SystemExit(0)))
 
     w = mainWindow.winfo_screenwidth()
     h = mainWindow.winfo_screenheight()
