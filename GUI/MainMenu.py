@@ -9,9 +9,9 @@ class WorldParameters:
     def __init__(self):
         self.update()
 
-    def update(self, tik = 0, chaos = 0,  food = 0, poison = 0, 
+    def update(self, Tick = 0, chaos = 0,  food = 0, poison = 0, 
                b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
-        self.TikUniverse = float(tik)
+        self.TickUniverse = float(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
         self.AmountOfPoison = int(poison)
@@ -28,7 +28,7 @@ class WorldParameters:
 
     def check(self):
         print("[LOG] Проверка параметров")
-        if not 0 < self.TikUniverse < 1000:
+        if not 0 < self.TickUniverse < 1000:
             return False
         if not 0 < self.ChaosMoment < 1000:
             return False
@@ -86,7 +86,7 @@ def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
     def SaveParameters(parameters):
         '''Сохранить параметры'''
-        parameters.update(tik.get(), 
+        parameters.update(tick.get(), 
                         chaos.get(),
                         food.get(), 
                         poison.get(), 
@@ -102,7 +102,7 @@ def ParamWindow(parameters):
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных
            интервалах'''
-        RandValue(tik, 0, 1000)
+        RandValue(tick, 0, 1000)
         RandValue(chaos, 0, 1000)
         RandValue(food, 0, 1000)
         RandValue(poison, 0, 1000)
@@ -129,10 +129,10 @@ def ParamWindow(parameters):
     win.title('Parameters window')
     win.protocol("WM_DELETE_WINDOW", lambda: close(win))
 
-    tik, chaos, randTik, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 0, 1000)
+    tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 0, 1000)
     food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 0, 1000)
 
-    randTik.bind('<Button>', lambda event: RandValue(tik, 0, 1000))
+    randTick.bind('<Button>', lambda event: RandValue(tick, 0, 1000))
     randChaos.bind('<Button>', lambda event: RandValue(chaos, 0, 1000))
     randFood.bind('<Button>', lambda event: RandValue(food, 0, 1000))
     randPoison.bind('<Button>', lambda event: RandValue(poison, 0, 1000))
@@ -179,7 +179,7 @@ def ParamWindow(parameters):
 
 def PrintParam(parameters):
     ''' Вывести все параметры на экран (для проверки) '''
-    print(f'tikOfUniverse = {parameters.TikUniverse}')
+    print(f'TickOfUniverse = {parameters.TickUniverse}')
     print(f'chaosMoment = {parameters.ChaosMoment}')
     print(f'amountOfFood = {parameters.AmountOfFood}')
     print(f'amountOfPoison = {parameters.AmountOfPoison}')

@@ -74,6 +74,6 @@ def StartGame(wPar):
         # Display surface updating. We can use display.update() to update only a portion of a screen
         pygame.display.flip()
         # Limiting runtime speed of the game
-        clock.tick(wPar.TikUniverse)
+        clock.tick(wPar.TickUniverse)
     pygame.quit()
     clock = pygame.time.Clock()
