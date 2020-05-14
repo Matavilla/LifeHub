@@ -28,31 +28,32 @@ class WorldParameters:
 
     def check(self):
         print("[LOG] Проверка параметров")
-        if not 0 < TikUniverse < 1000:
+        if not 0 < self.TikUniverse < 1000:
             return False
-        if not 0 < ChaosMoment < 1000:
+        if not 0 < self.ChaosMoment < 1000:
             return False
-        if not 0 < AmountOfFood < 1000:
+        if not 0 < self.AmountOfFood < 1000:
             return False
-        if not 0 < AmountOfPoison < 1000:
+        if not 0 < self.AmountOfPoison < 1000:
             return False
-        if not 0 < Biom1 < 1000:
+        if not 0 < self.Biom1 < 1000:
             return False
-        if not 0 < Biom2 < 1000:
+        if not 0 < self.Biom2 < 1000:
             return False
-        if not 0 < Biom3 < 1000:
+        if not 0 < self.Biom3 < 1000:
             return False
-        if not 0 < NumBots1 < 100:
+        if not 0 < self.NumBots1 < 100:
             return False
-        if not 0 < NumBots2 < 100:
+        if not 0 < self.NumBots2 < 100:
             return False
-        if not 0 < NumBots3 < 100:
+        if not 0 < self.NumBots3 < 100:
             return False
         print("[LOG] OK")
         return True
 
 
-
+def InfoParameters():
+    messagebox.showinfo("Information", "BLA BLA BLA")
 
 
 
@@ -96,7 +97,7 @@ def ParamWindow(parameters):
                         numBots2.get(),
                         numBots3.get())
         if not parameters.check():
-            messagebox.showerror("Error", "Wrong value of parameter")
+            messagebox.showerror("Error", "Wrong value of parameters")
 
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных
@@ -118,9 +119,9 @@ def ParamWindow(parameters):
         win.destroy()
 
     global count
-    count+=1
+    count += 1
     if count > 1:
-        count-=1
+        count -= 1
         return
 
     win = tkinter.Tk()
@@ -162,7 +163,7 @@ def ParamWindow(parameters):
     randBots3.bind('<Button>', lambda event: RandValue(numBots3, 0, 100))
 
 
-    buttonSave = tkinter.Button(win, text="Сохнанить")
+    buttonSave = tkinter.Button(win, text="Сохранить")
     buttonSave.grid(row=12, column=2)
     buttonSave.bind('<Button>', lambda event: SaveParameters(parameters))
 
@@ -170,6 +171,9 @@ def ParamWindow(parameters):
     buttonRandAll.grid(row=12, column=1)
     buttonRandAll.bind('<Button>', FullRandom)
 
+    buttonSave = tkinter.Button(win, text="Информация про параметры")
+    buttonSave.grid(row=12, column=3)
+    buttonSave.bind('<Button>', lambda event: InfoParameters())
 
 
 def PrintParam(parameters):

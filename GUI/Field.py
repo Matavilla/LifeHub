@@ -56,7 +56,7 @@ def create_grid(game, w, h, cell_size, Map=None, randomize: bool = True) -> None
             # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
-def Start_game(wPar):
+def StartGame(wPar):
     pygame.init()
     clock = pygame.time.Clock()
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h

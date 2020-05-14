@@ -6,6 +6,6 @@ if not wPar.check():
     print("[ERROR]     WrongParametersWorld")
     raise SystemExit(1)
 GUI.PrintParam(wPar)
-GUI.Start_game(wPar)
+GUI.StartGame(wPar)
 #generate world
 #construct handler and run pygame
