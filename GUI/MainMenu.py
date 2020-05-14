@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 from random import randint
 
 count = 0
@@ -26,7 +27,7 @@ class WorldParameters:
 
 
     def check(self):
-        print("Проверка параметров")
+        print("[LOG] Проверка параметров")
         return True
 
 
@@ -73,6 +74,8 @@ def ParamWindow(parameters):
                         numBots1.get(),
                         numBots2.get(),
                         numBots3.get())
+        if not parameters.check():
+            messagebox.showerror("Error", "Wrong value of parameter")
 
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных

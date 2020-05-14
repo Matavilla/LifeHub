@@ -3,7 +3,8 @@ import GUI
 wPar = GUI.WorldParameters()
 GUI.StartMenu(wPar)
 if not wPar.check():
-   raise WrongParametersWorld
+    print("[ERROR]     WrongParametersWorld")
+    raise SystemExit(1)
 GUI.PrintParam(wPar)
 GUI.Start_game(wPar)
 #generate world
