@@ -12,9 +12,8 @@ class WorldParameters:
         self.ScaleFactor = 1
         #Game screen size
 
-    def update(self, tick = 0, chaos = 1,  food = 1, poison = 1,
-               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
-
+    def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
+               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -132,7 +131,7 @@ def ParamWindow(parameters):
 
     def ScreenChange(parameters, mode) -> None:
         Modes = {'little': 4, 'medium': 2, 'large': 1}
-        parameters.ScaleFactor=Modes[mode]
+        parameters.ScaleFactor = Modes[mode]
 
 
 
@@ -207,15 +206,15 @@ def ParamWindow(parameters):
 
     buttonLittle = tkinter.Button(win, text="Низкое")
     buttonLittle.grid(row=13, column=1)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"little"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "little"))
 
     buttonLittle = tkinter.Button(win, text="Среднее")
     buttonLittle.grid(row=13, column=2)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"medium"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "medium"))
 
     buttonLittle = tkinter.Button(win, text="Высокое")
     buttonLittle.grid(row=13, column=3)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"large"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "large"))
 
     tkinter.Label(win, text="Выберите разрешение поля").grid(row=12, column=2, sticky='W', columnspan=2)
     tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
