@@ -9,8 +9,8 @@ class WorldParameters:
     def __init__(self):
         self.update()
 
-    def update(self, Tick = 0, chaos = 0,  food = 0, poison = 0, 
-               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
+    def update(self, Tick = 1, chaos = 1,  food = 1, poison = 1,
+               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
         self.TickUniverse = float(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -57,7 +57,7 @@ def InfoParameters():
 
 
 
-def AddStrOfTable(win, _text1, _text2, _row, _from = 0, _to = 100):
+def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     ''' Вспомогательная функция добавления строки
         таблицы в окно с параметрами.
         -> 2 spin бокса и 2 кнопки'''
@@ -65,19 +65,27 @@ def AddStrOfTable(win, _text1, _text2, _row, _from = 0, _to = 100):
     winParam1 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
     winParam1.grid(row=_row, column=1, padx=10)
     randButton1 = tkinter.Button(win, text="rand", width=4)
-    randButton1.grid(row=_row+1, column=1, sticky='N')
-    tkinter.Label(win, text=_text2).grid(row=_row, column=2, sticky='E')
+    randButton1.grid(row=_row, column=2, sticky='W')
+    tkinter.Label(win, text=_text2).grid(row=_row, column=3, sticky='E')
     winParam2 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
-    winParam2.grid(row=_row, column=3, sticky='E', padx=10)
+    winParam2.grid(row=_row, column=4, sticky='W', padx=10)
     randButton2 = tkinter.Button(win, text="rand", width=4)
-    randButton2.grid(row=_row+1, column=3, sticky='N')
+    randButton2.grid(row=_row, column=5, sticky='W')
+    tkinter.Label(win, text= "").grid(row=_row, column=6, sticky='W', padx=10, pady=10) #I KNOW IT IS BAD, I WILL FIX IT LATER
     return winParam1, winParam2, randButton1, randButton2
+
 
 
 
 def RandValue(vidget, _from, to):
         vidget.delete(0, tkinter.END)
         vidget.insert(0, randint(_from, to))
+
+def OldVariables(allvid : dict) -> None:
+    for vidget in allvid:
+        vidget.delete(0,tkinter.END)
+        vidget.insert(0,allvid[vidget])
+
 
 
 
@@ -86,12 +94,12 @@ def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
     def SaveParameters(parameters):
         '''Сохранить параметры'''
-        parameters.update(tick.get(), 
+        parameters.update(tick.get(),
                         chaos.get(),
-                        food.get(), 
-                        poison.get(), 
-                        biom1.get(), 
-                        biom2.get(), 
+                        food.get(),
+                        poison.get(),
+                        biom1.get(),
+                        biom2.get(),
                         biom3.get(),
                         numBots1.get(),
                         numBots2.get(),
@@ -102,16 +110,16 @@ def ParamWindow(parameters):
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных
            интервалах'''
-        RandValue(tick, 0, 1000)
-        RandValue(chaos, 0, 1000)
-        RandValue(food, 0, 1000)
-        RandValue(poison, 0, 1000)
-        RandValue(biom1, 0, 1000)
-        RandValue(biom2, 0, 1000)
-        RandValue(biom3, 0, 1000)
-        RandValue(numBots1, 0, 100)
-        RandValue(numBots2, 0, 100)
-        RandValue(numBots3, 0, 100)
+        RandValue(tick, 1, 999)
+        RandValue(chaos, 1, 999)
+        RandValue(food, 1, 999)
+        RandValue(poison, 1, 999)
+        RandValue(biom1, 1, 999)
+        RandValue(biom2, 1, 999)
+        RandValue(biom3, 1, 999)
+        RandValue(numBots1, 1, 99)
+        RandValue(numBots2, 1, 99)
+        RandValue(numBots3, 1, 99)
         SaveParameters(parameters)
 
     def close(win):
@@ -128,40 +136,52 @@ def ParamWindow(parameters):
     win = tkinter.Tk()
     win.title('Parameters window')
     win.protocol("WM_DELETE_WINDOW", lambda: close(win))
+    VidgAccord=dict() #This is the dictionary to match the name of the variable is a class field
 
-    tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 0, 1000)
-    food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 0, 1000)
+    tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)
+    VidgAccord.update({tick:parameters.TickUniverse,chaos:parameters.ChaosMoment})
+    food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 1, 999)
+    VidgAccord.update({food: parameters.AmountOfFood, poison: parameters.AmountOfPoison})
+    randTick.bind('<Button>', lambda event: RandValue(tick, 1, 999))
+    randChaos.bind('<Button>', lambda event: RandValue(chaos, 1, 999))
+    randFood.bind('<Button>', lambda event: RandValue(food, 1, 999))
+    randPoison.bind('<Button>', lambda event: RandValue(poison, 1, 999))
 
-    randTick.bind('<Button>', lambda event: RandValue(tick, 0, 1000))
-    randChaos.bind('<Button>', lambda event: RandValue(chaos, 0, 1000))
-    randFood.bind('<Button>', lambda event: RandValue(food, 0, 1000))
-    randPoison.bind('<Button>', lambda event: RandValue(poison, 0, 1000))
+    tkinter.Label(win, text="Период генерации еды/яда").grid(row=4, column=3, sticky='W', columnspan=2)
 
-    tkinter.Label(win, text="Период генерации еды/яда").grid(row=4, column=1, sticky='W', columnspan=2)
-
-    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5)
-    randBiom1.bind('<Button>', lambda event: RandValue(biom1, 0, 1000))
-    randBiom2.bind('<Button>', lambda event: RandValue(biom2, 0, 1000))
+    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5,1,999)
+    VidgAccord.update({biom1: parameters.Biom1, biom2: parameters.Biom2})
+    # biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5)
+    randBiom1.bind('<Button>', lambda event: RandValue(biom1, 1, 999))
+    randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 999))
 
     tkinter.Label(win, text="Биом 3:").grid(row=7, column=0, sticky='W', padx=10, pady=10)
-    biom3 = tkinter.Spinbox(win, width=7, from_=0, to=1000)
+    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99,textvariable=4)
     biom3.grid(row=7, column=1, padx=10)
+    VidgAccord.update({biom3: parameters.Biom3})
     randBiom3 = tkinter.Button(win, text="rand", width=4)
     randBiom3.grid(row=7, column=2, sticky='W')
-    randBiom3.bind('<Button>', lambda event: RandValue(biom3, 0, 1000))
+    randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 999))
 
-    tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=1, sticky='W', columnspan=2)
 
-    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 9, 0, 100)
-    randBots1.bind('<Button>', lambda event: RandValue(numBots1, 0, 100))
-    randBots2.bind('<Button>', lambda event: RandValue(numBots2, 0, 100))
+
+
+    tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=3, sticky='W', columnspan=2)
+
+    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 9, 1, 99)
+    VidgAccord.update({numBots1: parameters.NumBots1, numBots2: parameters.NumBots2})
+    numBots1.delete(0, tkinter.END)
+    numBots1.insert(0, 2)
+    randBots1.bind('<Button>', lambda event: RandValue(numBots1, 1, 99))
+    randBots2.bind('<Button>', lambda event: RandValue(numBots2, 1, 99))
 
     tkinter.Label(win, text="Биом 3:").grid(row=11, column=0, sticky='W', padx=10, pady=10)
-    numBots3 = tkinter.Spinbox(win, width=7, from_=0, to=100)
+    numBots3 = tkinter.Spinbox(win, width=7, from_=1, to=99)
+    VidgAccord.update({numBots3: parameters.NumBots3})
     numBots3.grid(row=11, column=1, padx=10)
     randBots3 = tkinter.Button(win, text="rand", width=4)
     randBots3.grid(row=11, column=2, sticky='W')
-    randBots3.bind('<Button>', lambda event: RandValue(numBots3, 0, 100))
+    randBots3.bind('<Button>', lambda event: RandValue(numBots3, 1, 99))
 
 
     buttonSave = tkinter.Button(win, text="Сохранить")
@@ -175,6 +195,8 @@ def ParamWindow(parameters):
     buttonSave = tkinter.Button(win, text="Информация про параметры")
     buttonSave.grid(row=12, column=3)
     buttonSave.bind('<Button>', lambda event: InfoParameters())
+
+    OldVariables(VidgAccord)
 
 
 def PrintParam(parameters):
@@ -206,11 +228,11 @@ def StartMenu(wPar):
     mainWindow.columnconfigure(3, weight = 1)
     mainWindow.rowconfigure(1, weight = 1)
     mainWindow.rowconfigure(5, weight = 1)
-    
+
 
     startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
-    startBtn.bind('<Button>', lambda event: mainWindow.quit())
+    startBtn.bind('<Button>', lambda event: mainWindow.destroy())
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
