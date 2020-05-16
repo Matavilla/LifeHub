@@ -9,22 +9,10 @@ class WorldParameters:
     # def __init__(self):
     #     self.update()
     def __init__(self):
-        self.TickUniverse = 1
-        self.ChaosMoment = 1
-        self.AmountOfFood = 1
-        self.AmountOfPoison = 1
-        # generation period of food and poison
-        self.Biom1 = 1
-        self.Biom2 = 1
-        self.Biom3 = 1
+        self.update()
 
-        # start number of bots in each bioms
-        self.NumBots1 = 1
-        self.NumBots2 = 1
-        self.NumBots3 = 1
-
-    def update(self, Tick = 0, chaos = 0,  food = 0, poison = 0, 
-               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
+    def update(self, Tick = 1, chaos = 1,  food = 1, poison = 1,
+               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
         self.TickUniverse = float(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
