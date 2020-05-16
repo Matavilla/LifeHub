@@ -9,14 +9,12 @@ class WorldParameters:
     '''Сохранение параметров вселенной'''
     def __init__(self):
         self.update()
+        self.ScaleFactor = 1
         #Game screen size
-        pygame.init()
-        self.ScreenWidth = pygame.display.Info().current_w
-        self.ScreenHeight = pygame.display.Info().current_h
 
     def update(self, Tick = 1, chaos = 1,  food = 1, poison = 1,
                b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
-        self.TickUniverse = float(Tick)
+        self.TickUniverse = int(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
         self.AmountOfPoison = int(poison)
@@ -29,7 +27,6 @@ class WorldParameters:
         self.NumBots1 = int(numB1)
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
-
 
     def check(self):
         print("[LOG] Проверка параметров")
@@ -94,7 +91,7 @@ def OldVariables(allvid : dict) -> None:
 
 
 
-def ParamWindow(parameters,window):
+def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
     def SaveParameters(parameters):
         '''Сохранить параметры'''
@@ -126,15 +123,9 @@ def ParamWindow(parameters,window):
         RandValue(numBots3, 1, 99)
         SaveParameters(parameters)
 
-    def ScreenChange(screen,parameters, mode):
-        pygame.init()
-        width, height = pygame.display.Info().current_w, pygame.display.Info().current_h;
-        # Modes={'little':4,"middle":3,"large":2}
-        # screen.geometry("{}x{}".format(width//Modes[mode],height//Modes[mode]))
-        Modes = {'little': (800, 600), 'medium': (1366, 768), 'large': (1600, 900)}
-        screen.geometry("{}x{}".format(Modes[mode][0],Modes[mode][1]))
-        parameters.ScreenWidth=Modes[mode][0]
-        parameters.ScreenHeight=Modes[mode][1]
+    def ScreenChange(parameters, mode) -> None:
+        Modes = {'little': 4, 'medium': 2, 'large': 1}
+        parameters.ScaleFactor=Modes[mode]
 
 
 
@@ -180,8 +171,6 @@ def ParamWindow(parameters,window):
     randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 999))
 
 
-
-
     tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=3, sticky='W', columnspan=2)
 
     numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 9, 1, 99)
@@ -211,19 +200,19 @@ def ParamWindow(parameters,window):
     buttonSave.grid(row=15, column=3)
     buttonSave.bind('<Button>', lambda event: InfoParameters())
 
-    buttonLittle = tkinter.Button(win, text="Маленький")
+    buttonLittle = tkinter.Button(win, text="Низкое")
     buttonLittle.grid(row=13, column=1)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(window,parameters,"little"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"little"))
 
-    buttonLittle = tkinter.Button(win, text="Средний")
+    buttonLittle = tkinter.Button(win, text="Среднее")
     buttonLittle.grid(row=13, column=2)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(window,parameters,"medium"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"medium"))
 
-    buttonLittle = tkinter.Button(win, text="Большой")
+    buttonLittle = tkinter.Button(win, text="Высокое")
     buttonLittle.grid(row=13, column=3)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(window,parameters,"large"))
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"large"))
 
-    tkinter.Label(win, text="Выберите размер экрана").grid(row=12, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Выберите разрешение экрана").grid(row=12, column=2, sticky='W', columnspan=2)
     tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
 
     OldVariables(VidgAccord)
@@ -245,7 +234,6 @@ def PrintParam(parameters):
 
 
 def StartMenu(wPar):
-    count = 0
     mainWindow = tkinter.Tk()
     mainWindow.configure(background='black')
     mainWindow.title('LifeHub')
@@ -266,7 +254,7 @@ def StartMenu(wPar):
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
-    paramBtn.bind('<Button>', lambda event: ParamWindow(wPar,mainWindow))
+    paramBtn.bind('<Button>', lambda event: ParamWindow(wPar))
 
 #    btn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25)
 #    btn.grid(row = 4, column = 2, padx = 20, pady = 20)

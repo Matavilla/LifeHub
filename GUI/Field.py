@@ -4,7 +4,7 @@ from pygame.locals import *
 
 
 #Class Game will be deleted. Its temporary solve for testing
-class Game:
+class Field:
     def __init__(self, width: int, height: int, cell_size: int) -> None:
         self.Width = width
         self.Height = height
@@ -15,11 +15,11 @@ class Game:
         self.Screen = pygame.display.set_mode((width, height))
 
         # Вычисляем количество ячеек по вертикали и горизонтали
-        self.CellWidthAmount = self.Width // self.CellSize + 1
-        self.CellHeightAmount = self.Height // self.CellSize + 1
+        self.CellWidthAmount = self.Width // self.CellSize
+        self.CellHeightAmount = self.Height // self.CellSize
 
     # Draw screen lines
-    def draw_lines(self) -> None:
+    def DrawLines(self) -> None:
         for x in range(0, self.Width, self.CellSize):
             pygame.draw.line(self.Screen, pygame.Color('black'),
                              (x, 0), (x, self.Height))
@@ -27,7 +27,7 @@ class Game:
             pygame.draw.line(self.Screen, pygame.Color('black'),
                              (0, y), (self.Width, y))
 
-    def create_grid(self, Map=None, randomize: bool = True) -> None:
+    def CreateGrid(self, Map=None, randomize: bool = True) -> None:
         # handler.RunOnTick()
         if Map == None:
             Map = [[0 for j in range(self.CellWidthAmount)] for i in range(self.CellHeightAmount)]
@@ -38,11 +38,11 @@ class Game:
         for hei in range(self.CellHeightAmount):
             for wei in range(self.CellWidthAmount):
                 Rect = (wei * self.CellSize, hei * self.CellSize, self.CellSize, self.CellSize)
-                pygame.draw.rect(self.Screen, get_color(Map[hei][wei]), Rect)
+                pygame.draw.rect(self.Screen, GetColor(Map[hei][wei]), Rect)
                 # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
-def get_color(param: int) -> pygame.color:
+def GetColor(param: int) -> pygame.color:
     purple = pygame.Color(116, 33, 125)  # poison
     green = pygame.Color(34, 134, 83)  # food
     blue = pygame.Color(0, 153, 153)  # resident of the cold biome
@@ -51,14 +51,22 @@ def get_color(param: int) -> pygame.color:
     Colors = {0: purple, 1: green, 2: blue, 3: yellow, 4: red}
     return Colors[param]
 
+def CellSize(weight: int, scale: int) -> int:
+    cells=400//scale #cells default amount
+    return weight//cells
+
+def ScreenFix(scr_param: list,cell_size: int)-> list:
+    return [(scr_param[0]//cell_size) * cell_size,(scr_param[1]//cell_size)*cell_size]
+
 
 
 def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-
-    game = Game(wPar.ScreenWidth, wPar.ScreenHeight, 10)
+    cell = CellSize(w//2, wPar.ScaleFactor)
+    w, h = ScreenFix([w//2,h//2], cell)
+    game = Field(w, h, cell)
     game.Screen.fill(pygame.Color('white'))
 
     running = True
@@ -66,8 +74,8 @@ def StartGame(wPar, handler):
         for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit(0)
-        game.draw_lines()
-        game.create_grid()
+        game.DrawLines()
+        game.CreateGrid()
         # Display surface updating. We can use display.update() to update only a portion of a screen
         pygame.display.flip()
         # Limiting runtime speed of the game
