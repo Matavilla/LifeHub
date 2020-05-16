@@ -9,8 +9,8 @@ class WorldParameters:
     def __init__(self):
         self.update()
 
-    def update(self, Tick = 1, chaos = 1,  food = 1, poison = 1,
-               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
+    def update(self, Tick = 0.0, chaos = 0,  food = 0, poison = 0,
+               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
         self.TickUniverse = float(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -95,15 +95,15 @@ def ParamWindow(parameters):
     def SaveParameters(parameters):
         '''Сохранить параметры'''
         parameters.update(tick.get(),
-                        chaos.get(),
-                        food.get(),
-                        poison.get(),
-                        biom1.get(),
-                        biom2.get(),
-                        biom3.get(),
-                        numBots1.get(),
-                        numBots2.get(),
-                        numBots3.get())
+                          chaos.get(),
+                          food.get(),
+                          poison.get(),
+                          biom1.get(),
+                          biom2.get(),
+                          biom3.get(),
+                          numBots1.get(),
+                          numBots2.get(),
+                          numBots3.get())
         if not parameters.check():
             messagebox.showerror("Error", "Wrong value of parameters")
 
@@ -136,8 +136,8 @@ def ParamWindow(parameters):
     win = tkinter.Tk()
     win.title('Parameters window')
     win.protocol("WM_DELETE_WINDOW", lambda: close(win))
-    VidgAccord=dict() #This is the dictionary to match the name of the variable is a class field
-
+    VidgAccord = dict() #This is the dictionary to match the name of the variable is a class field
+ 
     tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)
     VidgAccord.update({tick:parameters.TickUniverse,chaos:parameters.ChaosMoment})
     food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 1, 999)
