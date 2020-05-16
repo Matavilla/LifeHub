@@ -3,7 +3,6 @@ import random
 from pygame.locals import *
 
 
-#Class Game will be deleted. Its temporary solve for testing
 class Field:
     def __init__(self, width: int, height: int, cell_size: int) -> None:
         self.Width = width
@@ -64,8 +63,8 @@ def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    cell = CellSize(w//2, wPar.ScaleFactor)
-    w, h = ScreenFix([w//2,h//2], cell)
+    cell = CellSize(w // 2, wPar.ScaleFactor)
+    w, h = ScreenFix([w // 2, h // 2], cell)
     game = Field(w, h, cell)
     game.Screen.fill(pygame.Color('white'))
 

@@ -212,7 +212,7 @@ def ParamWindow(parameters):
     buttonLittle.grid(row=13, column=3)
     buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"large"))
 
-    tkinter.Label(win, text="Выберите разрешение экрана").grid(row=12, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Выберите разрешение поля").grid(row=12, column=2, sticky='W', columnspan=2)
     tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
 
     OldVariables(VidgAccord)
