@@ -26,6 +26,7 @@ class Field:
                 if obj.Alive:
                     pygame.draw.rect(self.Screen, obj.Color, obj.Bounds)
 
+
     # def create_grid(self, Map=None, randomize: bool = True) -> None:
     #     # handler.RunOnTick()
     #     if Map == None:
@@ -51,14 +52,31 @@ class Field:
 #     return Colors[param]
 
 
+def CellSize(weight: int, scale: int) -> int:
+    cells=400 // scale
+    return weight // cells
+
+
+def ScreenFix(scr_param: list,cell_size: int)-> list:
+    return [(scr_param[0] // cell_size) * cell_size,(scr_param[1] // cell_size) * cell_size]
+
+
 def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
-    # w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    # w, h = w // 2, h // 2
-    background_image = 'images/background.png'
 
-    field = Field('LifeHub', 800, 800, background_image)
+    background_image = 'images/background.png'
+    w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
+    cell = CellSize(w // 2, wPar.ScaleFactor)
+    w, h = ScreenFix([w // 2, h // 2], cell)
+    field = Field('LifeHub',w, h, background_image)
+    wPar.Width = w
+    wPar.Height = h
+    wPar.CellSize = cell
+    handler.generate_objects(wPar)
+
+    #game.Screen.fill(pygame.Color('white'))
+
 
     running = True
     while running:
