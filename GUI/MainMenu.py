@@ -93,8 +93,8 @@ def RandValue(vidget, _from, to):
 
 def OldVariables(allvid : dict) -> None:
     for vidget in allvid:
-        vidget.delete(0,tkinter.END)
-        vidget.insert(0,allvid[vidget])
+        vidget.delete(0, tkinter.END)
+        vidget.insert(0, allvid[vidget])
 
 def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
@@ -136,10 +136,6 @@ def ParamWindow(parameters):
 
 
 
-    def close(win):
-        global count
-        count = 0
-        win.destroy()
 
     global COUNT, WINDOWS
     COUNT += 1
@@ -151,7 +147,7 @@ def ParamWindow(parameters):
     WINDOWS.append(win)
 
     win.title('Parameters window')
-    win.protocol("WM_DELETE_WINDOW", lambda: close(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
     VidgAccord = dict() #This is the dictionary to match the name of the variable is a class field
  
     tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)

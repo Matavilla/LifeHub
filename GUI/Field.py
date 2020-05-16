@@ -51,11 +51,11 @@ def GetColor(param: int) -> pygame.color:
     return Colors[param]
 
 def CellSize(weight: int, scale: int) -> int:
-    cells=400//scale #cells default amount
-    return weight//cells
+    cells=400 // scale
+    return weight // cells
 
 def ScreenFix(scr_param: list,cell_size: int)-> list:
-    return [(scr_param[0]//cell_size) * cell_size,(scr_param[1]//cell_size)*cell_size]
+    return [(scr_param[0] // cell_size) * cell_size,(scr_param[1] // cell_size) * cell_size]
 
 
 
