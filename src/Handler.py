@@ -18,7 +18,7 @@ class Handler:
 			self.Map.append([])
 			for j in range(0, 200): # кол-во клеток по столбцу
 				self.Map[i].append(Cell(i * 4, j * 4, 4)) # 4 - размер клетки (далее в wPar)
-		# Добавление одного бота
+		# Добавление одного бота для теста
 		self.Map[100][100] = Bot(400, 400, 4, 1, (255, 0, 0), 1, True)
 
 	def random_move(self, x, y):
