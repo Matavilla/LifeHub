@@ -9,9 +9,12 @@ class WorldParameters:
     '''Сохранение параметров вселенной'''
     def __init__(self):
         self.update()
+        self.ScaleFactor = 1
+        #Game screen size
 
-    def update(self, Tick = 0, chaos = 0,  food = 0, poison = 0,
-               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
+    def update(self, Tick = 1, chaos = 1,  food = 1, poison = 1,
+               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
+
         self.TickUniverse = int(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -25,7 +28,6 @@ class WorldParameters:
         self.NumBots1 = int(numB1)
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
-
 
     def check(self):
         print("[LOG] Проверка параметров")
@@ -66,6 +68,7 @@ def CloseAllWindow():
     for i in WINDOWS:
         CloseWindow(i)
 
+
 def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     ''' Вспомогательная функция добавления строки
         таблицы в окно с параметрами.
@@ -90,9 +93,8 @@ def RandValue(vidget, _from, to):
 
 def OldVariables(allvid : dict) -> None:
     for vidget in allvid:
-        vidget.delete(0,tkinter.END)
-        vidget.insert(0,allvid[vidget])
-
+        vidget.delete(0, tkinter.END)
+        vidget.insert(0, allvid[vidget])
 
 def ParamWindow(parameters):
     '''Создание окна с параметрами вселенной и сохранение параметров'''
@@ -128,6 +130,13 @@ def ParamWindow(parameters):
         SaveParameters(parameters)
 
 
+    def ScreenChange(parameters, mode) -> None:
+        Modes = {'little': 4, 'medium': 2, 'large': 1}
+        parameters.ScaleFactor=Modes[mode]
+
+
+
+
     global COUNT, WINDOWS
     COUNT += 1
     if COUNT > 1:
@@ -138,7 +147,7 @@ def ParamWindow(parameters):
     WINDOWS.append(win)
 
     win.title('Parameters window')
-    win.protocol("WM_DELETE_WINDOW", lambda: CloseParamWindow(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
     VidgAccord = dict() #This is the dictionary to match the name of the variable is a class field
  
     tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)
@@ -167,8 +176,6 @@ def ParamWindow(parameters):
     randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 999))
 
 
-
-
     tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=3, sticky='W', columnspan=2)
 
     numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 9, 1, 99)
@@ -186,18 +193,32 @@ def ParamWindow(parameters):
     randBots3.grid(row=11, column=2, sticky='W')
     randBots3.bind('<Button>', lambda event: RandValue(numBots3, 1, 99))
 
-
     buttonSave = tkinter.Button(win, text="Сохранить")
-    buttonSave.grid(row=12, column=2)
+    buttonSave.grid(row=15, column=2)
     buttonSave.bind('<Button>', lambda event: SaveParameters(parameters))
 
     buttonRandAll = tkinter.Button(win, text="Рандом")
-    buttonRandAll.grid(row=12, column=1)
+    buttonRandAll.grid(row=15, column=1)
     buttonRandAll.bind('<Button>', FullRandom)
 
     buttonSave = tkinter.Button(win, text="Информация про параметры")
-    buttonSave.grid(row=12, column=3)
+    buttonSave.grid(row=15, column=3)
     buttonSave.bind('<Button>', lambda event: InfoParameters())
+
+    buttonLittle = tkinter.Button(win, text="Низкое")
+    buttonLittle.grid(row=13, column=1)
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"little"))
+
+    buttonLittle = tkinter.Button(win, text="Среднее")
+    buttonLittle.grid(row=13, column=2)
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"medium"))
+
+    buttonLittle = tkinter.Button(win, text="Высокое")
+    buttonLittle.grid(row=13, column=3)
+    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"large"))
+
+    tkinter.Label(win, text="Выберите разрешение поля").grid(row=12, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
 
     OldVariables(VidgAccord)
 
