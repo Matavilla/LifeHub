@@ -3,8 +3,7 @@ import random
 from pygame.locals import *
 
 
-#Class Game will be deleted. Its temporary solve for testing
-class Game:
+class Field:
     def __init__(self, width: int, height: int, cell_size: int) -> None:
         self.Width = width
         self.Height = height
@@ -38,11 +37,11 @@ class Game:
         for hei in range(self.CellHeightAmount):
             for wei in range(self.CellWidthAmount):
                 Rect = (wei * self.CellSize, hei * self.CellSize, self.CellSize, self.CellSize)
-                pygame.draw.rect(self.Screen, get_color(Map[hei][wei]), Rect)
+                pygame.draw.rect(self.Screen, GetColor(Map[hei][wei]), Rect)
                 # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
-def get_color(param: int) -> pygame.color:
+def GetColor(param: int) -> pygame.color:
     purple = pygame.Color(116, 33, 125)  # poison
     green = pygame.Color(34, 134, 83)  # food
     blue = pygame.Color(0, 153, 153)  # resident of the cold biome
@@ -51,15 +50,22 @@ def get_color(param: int) -> pygame.color:
     Colors = {0: purple, 1: green, 2: blue, 3: yellow, 4: red}
     return Colors[param]
 
+def CellSize(weight: int, scale: int) -> int:
+    cells=400 // scale
+    return weight // cells
+
+def ScreenFix(scr_param: list,cell_size: int)-> list:
+    return [(scr_param[0] // cell_size) * cell_size,(scr_param[1] // cell_size) * cell_size]
+
 
 
 def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    w, h = w // 2, h // 2
-
-    game = Game(w, h, 10)
+    cell = CellSize(w // 2, wPar.ScaleFactor)
+    w, h = ScreenFix([w // 2, h // 2], cell)
+    game = Field(w, h, cell)
     game.Screen.fill(pygame.Color('white'))
 
     running = True
