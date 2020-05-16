@@ -6,8 +6,6 @@ count = 0
 
 class WorldParameters:
     '''Сохранение параметров вселенной'''
-    # def __init__(self):
-    #     self.update()
     def __init__(self):
         self.update()
 
