@@ -2,7 +2,8 @@ import tkinter
 from tkinter import messagebox
 from random import randint
 
-count = 0
+COUNT = 0
+WINDOWS = list()
 
 class WorldParameters:
     '''Сохранение параметров вселенной'''
@@ -55,7 +56,15 @@ class WorldParameters:
 def InfoParameters():
     messagebox.showinfo("Information", "BLA BLA BLA")
 
+def CloseWindow(win):
+    global COUNT
+    COUNT = 0
+    win.destroy()
 
+def CloseAllWindow():
+    global WINDOWS
+    for i in WINDOWS:
+        CloseWindow(i)
 
 def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     ''' Вспомогательная функция добавления строки
@@ -75,8 +84,6 @@ def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     return winParam1, winParam2, randButton1, randButton2
 
 
-
-
 def RandValue(vidget, _from, to):
         vidget.delete(0, tkinter.END)
         vidget.insert(0, randint(_from, to))
@@ -85,9 +92,6 @@ def OldVariables(allvid : dict) -> None:
     for vidget in allvid:
         vidget.delete(0,tkinter.END)
         vidget.insert(0,allvid[vidget])
-
-
-
 
 
 def ParamWindow(parameters):
@@ -107,6 +111,7 @@ def ParamWindow(parameters):
         if not parameters.check():
             messagebox.showerror("Error", "Wrong value of parameters")
 
+
     def FullRandom(*args, **kwargs):
         '''установка рандомных параметров в заданных
            интервалах'''
@@ -122,20 +127,18 @@ def ParamWindow(parameters):
         RandValue(numBots3, 1, 99)
         SaveParameters(parameters)
 
-    def close(win):
-        global count
-        count = 0
-        win.destroy()
 
-    global count
-    count += 1
-    if count > 1:
-        count -= 1
+    global COUNT, WINDOWS
+    COUNT += 1
+    if COUNT > 1:
+        COUNT -= 1
         return
-
+    
     win = tkinter.Tk()
+    WINDOWS.append(win)
+
     win.title('Parameters window')
-    win.protocol("WM_DELETE_WINDOW", lambda: close(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseParamWindow(win))
     VidgAccord = dict() #This is the dictionary to match the name of the variable is a class field
  
     tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)
@@ -215,8 +218,10 @@ def PrintParam(parameters):
 
 
 def StartMenu(wPar):
-    count = 0
+    global WINDOWS
     mainWindow = tkinter.Tk()
+    WINDOWS.append(mainWindow)
+
     mainWindow.configure(background='black')
     mainWindow.title('LifeHub')
     mainWindow.protocol("WM_DELETE_WINDOW", lambda: (_ for _ in ()).throw(SystemExit(0)))
@@ -232,7 +237,7 @@ def StartMenu(wPar):
 
     startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
-    startBtn.bind('<Button>', lambda event: mainWindow.destroy())
+    startBtn.bind('<Button>', lambda event: CloseAllWindow())
 
     paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
