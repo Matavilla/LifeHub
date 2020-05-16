@@ -18,7 +18,7 @@ class Field:
         self.CellHeightAmount = self.Height // self.CellSize
 
     # Draw screen lines
-    def DrawLines(self) -> None:
+    def draw_lines(self) -> None:
         for x in range(0, self.Width, self.CellSize):
             pygame.draw.line(self.Screen, pygame.Color('black'),
                              (x, 0), (x, self.Height))
@@ -26,7 +26,7 @@ class Field:
             pygame.draw.line(self.Screen, pygame.Color('black'),
                              (0, y), (self.Width, y))
 
-    def CreateGrid(self, Map=None, randomize: bool = True) -> None:
+    def create_grid(self, Map=None, randomize: bool = True) -> None:
         # handler.RunOnTick()
         if Map == None:
             Map = [[0 for j in range(self.CellWidthAmount)] for i in range(self.CellHeightAmount)]
@@ -73,8 +73,8 @@ def StartGame(wPar, handler):
         for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit(0)
-        game.DrawLines()
-        game.CreateGrid()
+        game.draw_lines()
+        game.create_grid()
         # Display surface updating. We can use display.update() to update only a portion of a screen
         pygame.display.flip()
         # Limiting runtime speed of the game
