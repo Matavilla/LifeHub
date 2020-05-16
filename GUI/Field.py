@@ -15,8 +15,8 @@ class Game:
         self.Screen = pygame.display.set_mode((width, height))
 
         # Вычисляем количество ячеек по вертикали и горизонтали
-        self.CellWidthAmount = self.Width // self.CellSize
-        self.CellHeightAmount = self.Height // self.CellSize
+        self.CellWidthAmount = self.Width // self.CellSize + 1
+        self.CellHeightAmount = self.Height // self.CellSize + 1
 
     # Draw screen lines
     def draw_lines(self) -> None:
@@ -57,9 +57,8 @@ def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    w, h = w // 2, h // 2
 
-    game = Game(w, h, 10)
+    game = Game(wPar.ScreenWidth, wPar.ScreenHeight, 10)
     game.Screen.fill(pygame.Color('white'))
 
     running = True
