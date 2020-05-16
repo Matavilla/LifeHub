@@ -10,9 +10,9 @@ class WorldParameters:
     def __init__(self):
         self.update()
 
-    def update(self, Tick = 0.0, chaos = 0,  food = 0, poison = 0,
+    def update(self, Tick = 0, chaos = 0,  food = 0, poison = 0,
                b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
-        self.TickUniverse = float(Tick)
+        self.TickUniverse = int(Tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
         self.AmountOfPoison = int(poison)
