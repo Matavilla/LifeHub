@@ -237,6 +237,7 @@ def PrintParam(parameters):
     print(f'NumBots1 = {parameters.NumBots1}')
     print(f'NumBots2 = {parameters.NumBots2}')
     print(f'NumBots3 = {parameters.NumBots3}')
+    print(f'WorldSize = {parameters.WorldSize}')
     print('\n')
 
 
