@@ -9,7 +9,6 @@ class WorldParameters:
     '''Сохранение параметров вселенной'''
     def __init__(self):
         self.update()
-        #Game screen size
 
     def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
                b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0, numB3 = 0):
@@ -122,6 +121,7 @@ def ParamWindow(parameters):
         RandValue(chaos, 1, 999)
         RandValue(food, 1, 999)
         RandValue(poison, 1, 999)
+
         RandValue(biom1, 1, 999)
         RandValue(biom2, 1, 999)
         RandValue(biom3, 1, 999)
@@ -129,6 +129,7 @@ def ParamWindow(parameters):
         RandValue(numBots1, 1, 99)
         RandValue(numBots2, 1, 99)
         RandValue(numBots3, 1, 99)
+
         SaveParameters(parameters)
 
 
@@ -202,9 +203,9 @@ def ParamWindow(parameters):
     buttonRandAll.grid(row=15, column=1)
     buttonRandAll.bind('<Button>', FullRandom)
 
-    buttonSave = tkinter.Button(win, text="Информация про параметры")
-    buttonSave.grid(row=15, column=3)
-    buttonSave.bind('<Button>', lambda event: InfoParameters())
+    buttonInfo = tkinter.Button(win, text="Информация про параметры")
+    buttonInfo.grid(row=15, column=3)
+    buttonInfo.bind('<Button>', lambda event: InfoParameters())
 
     buttonLittle = tkinter.Button(win, text="Маленький")
     buttonLittle.grid(row=13, column=1)
