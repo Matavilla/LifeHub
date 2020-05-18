@@ -134,8 +134,6 @@ def ParamWindow(parameters):
         parameters.ScaleFactor = Modes[mode]
 
 
-
-
     global COUNT, WINDOWS
     COUNT += 1
     if COUNT > 1:
@@ -204,19 +202,19 @@ def ParamWindow(parameters):
     buttonSave.grid(row=15, column=3)
     buttonSave.bind('<Button>', lambda event: InfoParameters())
 
-    buttonLittle = tkinter.Button(win, text="Низкое")
+    buttonLittle = tkinter.Button(win, text="Маленький")
     buttonLittle.grid(row=13, column=1)
     buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "little"))
 
-    buttonLittle = tkinter.Button(win, text="Среднее")
+    buttonLittle = tkinter.Button(win, text="Средний")
     buttonLittle.grid(row=13, column=2)
     buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "medium"))
 
-    buttonLittle = tkinter.Button(win, text="Высокое")
+    buttonLittle = tkinter.Button(win, text="Большой")
     buttonLittle.grid(row=13, column=3)
     buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters, "large"))
 
-    tkinter.Label(win, text="Выберите разрешение поля").grid(row=12, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Выберите размер поля").grid(row=12, column=2, sticky='W', columnspan=2)
     tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
 
     OldVariables(VidgAccord)
