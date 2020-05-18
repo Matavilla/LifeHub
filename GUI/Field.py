@@ -6,7 +6,7 @@ from pygame.locals import *
 class Field:
     def __init__(self, w: int, h: int, world_size: int) -> None:
         self.LengthWindow = min((3 * w) // 4, (3 * h) // 4)
-        self.LengthWindow += self.LengthWindow % world_size
+        self.LengthWindow -= self.LengthWindow % world_size
         self.CellSize = self.LengthWindow // world_size
         
         pygame.display.set_caption('LifeHub')
