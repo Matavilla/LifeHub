@@ -39,7 +39,6 @@ class Map:
         dx1, dx2 = 0, 0
         bound1 = random.randint(self.Size // 4, self.Size // 3)
         bound2 = random.randint((2 * self.Size) // 3, (3 * self.Size) // 4)
-        print(bound1, bound2)
         reg = REGULARITY_CELL
         smoothing = True
         for x in range(self.Size):
