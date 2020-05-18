@@ -26,7 +26,7 @@ class Field:
             pygame.draw.line(self.Screen, pygame.Color('black'),
                              (0, y), (self.Width, y))
 
-    def create_grid(self, Map=None, randomize: bool = True) -> None:
+    def create_grid(self, Map = None, randomize: bool = True) -> None:
         # handler.RunOnTick()
         if Map == None:
             Map = [[0 for j in range(self.CellWidthAmount)] for i in range(self.CellHeightAmount)]
@@ -41,6 +41,14 @@ class Field:
                 # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
+def CellSize(weight: int, cells: int) -> int:
+    return weight // cells
+
+
+def ScreenFix(scr_param: list, cell_size: int)-> list:
+    return [(scr_param[0] // cell_size) * cell_size, (scr_param[1] // cell_size) * cell_size]
+
+
 def GetColor(param: int) -> pygame.color:
     purple = pygame.Color(116, 33, 125)  # poison
     green = pygame.Color(34, 134, 83)  # food
@@ -50,22 +58,16 @@ def GetColor(param: int) -> pygame.color:
     Colors = {0: purple, 1: green, 2: blue, 3: yellow, 4: red}
     return Colors[param]
 
-def CellSize(weight: int, scale: int) -> int:
-    cells = 400 // scale
-    return weight // cells
-
-def ScreenFix(scr_param: list, cell_size: int)-> list:
-    return [(scr_param[0] // cell_size) * cell_size, (scr_param[1] // cell_size) * cell_size]
-
-
 
 def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
+
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    cell = CellSize(w // 2, wPar.ScaleFactor)
-    w, h = ScreenFix([w // 2, h // 2], cell)
-    game = Field(w, h, cell)
+    cell_size = CellSize(w // 2, wPar.WorldSize)
+    w, h = ScreenFix([w // 2, h // 2], cell_size)
+
+    game = Field(w, h, cell_size)
     game.Screen.fill(pygame.Color('white'))
 
     running = True

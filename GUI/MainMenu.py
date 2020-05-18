@@ -9,7 +9,6 @@ class WorldParameters:
     '''Сохранение параметров вселенной'''
     def __init__(self):
         self.update()
-        self.ScaleFactor = 1
         #Game screen size
 
     def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
@@ -27,6 +26,9 @@ class WorldParameters:
         self.NumBots1 = int(numB1)
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
+
+    def add_world_size(self, size):
+        self.WorldSize = size
 
     def check(self):
         print("[LOG] Проверка параметров")
@@ -123,6 +125,7 @@ def ParamWindow(parameters):
         RandValue(biom1, 1, 999)
         RandValue(biom2, 1, 999)
         RandValue(biom3, 1, 999)
+
         RandValue(numBots1, 1, 99)
         RandValue(numBots2, 1, 99)
         RandValue(numBots3, 1, 99)
@@ -130,8 +133,9 @@ def ParamWindow(parameters):
 
 
     def ScreenChange(parameters, mode) -> None:
-        Modes = {'little': 4, 'medium': 2, 'large': 1}
-        parameters.ScaleFactor = Modes[mode]
+        scale = {'little': 4, 'medium': 2, 'large': 1}
+        MAX_WORLD_SIZE = 400
+        parameters.add_world_size(MAX_WORLD_SIZE // scale[mode])
 
 
     global COUNT, WINDOWS
@@ -165,7 +169,7 @@ def ParamWindow(parameters):
     randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 999))
 
     tkinter.Label(win, text="Биом 3:").grid(row=7, column=0, sticky='W', padx=10, pady=10)
-    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99,textvariable=4)
+    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99, textvariable=4)
     biom3.grid(row=7, column=1, padx=10)
     VidgAccord.update({biom3: parameters.Biom3})
     randBiom3 = tkinter.Button(win, text="rand", width=4)
