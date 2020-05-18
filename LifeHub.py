@@ -8,5 +8,5 @@ if not wPar.check():
     raise SystemExit(1)
 GUI.PrintParam(wPar)
 handler = src.Handler(wPar)
-#generate world
+handler.create_world()
 GUI.StartGame(wPar, handler)
