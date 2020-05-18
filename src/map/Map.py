@@ -60,6 +60,9 @@ class Map:
                     dx1 = 1 if dx1 > 66 else 0 if dx1 > 33 else -1
                     dx2 = 1 if dx2 > 66 else 0 if dx2 > 33 else -1
                     reg = REGULARITY_CELL
+            if bound2 - bound1 < 5:
+                dx1 *= -1
+                dx2 += -1
             bound1 += dx1
             bound2 += dx2
             reg -= 1
