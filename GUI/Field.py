@@ -4,49 +4,22 @@ from pygame.locals import *
 
 
 class Field:
-    def __init__(self, width: int, height: int, cell_size: int) -> None:
-        self.Width = width
-        self.Height = height
-        self.CellSize = cell_size
-
-        # Создание нового окна
+    def __init__(self, w: int, h: int, world_size: int) -> None:
+        self.LengthWindow = min((3 * w) // 4, (3 * h) // 4)
+        self.LengthWindow -= self.LengthWindow % world_size
+        self.CellSize = self.LengthWindow // world_size
+        
         pygame.display.set_caption('LifeHub')
-        self.Screen = pygame.display.set_mode((width, height))
+        self.Screen = pygame.display.set_mode((self.LengthWindow, self.LengthWindow))
 
-        # Вычисляем количество ячеек по вертикали и горизонтали
-        self.CellWidthAmount = self.Width // self.CellSize
-        self.CellHeightAmount = self.Height // self.CellSize
 
-    # Draw screen lines
-    def draw_lines(self) -> None:
-        for x in range(0, self.Width, self.CellSize):
-            pygame.draw.line(self.Screen, pygame.Color('black'),
-                             (x, 0), (x, self.Height))
-        for y in range(0, self.Height, self.CellSize):
-            pygame.draw.line(self.Screen, pygame.Color('black'),
-                             (0, y), (self.Width, y))
-
-    def create_grid(self, Map = None, randomize: bool = True) -> None:
-        # handler.RunOnTick()
-        if Map == None:
-            Map = [[0 for j in range(self.CellWidthAmount)] for i in range(self.CellHeightAmount)]
-        if randomize:
-            for hei in range(self.CellHeightAmount):
-                for wei in range(self.CellWidthAmount):
-                    Map[hei][wei] = random.randint(0, 4)  # 0 - poison, 1 - food, 2 - cold, 3 - normal, 4 - warm
-        for hei in range(self.CellHeightAmount):
-            for wei in range(self.CellWidthAmount):
-                Rect = (wei * self.CellSize, hei * self.CellSize, self.CellSize, self.CellSize)
-                pygame.draw.rect(self.Screen, GetColor(Map[hei][wei]), Rect)
+    def create_grid(self, Map) -> None:
+        for y in range(Map.Size):
+            for x in range(Map.Size):
+                Rect = (x * self.CellSize, y * self.CellSize, self.CellSize, self.CellSize)
+                color = pygame.Color(*(Map.Field[x][y].get_color()))
+                pygame.draw.rect(self.Screen, color, Rect)
                 # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
-
-
-def CellSize(weight: int, cells: int) -> int:
-    return weight // cells
-
-
-def ScreenFix(scr_param: list, cell_size: int)-> list:
-    return [(scr_param[0] // cell_size) * cell_size, (scr_param[1] // cell_size) * cell_size]
 
 
 def GetColor(param: int) -> pygame.color:
@@ -64,10 +37,8 @@ def StartGame(wPar, handler):
     clock = pygame.time.Clock()
 
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    cell_size = CellSize(w // 2, wPar.WorldSize)
-    w, h = ScreenFix([w // 2, h // 2], cell_size)
+    game = Field(w, h, wPar.WorldSize)
 
-    game = Field(w, h, cell_size)
     game.Screen.fill(pygame.Color('white'))
 
     running = True
@@ -75,10 +46,8 @@ def StartGame(wPar, handler):
         for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit(0)
-        game.draw_lines()
-        game.create_grid()
-        # Display surface updating. We can use display.update() to update only a portion of a screen
+        # handler.RunOnTick()
+        game.create_grid(handler.Map)
         pygame.display.flip()
-        # Limiting runtime speed of the game
         clock.tick(wPar.TickUniverse)
     pygame.quit()
