@@ -102,44 +102,44 @@ class Handler:
 	def action_on_tick(self, x, y):
 		cell_size = self.wPar.CellSize
 		if self.Map[x][y].Life > 0:
-			self.check_around(x, y)
+			#self.check_around(x, y)
 			self.random_move(x, y)
 		else:
 			self.Map[x][y] = Cell(x * cell_size, y * cell_size, cell_size)
 
-    def check_around(self, x, y):
-    	#bot = self.Map[x][y]
-    	agr = randint(1, 100)
-		for i in range(1, self.Sensity + 1):
-			if x - i < 0:
-				start_x = 0
-			else:
-				start_x = x - i
+  #   def check_around(self, x, y):
+  #   	#bot = self.Map[x][y]
+  #   	agr = randint(1, 100)
+		# for i in range(1, self.Sensity + 1):
+		# 	if x - i < 0:
+		# 		start_x = 0
+		# 	else:
+		# 		start_x = x - i
 
-			if x + i >= self.CellsPerRow:
-				fin_x = self.CellsPerRow - 1
-			else 
-				fin_x = x + i
+		# 	if x + i >= self.CellsPerRow:
+		# 		fin_x = self.CellsPerRow - 1
+		# 	else 
+		# 		fin_x = x + i
 
-			if y - i >= 0:
-				for j in range(start_x, fin_x + 1):
-					if self.Map[j][y-i].Alive:
-						if agr <= bot.Agression:
-							if i == 1:
-								self.Map[j][y-1].Life -= 50
+		# 	if y - i >= 0:
+		# 		for j in range(start_x, fin_x + 1):
+		# 			if self.Map[j][y-i].Alive:
+		# 				if agr <= bot.Agression:
+		# 					if i == 1:
+		# 						self.Map[j][y-1].Life -= 50
 
-			if y - i < 0:
-				start_y = 0
-			else:
-				start_y = y - i
-			if y + i >= self.CellsPerColl:
-				fin_y = self.CellsPerColl - 1
-			else 
-				fin_y = y + i
+		# 	if y - i < 0:
+		# 		start_y = 0
+		# 	else:
+		# 		start_y = y - i
+		# 	if y + i >= self.CellsPerColl:
+		# 		fin_y = self.CellsPerColl - 1
+		# 	else 
+		# 		fin_y = y + i
 
-			for j in range(start_y, fin_y + 1):
-				for k in range(start_x, fin_x + 1):
-					if 
+		# 	for j in range(start_y, fin_y + 1):
+		# 		for k in range(start_x, fin_x + 1):
+		# 			if 
 
 
 
