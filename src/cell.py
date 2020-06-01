@@ -8,3 +8,7 @@ class Cell:
         self.Y = y
         self.CellSize = cell_size
         self.Alive = alive
+        self.WasChecked = False
+
+    def action_on_tick(self):
+    	pass
