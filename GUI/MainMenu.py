@@ -6,15 +6,16 @@ COUNT = 0
 WINDOWS = list()
 
 class WorldParameters:
-    '''Сохранение параметров вселенной'''
+    '''Параметры вселенной'''
+
+    Scale = {'little': 4, 'medium': 2, 'large': 1}
+
     def __init__(self):
         self.update()
-        self.ScaleFactor = 1
-        #Game screen size
 
-    def update(self, tick = 0, chaos = 1,  food = 1, poison = 1,
-               b1 = 1, b2 = 1, b3 = 1, numB1 = 1, numB2 = 1, numB3 = 1):
-
+    def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
+               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0,
+               numB3 = 0, mode = "large"):
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -29,7 +30,13 @@ class WorldParameters:
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
 
-    def check(self):
+        self.set_world_size(mode)
+
+    def set_world_size(self, mode):
+        MAX_WORLD_SIZE = 400
+        self.WorldSize = MAX_WORLD_SIZE // self.Scale[mode]
+
+    def __bool__(self):
         print("[LOG] Проверка параметров")
         if not 0 < self.TickUniverse < 1000:
             return False
@@ -53,6 +60,20 @@ class WorldParameters:
             return False
         print("[LOG] OK")
         return True
+
+    def print_in_log(self):
+        print(f'TickOfUniverse = {self.TickUniverse}')
+        print(f'ChaosMoment = {self.ChaosMoment}')
+        print(f'AmountOfFood = {self.AmountOfFood}')
+        print(f'AmountOfPoison = {self.AmountOfPoison}')
+        print(f'Biom1 = {self.Biom1}')
+        print(f'Biom2 = {self.Biom2}')
+        print(f'Biom3 = {self.Biom3}')
+        print(f'NumBots1 = {self.NumBots1}')
+        print(f'NumBots2 = {self.NumBots2}')
+        print(f'NumBots3 = {self.NumBots3}')
+        print(f'WorldSize = {self.WorldSize}')
+        print('\n')
 
 
 def InfoParameters():
@@ -110,7 +131,7 @@ def ParamWindow(parameters):
                           numBots1.get(),
                           numBots2.get(),
                           numBots3.get())
-        if not parameters.check():
+        if not parameters:
             messagebox.showerror("Error", "Wrong value of parameters")
 
 
@@ -121,20 +142,16 @@ def ParamWindow(parameters):
         RandValue(chaos, 1, 999)
         RandValue(food, 1, 999)
         RandValue(poison, 1, 999)
+
         RandValue(biom1, 1, 999)
         RandValue(biom2, 1, 999)
         RandValue(biom3, 1, 999)
+
         RandValue(numBots1, 1, 99)
         RandValue(numBots2, 1, 99)
         RandValue(numBots3, 1, 99)
+
         SaveParameters(parameters)
-
-
-    def ScreenChange(parameters, mode) -> None:
-        Modes = {'little': 4, 'medium': 2, 'large': 1}
-        parameters.ScaleFactor=Modes[mode]
-
-
 
 
     global COUNT, WINDOWS
@@ -168,7 +185,7 @@ def ParamWindow(parameters):
     randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 999))
 
     tkinter.Label(win, text="Биом 3:").grid(row=7, column=0, sticky='W', padx=10, pady=10)
-    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99,textvariable=4)
+    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99, textvariable=4)
     biom3.grid(row=7, column=1, padx=10)
     VidgAccord.update({biom3: parameters.Biom3})
     randBiom3 = tkinter.Button(win, text="rand", width=4)
@@ -201,41 +218,28 @@ def ParamWindow(parameters):
     buttonRandAll.grid(row=15, column=1)
     buttonRandAll.bind('<Button>', FullRandom)
 
-    buttonSave = tkinter.Button(win, text="Информация про параметры")
-    buttonSave.grid(row=15, column=3)
-    buttonSave.bind('<Button>', lambda event: InfoParameters())
+    buttonInfo = tkinter.Button(win, text="Информация про параметры")
+    buttonInfo.grid(row=15, column=3)
+    buttonInfo.bind('<Button>', lambda event: InfoParameters())
 
-    buttonLittle = tkinter.Button(win, text="Низкое")
+    buttonLittle = tkinter.Button(win, text="Маленький")
     buttonLittle.grid(row=13, column=1)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"little"))
+    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("little"))
 
-    buttonLittle = tkinter.Button(win, text="Среднее")
+    buttonLittle = tkinter.Button(win, text="Средний")
     buttonLittle.grid(row=13, column=2)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"medium"))
+    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("medium"))
 
-    buttonLittle = tkinter.Button(win, text="Высокое")
+    buttonLittle = tkinter.Button(win, text="Большой")
     buttonLittle.grid(row=13, column=3)
-    buttonLittle.bind('<Button>', lambda event: ScreenChange(parameters,"large"))
+    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("large"))
 
-    tkinter.Label(win, text="Выберите разрешение поля").grid(row=12, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Выберите размер поля").grid(row=12, column=2, sticky='W', columnspan=2)
     tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
 
     OldVariables(VidgAccord)
 
 
-def PrintParam(parameters):
-    ''' Вывести все параметры на экран (для проверки) '''
-    print(f'TickOfUniverse = {parameters.TickUniverse}')
-    print(f'chaosMoment = {parameters.ChaosMoment}')
-    print(f'amountOfFood = {parameters.AmountOfFood}')
-    print(f'amountOfPoison = {parameters.AmountOfPoison}')
-    print(f'biom1 = {parameters.Biom1}')
-    print(f'biom2 = {parameters.Biom2}')
-    print(f'biom3 = {parameters.Biom3}')
-    print(f'NumBots1 = {parameters.NumBots1}')
-    print(f'NumBots2 = {parameters.NumBots2}')
-    print(f'NumBots3 = {parameters.NumBots3}')
-    print('\n')
 
 
 def StartMenu(wPar):

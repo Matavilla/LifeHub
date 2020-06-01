@@ -3,10 +3,10 @@ import src
 
 wPar = GUI.WorldParameters()
 GUI.StartMenu(wPar)
-if not wPar.check():
+if not wPar:
     print("[ERROR]     WrongParametersWorld")
     raise SystemExit(1)
-GUI.PrintParam(wPar)
+wPar.print_in_log()
 handler = src.Handler(wPar)
-#generate world
+handler.create_world()
 GUI.StartGame(wPar, handler)
