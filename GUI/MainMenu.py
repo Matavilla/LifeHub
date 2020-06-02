@@ -14,16 +14,16 @@ class WorldParameters:
         self.update()
 
     def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
-               b1 = 0, b2 = 0, b3 = 0, numB1 = 0, numB2 = 0,
+               t_1 = 0,t_2 = 0, t_3 = 0, numB1 = 0, numB2 = 0,
                numB3 = 0, mode = "large"):
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
         self.AmountOfPoison = int(poison)
         #generation period of food and poison
-        self.Biom1 = int(b1)
-        self.Biom2 = int(b2)
-        self.Biom3 = int(b3)
+        self.T_1 = int(t_1)
+        self.T_2 = int(t_2)
+        self.T_3 = int(t_3)
 
         #start number of bots in each bioms
         self.NumBots1 = int(numB1)
@@ -46,11 +46,11 @@ class WorldParameters:
             return False
         if not 0 < self.AmountOfPoison < 1000:
             return False
-        if not 0 < self.Biom1 < 1000:
+        if not 0 < self.T_1 < 1000:
             return False
-        if not 0 < self.Biom2 < 1000:
+        if not 0 < self.T_2 < 1000:
             return False
-        if not 0 < self.Biom3 < 1000:
+        if not 0 < self.T_3 < 1000:
             return False
         if not 0 < self.NumBots1 < 100:
             return False
