@@ -30,12 +30,18 @@ def StartGame(handler):
     game.Screen.fill(pygame.Color('white'))
 
     running = True
+    tick = handler.World_par.TickUniverse
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit(0)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    tick += int(tick * 0.2) + 1
+                elif event.key == pygame.K_DOWN:
+                    tick -= int(tick * 0.3) 
         handler.RunOnTick()
         game.create_grid(handler.Map)
         pygame.display.flip()
-        clock.tick(handler.World_par.TickUniverse)
+        clock.tick(tick)
     pygame.quit()
