@@ -1,5 +1,7 @@
-import src.map as map
+import random
 
+import src.map as map
+import src.food as food
 
 class Handler:   
     def __init__(self, worldPar):
@@ -25,21 +27,26 @@ class Handler:
 #+ bot
 
     def spawn_food(self, biom, count):
+        while count:
+            x, y = random.choice(self.Map.Biom_coord[biom - 1])
+            if not self.Map.Field[x][y].is_food_here():
+                count -= 1
+                self.Map.Field[x][y].set_food(food.Food(biom))
 
 
     def RunOnTick(self):
         '''Готовит изображение для вывода'''
            
-        if not Tick % T_1:
+        if not self.Tick % self.World_par.T_1:
             count = 1
             self.spawn_food(1, count)
 
-        if not Tick % T_2:
+        if not self.Tick % self.World_par.T_2:
             count = 2
             self.spawn_food(2, count)
 
-        if not Tick % T_3:
+        if not self.Tick % self.World_par.T_3:
             count = 3
             self.spawn_food(3, count)
 
-        Tick += 1
+        self.Tick += 1
