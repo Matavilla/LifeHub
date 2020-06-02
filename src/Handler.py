@@ -29,9 +29,8 @@ class Handler:
     def spawn_food(self, biom, count):
         while count:
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
-            if not self.Map.Field[x][y].is_food_here():
-                count -= 1
-                self.Map.Field[x][y].set_food(food.Food(biom))
+            self.Map.Field[x][y].set_food(food.Food(biom))
+            count -= 1
 
 
     def RunOnTick(self):

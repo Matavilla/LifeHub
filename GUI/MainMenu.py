@@ -12,10 +12,11 @@ class WorldParameters:
 
     def __init__(self):
         self.update()
+        self.set_world_size('little')
 
     def update(self, tick = 0, chaos = 0,  food = 0, poison = 0,
                t_1 = 0,t_2 = 0, t_3 = 0, numB1 = 0, numB2 = 0,
-               numB3 = 0, mode = "large"):
+               numB3 = 0):
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -29,8 +30,6 @@ class WorldParameters:
         self.NumBots1 = int(numB1)
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
-
-        self.set_world_size(mode)
 
     def set_world_size(self, mode):
         MAX_WORLD_SIZE = 400
@@ -46,11 +45,11 @@ class WorldParameters:
             return False
         if not 0 < self.AmountOfPoison < 1000:
             return False
-        if not 0 < self.T_1 < 1000:
+        if not 0 < self.T_1 < 10:
             return False
-        if not 0 < self.T_2 < 1000:
+        if not 0 < self.T_2 < 10:
             return False
-        if not 0 < self.T_3 < 1000:
+        if not 0 < self.T_3 < 10:
             return False
         if not 0 < self.NumBots1 < 100:
             return False
@@ -66,9 +65,9 @@ class WorldParameters:
         print(f'ChaosMoment = {self.ChaosMoment}')
         print(f'AmountOfFood = {self.AmountOfFood}')
         print(f'AmountOfPoison = {self.AmountOfPoison}')
-        print(f'Biom1 = {self.T_1}')
-        print(f'Biom2 = {self.T_2}')
-        print(f'Biom3 = {self.T_3}')
+        print(f'T_1 = {self.T_1}')
+        print(f'T_2 = {self.T_2}')
+        print(f'T_3 = {self.T_3}')
         print(f'NumBots1 = {self.NumBots1}')
         print(f'NumBots2 = {self.NumBots2}')
         print(f'NumBots3 = {self.NumBots3}')
@@ -143,9 +142,9 @@ def ParamWindow(parameters):
         RandValue(food, 1, 999)
         RandValue(poison, 1, 999)
 
-        RandValue(biom1, 1, 999)
-        RandValue(biom2, 1, 999)
-        RandValue(biom3, 1, 999)
+        RandValue(biom1, 1, 9)
+        RandValue(biom2, 1, 9)
+        RandValue(biom3, 1, 9)
 
         RandValue(numBots1, 1, 99)
         RandValue(numBots2, 1, 99)
@@ -181,8 +180,8 @@ def ParamWindow(parameters):
     biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5,1,999)
     VidgAccord.update({biom1: parameters.T_1, biom2: parameters.T_2})
     # biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5)
-    randBiom1.bind('<Button>', lambda event: RandValue(biom1, 1, 999))
-    randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 999))
+    randBiom1.bind('<Button>', lambda event: RandValue(biom1, 1, 9))
+    randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 9))
 
     tkinter.Label(win, text="Биом 3:").grid(row=7, column=0, sticky='W', padx=10, pady=10)
     biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99, textvariable=4)
@@ -190,7 +189,7 @@ def ParamWindow(parameters):
     VidgAccord.update({biom3: parameters.T_3})
     randBiom3 = tkinter.Button(win, text="rand", width=4)
     randBiom3.grid(row=7, column=2, sticky='W')
-    randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 999))
+    randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 9))
 
 
     tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=3, sticky='W', columnspan=2)

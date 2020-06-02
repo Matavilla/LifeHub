@@ -10,4 +10,4 @@ class Food:
         self.set_color()
 
     def set_color(self):
-        self.color = (self.toxic_value % 41, self.food_value % 41 ,0)
+        self.color = ((self.toxic_value * 3) % 256, (self.food_value * 4) % 256, 0)
