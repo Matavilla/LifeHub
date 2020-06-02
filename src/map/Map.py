@@ -33,6 +33,7 @@ class Map:
     def __init__(self, size):
         self.Size = size
         self.Field = [[None for x in range(size)] for y in range(size)]
+        self.Biom_Coord = [[], [], []]
 
     def generate(self):
         REGULARITY_CELL = 2
@@ -48,6 +49,7 @@ class Map:
                     biom += 1
                 if y == bound2:
                     biom += 1
+                self.Biom_Coord[biom - 1].append((x, y))
                 self.Field[x][y] = MapCell(biom)
             if not reg:
                 if smoothing:
