@@ -9,4 +9,4 @@ if not wPar:
 wPar.print_in_log()
 handler = src.Handler(wPar)
 handler.create_world()
-GUI.StartGame(wPar, handler)
+GUI.StartGame(handler)
