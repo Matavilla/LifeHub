@@ -9,7 +9,7 @@ class Bot:
         self.set_color()
         self.WasChecked = False
         self.Dna = dna.Dna(biom)
-        self.TimeSpeed = 10 - (self.Dna.get("speed") - 1)
+        self.TimeSpeed = 11 - self.Dna.get("speed") # amount of ticks for one move
 
     def set_color(self):
         self.Color = ((self.Bot_value * 3) % 256, (self.Bot_value * 4) % 256, 100)

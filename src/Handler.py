@@ -1,5 +1,4 @@
 import random
-
 import src.map as map
 import src.food as food
 import src.bot as bot
@@ -72,7 +71,7 @@ class Handler:
 		speed = bot.Dna.get("speed")
 		if bot.TimeSpeed > 0:
 			return
-		self.Map.Field[x][y].Bot_ref.TimeSpeed = 10 - (speed - 1)
+		self.Map.Field[x][y].Bot_ref.TimeSpeed = 11 - speed
 		dx, dy = 0, 0
 		direction = random.randint(1,8)
 		if direction == 1:
@@ -96,8 +95,6 @@ class Handler:
 			dx = 0
 		if y + dy >= self.Map.Size or y + dy < 0:
 			dy = 0
-
-		#cell = self.Map.Field[x + dx][y + dy]
 
 		if self.Map.Field[x + dx][y + dy].Biom == bot.Dna.Biom and\
 		   not self.Map.Field[x + dx][y + dy].is_bot_here() and\

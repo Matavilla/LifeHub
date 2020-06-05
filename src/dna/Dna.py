@@ -6,7 +6,6 @@ class Dna(GenAlgo):
     Value_names = ["life", "speed", "sensity", 
                    "size", "agression", "armor"] #names - speed...
 
-
     def __init__(self, biom):
         self.Biom = biom
         self.Gens = array.array('H')
