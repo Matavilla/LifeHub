@@ -7,7 +7,7 @@ class Dna(GenAlgo):
 
     def __init__(self):
         self.gens = array.array('H')
-        seld.index = dict()
+        self.index = dict()
 #need to init value - may be use random + bounds
         for i in value_names:
             self.set_value(i, random.randint(0, 65535))
