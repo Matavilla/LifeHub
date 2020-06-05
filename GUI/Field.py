@@ -6,25 +6,26 @@ from pygame.locals import *
 
 
 class Field:
-    '''Отрисовка карты и объектов'''
-    def __init__(self, 
-                caption: str,
-                width: int, 
-                height: int, 
-                back_image_filename: str) -> None:
-        self.Width = width
-        self.Height = height
-        self.BackgroundImage = pygame.image.load(back_image_filename)
-        # Создание нового окна
-        pygame.display.set_caption(caption)
-        self.Screen = pygame.display.set_mode((width, height))
+# <<<<<<< HEAD
+#     '''Отрисовка карты и объектов'''
+#     def __init__(self, 
+#                 caption: str,
+#                 width: int, 
+#                 height: int, 
+#                 back_image_filename: str) -> None:
+#         self.Width = width
+#         self.Height = height
+#         self.BackgroundImage = pygame.image.load(back_image_filename)
+#         # Создание нового окна
+#         pygame.display.set_caption(caption)
+#         self.Screen = pygame.display.set_mode((width, height))
 
-    def draw_map(self, map_):
-        self.Screen.blit(self.BackgroundImage, (0, 0))
-        for objects in map_:
-            for obj in objects:
-                if obj.Alive:
-                    pygame.draw.rect(self.Screen, obj.Color, obj.Bounds)
+#     def draw_map(self, map_):
+#         self.Screen.blit(self.BackgroundImage, (0, 0))
+#         for objects in map_:
+#             for obj in objects:
+#                 if obj.Alive:
+#                     pygame.draw.rect(self.Screen, obj.Color, obj.Bounds)
 
 
     # def create_grid(self, Map=None, randomize: bool = True) -> None:
@@ -39,6 +40,23 @@ class Field:
     #         for wei in range(self.CellWidthAmount):
     #             Rect = (wei * self.CellSize, hei * self.CellSize, self.CellSize, self.CellSize)
     #             pygame.draw.rect(self.Screen, get_color(Map[hei][wei]), Rect)
+#=======
+    def __init__(self, w: int, h: int, world_size: int) -> None:
+        self.LengthWindow = min((3 * w) // 4, (3 * h) // 4)
+        self.LengthWindow -= self.LengthWindow % world_size
+        self.CellSize = self.LengthWindow // world_size
+        
+        pygame.display.set_caption('LifeHub')
+        self.Screen = pygame.display.set_mode((self.LengthWindow, self.LengthWindow))
+
+
+    def create_grid(self, Map) -> None:
+        for y in range(Map.Size):
+            for x in range(Map.Size):
+                Rect = (x * self.CellSize, y * self.CellSize, self.CellSize, self.CellSize)
+                color = pygame.Color(*(Map.Field[x][y].get_color()))
+                pygame.draw.rect(self.Screen, color, Rect)
+#>>>>>>> master
                 # pygame.draw.rect(Inform.screen, pygame.Color("Red"), Rect)
 
 
@@ -52,41 +70,57 @@ class Field:
 #     return Colors[param]
 
 
-def CellSize(weight: int, scale: int) -> int:
-    cells=400 // scale
-    return weight // cells
+# <<<<<<< HEAD
+# def CellSize(weight: int, scale: int) -> int:
+#     cells=400 // scale
+#     return weight // cells
 
 
-def ScreenFix(scr_param: list,cell_size: int)-> list:
-    return [(scr_param[0] // cell_size) * cell_size,(scr_param[1] // cell_size) * cell_size]
+# def ScreenFix(scr_param: list,cell_size: int)-> list:
+#     return [(scr_param[0] // cell_size) * cell_size,(scr_param[1] // cell_size) * cell_size]
 
+# =======
+# >>>>>>> master
 
 def StartGame(wPar, handler):
     pygame.init()
     clock = pygame.time.Clock()
 
-    background_image = 'images/background.png'
+# <<<<<<< HEAD
+#     background_image = 'images/background.png'
+#     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
+#     cell = CellSize(w // 2, wPar.ScaleFactor)
+#     w, h = ScreenFix([w // 2, h // 2], cell)
+#     field = Field('LifeHub',w, h, background_image)
+#     wPar.Width = w
+#     wPar.Height = h
+#     wPar.CellSize = cell
+#     handler.generate_objects(wPar)
+
+#     #game.Screen.fill(pygame.Color('white'))
+
+# =======
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
-    cell = CellSize(w // 2, wPar.ScaleFactor)
-    w, h = ScreenFix([w // 2, h // 2], cell)
-    field = Field('LifeHub',w, h, background_image)
-    wPar.Width = w
-    wPar.Height = h
-    wPar.CellSize = cell
-    handler.generate_objects(wPar)
+    game = Field(w, h, wPar.WorldSize)
 
-    #game.Screen.fill(pygame.Color('white'))
-
+    game.Screen.fill(pygame.Color('white'))
+#>>>>>>> master
 
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit(0)
-        # Display surface updating. We can use display.update() to update only a portion of a screen
-        handler_map = handler.run_on_tick()
-        field.draw_map(handler_map)
-        pygame.display.update()
-        # Limiting runtime speed of the game
+# <<<<<<< HEAD
+#         # Display surface updating. We can use display.update() to update only a portion of a screen
+#         handler_map = handler.run_on_tick()
+#         field.draw_map(handler_map)
+#         pygame.display.update()
+#         # Limiting runtime speed of the game
+# =======
+        # handler.RunOnTick()
+        game.create_grid(handler.Map)
+        pygame.display.flip()
+#>>>>>>> master
         clock.tick(wPar.TickUniverse)
     pygame.quit()
