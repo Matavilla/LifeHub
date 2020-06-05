@@ -78,10 +78,12 @@ class WorldParameters:
 def InfoParameters():
     messagebox.showinfo("Information", "BLA BLA BLA")
 
+
 def CloseWindow(win):
     global COUNT
     COUNT = 0
     win.destroy()
+
 
 def CloseAllWindow():
     global WINDOWS
