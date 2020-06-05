@@ -11,9 +11,9 @@ class MapCell:
 
     def get_color(self):
         if self.is_bot_here():
-            return self.Bot_ref.color
+            return self.Bot_ref.Color
         if self.is_food_here():
-            return self.Food_ref.color
+            return self.Food_ref.Color
         return self.Biom_color[self.Biom]
 
     def set_bot(self, bot):
@@ -33,6 +33,7 @@ class Map:
     def __init__(self, size):
         self.Size = size
         self.Field = [[None for x in range(size)] for y in range(size)]
+        self.Biom_coord = [[], [], []]
 
     def generate(self):
         REGULARITY_CELL = 2
@@ -48,6 +49,7 @@ class Map:
                     biom += 1
                 if y == bound2:
                     biom += 1
+                self.Biom_coord[biom - 1].append((x, y))
                 self.Field[x][y] = MapCell(biom)
             if not reg:
                 if smoothing:
@@ -66,3 +68,6 @@ class Map:
             bound1 += dx1
             bound2 += dx2
             reg -= 1
+        random.shuffle(self.Biom_coord[0])
+        random.shuffle(self.Biom_coord[1])
+        random.shuffle(self.Biom_coord[2])
