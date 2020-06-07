@@ -2,7 +2,9 @@ import random
 
 class MapCell:
 #1 - north, 2 - mid, 3 - south
-    Biom_color = {1 : (102, 205, 170), 2 : (152, 251, 152), 3 : (255, 222, 173)} 
+    Biom_color = {1 : (102, 205, 170), 
+                  2 : (152, 251, 152), 
+                  3 : (255, 222, 173)} 
 
     def __init__(self, num_biom):
         self.Biom = num_biom

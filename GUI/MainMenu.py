@@ -94,8 +94,11 @@ def CloseAllWindow():
 def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     ''' Вспомогательная функция добавления строки
         таблицы в окно с параметрами.
-        -> 2 spin бокса и 2 кнопки'''
-    tkinter.Label(win, text=_text1).grid(row=_row, column=0, sticky='W', padx=10, pady=10)
+        -> 2 spin бокса и 2 кнопки
+
+    '''
+    tkinter.Label(win, text=_text1).grid(row=_row, column=0, sticky='W', 
+                                         padx=10, pady=10)
     winParam1 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
     winParam1.grid(row=_row, column=1, padx=10)
     randButton1 = tkinter.Button(win, text="rand", width=4)
@@ -105,7 +108,9 @@ def AddStrOfTable(win, _text1, _text2, _row, _from = 1, _to = 99):
     winParam2.grid(row=_row, column=4, sticky='W', padx=10)
     randButton2 = tkinter.Button(win, text="rand", width=4)
     randButton2.grid(row=_row, column=5, sticky='W')
-    tkinter.Label(win, text= "").grid(row=_row, column=6, sticky='W', padx=10, pady=10) #I KNOW IT IS BAD, I WILL FIX IT LATER
+    #I KNOW IT IS BAD, I WILL FIX IT LATER
+    tkinter.Label(win, text= "").grid(row=_row, column=6, sticky='W', 
+                                      padx=10, pady=10)
     return winParam1, winParam2, randButton1, randButton2
 
 
