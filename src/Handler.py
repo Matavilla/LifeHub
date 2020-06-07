@@ -62,17 +62,18 @@ class Handler:
         self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
         bot = self.Map.Field[x][y].Bot_ref
+        biom = self.Map.Field[x][y].Biom
 
-        if Map.Field[x][y].Biom == 1:
-            damage = 1 - bot.Dna.get("weather_resistanse_1") / 255
-        elif Map.Field[x][y].Biom == 2:
-            damage = 1 - bot.Dna.get("weather_resistanse_2") / 255
-        elif Map.Field[x][y].Biom == 3:
-            damage = 1 - bot.Dna.get("weather_resistanse_3") / 255
+        if biom == 1:
+            damage = 1 - bot.Dna.get("weather_resistance_1") / 255
+        elif biom == 2:
+            damage = 1 - bot.Dna.get("weather_resistance_2") / 255
+        elif biom == 3:
+            damage = 1 - bot.Dna.get("weather_resistance_3") / 255
 
         self.Map.Field[x][y].Bot_ref.Life -= damage
         speed = bot.Dna.get("speed") // 52
-        
+
         if bot.Life < 0:
             self.BotCoordinates.pop(i)
             self.Map.Field[x][y].Bot_ref = None
