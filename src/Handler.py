@@ -63,6 +63,8 @@ class Handler:
 
             self.actions_of_bot(i, x, y)
 
+            print(f"Ticks = {self.Tick}")
+
     def actions_of_bot(self, i, x, y):
         self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
