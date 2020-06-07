@@ -9,8 +9,8 @@ class Bot:
                       2 : (176, 163, 42), 
                       3 : (173, 50, 58)}
 
-    Abs_dir = [(-1, -1), (0, -1), (1, -1), (1, 0), 
-               (1, 1),   (0, 1),  (-1, 1), (-1, 0)]
+    Bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0), 
+                (1, 1),   (0, 1),  (-1, 1), (-1, 0)]
 
     def __init__(self, biom):
         self.Dna = dna.Dna(biom)
@@ -56,7 +56,7 @@ class Bot:
             action = "check"
         else:
             action = None
-        dx, dy = self.Abs_dir[(curr_command + self.Curr_direction - 1) % 8]
+        dx, dy = self.Bias_dir[(curr_command + self.Curr_direction - 1) % 8]
         return dx, dy, action
 
 
