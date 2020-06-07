@@ -1,6 +1,6 @@
-from src.dna.Algo import GenAlgo
 import random
 import array
+from src.dna.Algo import GenAlgo
 
 class Dna(GenAlgo):
     Value_names = ["speed", "sensity", "power", 
@@ -9,7 +9,7 @@ class Dna(GenAlgo):
 
     def __init__(self, biom):
         self.Biom = biom
-        self.Gens = array.array('h')
+        self.Gens = array.array('B')
         self.Index = dict()
 #need to init value - may be use random + bounds
         if biom == 1:
