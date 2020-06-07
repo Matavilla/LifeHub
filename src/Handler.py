@@ -150,15 +150,15 @@ class Handler:
     def RunOnTick(self):
         '''Готовит изображение для вывода'''
         if not self.Tick % self.World_par.T_1:
-          count = 1
+          count = 3
           self.spawn_food(1, count)
 
         if not self.Tick % self.World_par.T_2:
-          count = 2
+          count = 4
           self.spawn_food(2, count)
 
         if not self.Tick % self.World_par.T_3:
-          count = 3
+          count = 5
           self.spawn_food(3, count)
 
         self.actions_of_bots()
