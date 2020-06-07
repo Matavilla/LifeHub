@@ -56,6 +56,10 @@ class Handler:
 
     def actions_of_bots(self):
         for i, (x, y) in enumerate(self.BotCoordinates):
+            # output all info
+            print(f"Coordinates: x = {x}, y = {y}")
+            self.Map.Field[x][y].Bot_ref.print_info()
+
             self.actions_of_bot(i, x, y)
 
     def actions_of_bot(self, i, x, y):
