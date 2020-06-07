@@ -94,7 +94,9 @@ class Handler:
     def action(self, i, x, y, dx, dy, action):
         bot = self.Map.Field[x][y].Bot_ref
         cell = self.Map.Field[x + dx][y + dy]
-        if self.Map.Field[x][y].Biom != self.Map.Field[x + dx][y + dy].Biom:
+
+        if self.Tick < self.World_par.ChaosMoment and \
+           self.Map.Field[x][y].Biom != self.Map.Field[x + dx][y + dy].Biom:
             self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai + 
                                                           2) % 64
             return
