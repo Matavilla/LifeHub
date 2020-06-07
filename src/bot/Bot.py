@@ -17,7 +17,7 @@ class Bot:
         self.Ai = AI()
         self.Curr_direction = 1
         self.Pointer_of_ai = 0
-        self.Life = 255
+        self.Life = 300
         self.set_color()
         # amount of ticks for one move
         self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
