@@ -4,7 +4,8 @@ from src.dna.Algo import GenAlgo
 
 class Dna(GenAlgo):
     Value_names = ["speed", "sensity", "power", 
-                   "agression", "armor", "weather_resistance",
+                   "agression", "armor", "weather_resistance_1",
+                   "weather_resistance_2", "weather_resistance_3"
                    "poison_vulnerability"] #names - speed...
 
     def __init__(self, biom):
@@ -18,7 +19,9 @@ class Dna(GenAlgo):
             self.set_value("power", random.randint(120, 150))
             self.set_value("agression", random.randint(127, 153))
             self.set_value("armor", random.randint(127, 178))
-            self.set_value("weather_resistance", random.randint(127, 178))
+            self.set_value("weather_resistance_1", 255)
+            self.set_value("weather_resistance_2", 127)
+            self.set_value("weather_resistance_3", 0)
             self.set_value("poison_vulnerability", random.randint(127, 178))
         elif biom == 2:
             self.set_value("speed", random.randint(52, 155))
@@ -26,7 +29,9 @@ class Dna(GenAlgo):
             self.set_value("power", random.randint(50, 70))
             self.set_value("agression", random.randint(63, 102))
             self.set_value("armor", random.randint(63, 102))
-            self.set_value("weather_resistance", random.randint(63, 102))
+            self.set_value("weather_resistance_1", 127)
+            self.set_value("weather_resistance_2", 255)
+            self.set_value("weather_resistance_3", 127)
             self.set_value("poison_vulnerability", random.randint(63, 102))
         elif biom == 3:
             self.set_value("speed", random.randint(104, 255))
@@ -34,7 +39,9 @@ class Dna(GenAlgo):
             self.set_value("power", random.randint(30, 50))
             self.set_value("agression", random.randint(12, 25))
             self.set_value("armor", random.randint(12, 38))
-            self.set_value("weather_resistance", random.randint(12, 38))
+            self.set_value("weather_resistance_1", 0)
+            self.set_value("weather_resistance_2", 127)
+            self.set_value("weather_resistance_3", 255)
             self.set_value("poison_vulnerability", random.randint(12, 38))
 
     def set_value(self, name, value):
