@@ -35,7 +35,7 @@ class Dna(GenAlgo):
             self.set_value("poison_vulnerability", random.randint(63, 102))
         elif biom == 3:
             self.set_value("speed", random.randint(104, 255))
-            self.set_value("sensity", 255)
+            self.set_value("sensity", 200)
             self.set_value("power", random.randint(30, 50))
             self.set_value("agression", random.randint(12, 25))
             self.set_value("armor", random.randint(12, 38))
