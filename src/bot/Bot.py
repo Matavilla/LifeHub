@@ -1,6 +1,7 @@
 import random
-import src.dna as dna
 import array
+import src.dna as dna
+from src.dna.Algo import GenAlgo
 
 
 class Bot:
@@ -59,12 +60,12 @@ class Bot:
         return dx, dy, action
 
 
-class AI:
+class AI(GenAlgo):
     """ Bot artificial intelligence
 
     """
     def __init__(self):
-        self.Gens = array.array('h')
+        self.Gens = array.array('B')
         self.set_ai()
        
     def set_ai(self):
