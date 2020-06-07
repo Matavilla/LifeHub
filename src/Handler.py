@@ -56,59 +56,109 @@ class Handler:
 
     def actions_of_bots(self):
         for i, (x, y) in enumerate(self.BotCoordinates):
-            self.random_move(i, x, y)
+            # output all info
+            print(f"Number of bots = {len(self.BotCoordinates)}")
+            print(f"Coordinates: x = {x}, y = {y}")
+            self.Map.Field[x][y].Bot_ref.print_info()
 
-    def random_move(self, index, x, y):
+            self.actions_of_bot(i, x, y)
+
+            print(f"Ticks = {self.Tick}")
+
+    def actions_of_bot(self, i, x, y):
+        self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
         bot = self.Map.Field[x][y].Bot_ref
-        speed = bot.Dna.get("speed")
+        biom = self.Map.Field[x][y].Biom
+
+        if biom == 1:
+            damage = 1 - bot.Dna.get("weather_resistance_1") / 255
+        elif biom == 2:
+            damage = 1 - bot.Dna.get("weather_resistance_2") / 255
+        elif biom == 3:
+            damage = 1 - bot.Dna.get("weather_resistance_3") / 255
+
+        self.Map.Field[x][y].Bot_ref.Life -= damage
+        speed = bot.Dna.get("speed") // 52
+
+        if bot.Life < 0:
+            self.BotCoordinates.pop(i)
+            self.Map.Field[x][y].Bot_ref = None
+            return
         if bot.TimeSpeed > 0:
             return
-        self.Map.Field[x][y].Bot_ref.TimeSpeed = 11 - speed
-        dx, dy = 0, 0
-        direction = random.randint(1,8)
-        if direction == 1:
-            dx, dy = -1, 1
-        elif direction == 2:
-            dx, dy = 0, 1
-        elif direction == 3:
-            dx, dy = 1, 1
-        elif direction == 4:
-            dx, dy = 1, 0
-        elif direction == 5:
-            dx, dy = 1, -1
-        elif direction == 6:
-            dx, dy = 0, -1
-        elif direction == 7:
-            dx, dy = -1, -1
-        elif direction == 8:
-            dx, dy = -1, 0
+        self.Map.Field[x][y].Bot_ref.TimeSpeed = 5 - speed
 
+        dx, dy, action = self.Map.Field[x][y].Bot_ref.get_dir_and_action()
         if x + dx >= self.Map.Size or x + dx < 0:
             dx = 0
         if y + dy >= self.Map.Size or y + dy < 0:
             dy = 0
 
-        if self.Map.Field[x + dx][y + dy].Biom == bot.Dna.Biom and\
-           not self.Map.Field[x + dx][y + dy].is_bot_here() and\
-           not self.Map.Field[x + dx][y + dy].is_food_here():
-            self.Map.Field[x][y].set_bot(self.Map.Field[x + dx][y + dy].Bot_ref)
-            self.Map.Field[x + dx][y + dy].set_bot(bot)
-            self.Map.Field[x + dx][y + dy].Bot_ref.WasChecked = True
-            self.BotCoordinates[index] = (x + dx, y + dy)
+        if (dx != 0 or dy != 0) and action:
+            self.action(i, x, y, dx, dy, action)
+
+    def action(self, i, x, y, dx, dy, action):
+        bot = self.Map.Field[x][y].Bot_ref
+        cell = self.Map.Field[x + dx][y + dy]
+
+        if self.Tick < self.World_par.ChaosMoment and \
+           self.Map.Field[x][y].Biom != self.Map.Field[x + dx][y + dy].Biom:
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai + 
+                                                          2) % 64
+            return
+
+        if cell.is_bot_here():
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai + 
+                                                          3) % 64
+            if action == "attack":
+                agr = random.randint(1, 255)
+                if agr <= bot.Dna.get("agression"):
+                    armor = cell.Bot_ref.Dna.get("armor") / 255
+                    self.Map.Field[x + dx][y + dy].Bot_ref.Life -= \
+                                                        (1 - armor) * \
+                                                        bot.Dna.get("power")
+        elif cell.is_food_here():
+            f = cell.Food_ref
+            bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
+                                (bot.Pointer_of_ai + 4) % 64
+            if action == "move":
+                vulnerability = bot.Dna.get("poison_vulnerability") / 255
+                damage_from_poison = f.Toxic_value * (1 - vulnerability)
+                if f.Food_value < damage_from_poison:
+                    sens = random.randint(1, 255)
+                    if sens > bot.Dna.get("sensity"):
+                        bot.Life -= damage_from_poison - f.Food_value
+                        self.Map.Field[x + dx][y + dy].set_bot(bot)
+                        self.Map.Field[x + dx][y + dy].Food_ref = None
+                        self.Map.Field[x][y].Bot_ref = None
+                        self.BotCoordinates[i] = (x + dx, y + dy)
+                else:
+                    bot.Life += f.Food_value - damage_from_poison
+                    self.Map.Field[x + dx][y + dy].set_bot(bot)
+                    self.Map.Field[x + dx][y + dy].Food_ref = None
+                    self.Map.Field[x][y].Bot_ref = None
+                    self.BotCoordinates[i] = (x + dx, y + dy)
+        else:
+            bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
+                                (bot.Pointer_of_ai + 5) % 64
+            if action == "move":
+                self.Map.Field[x + dx][y + dy].set_bot(bot)
+                self.Map.Field[x][y].Bot_ref = None
+                self.BotCoordinates[i] = (x + dx, y + dy)
 
     def RunOnTick(self):
         '''Готовит изображение для вывода'''
         if not self.Tick % self.World_par.T_1:
-          count = 1
+          count = 3
           self.spawn_food(1, count)
 
         if not self.Tick % self.World_par.T_2:
-          count = 2
+          count = 4
           self.spawn_food(2, count)
 
         if not self.Tick % self.World_par.T_3:
-          count = 3
+          count = 5
           self.spawn_food(3, count)
 
         self.actions_of_bots()

@@ -1,34 +1,48 @@
-from src.dna.Algo import GenAlgo
 import random
 import array
+from src.dna.Algo import GenAlgo
 
 class Dna(GenAlgo):
-    Value_names = ["life", "speed", "sensity", 
-                   "size", "agression", "armor"] #names - speed...
+    Value_names = ["speed", "sensity", "power", 
+                   "agression", "armor", "weather_resistance_1",
+                   "weather_resistance_2", "weather_resistance_3"
+                   "poison_vulnerability"] #names - speed...
 
     def __init__(self, biom):
         self.Biom = biom
-        self.Gens = array.array('H')
+        self.Gens = array.array('B')
         self.Index = dict()
 #need to init value - may be use random + bounds
         if biom == 1:
-            self.set_value("life", random.randint(90, 100))
-            self.set_value("speed", random.randint(1, 4))
-            self.set_value("sensity", random.randint(5, 7))
-            self.set_value("agression", random.randint(50, 60))
-            self.set_value("armor", random.randint(50, 60))
+            self.set_value("speed", random.randint(0, 103))
+            self.set_value("sensity", random.randint(25, 76))
+            self.set_value("power", random.randint(120, 150))
+            self.set_value("agression", random.randint(127, 153))
+            self.set_value("armor", random.randint(127, 178))
+            self.set_value("weather_resistance_1", 255)
+            self.set_value("weather_resistance_2", 127)
+            self.set_value("weather_resistance_3", 0)
+            self.set_value("poison_vulnerability", random.randint(127, 178))
         elif biom == 2:
-            self.set_value("life", random.randint(80, 90))
-            self.set_value("speed", random.randint(4, 8))
-            self.set_value("sensity", random.randint(3, 5))
-            self.set_value("agression", random.randint(25, 40))
-            self.set_value("armor", random.randint(30, 40))
+            self.set_value("speed", random.randint(52, 155))
+            self.set_value("sensity", random.randint(127, 153))
+            self.set_value("power", random.randint(50, 70))
+            self.set_value("agression", random.randint(63, 102))
+            self.set_value("armor", random.randint(63, 102))
+            self.set_value("weather_resistance_1", 127)
+            self.set_value("weather_resistance_2", 255)
+            self.set_value("weather_resistance_3", 127)
+            self.set_value("poison_vulnerability", random.randint(63, 102))
         elif biom == 3:
-            self.set_value("life", random.randint(70, 80))
-            self.set_value("speed", random.randint(8, 10))
-            self.set_value("sensity", random.randint(1, 3))
-            self.set_value("agression", random.randint(5, 10))
-            self.set_value("armor", random.randint(10, 15))
+            self.set_value("speed", random.randint(104, 255))
+            self.set_value("sensity", 200)
+            self.set_value("power", random.randint(30, 50))
+            self.set_value("agression", random.randint(12, 25))
+            self.set_value("armor", random.randint(12, 38))
+            self.set_value("weather_resistance_1", 0)
+            self.set_value("weather_resistance_2", 127)
+            self.set_value("weather_resistance_3", 255)
+            self.set_value("poison_vulnerability", random.randint(12, 38))
 
     def set_value(self, name, value):
         self.Gens.append(value)
@@ -36,5 +50,17 @@ class Dna(GenAlgo):
 
     def get(self, name):
         return self.Gens[self.Index[name]]
-    
+
+    def print_info(self):
+        print("Biom = " + str(self.Biom))
+        print("Gens Dna: ")
+        print("\tspeed = " + str(self.get("speed")))
+        print("\tsensity = " + str(self.get("sensity")))
+        print("\tpower = " + str(self.get("power")))
+        print("\tagression = " + str(self.get("agression")))
+        print("\tarmor = " + str(self.get("armor")))
+        print("\tweather_resistance_1 = " + str(self.get("weather_resistance_1")))
+        print("\tweather_resistance_2 = " + str(self.get("weather_resistance_2")))
+        print("\tweather_resistance_3 = " + str(self.get("weather_resistance_3")))
+        print("\tpoison_vulnerability = " + str(self.get("poison_vulnerability")))
 
