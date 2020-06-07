@@ -50,5 +50,17 @@ class Dna(GenAlgo):
 
     def get(self, name):
         return self.Gens[self.Index[name]]
-    
+
+    def print_info(self):
+        print("Biom = " + str(self.Biom))
+        print("Gens Dna: ")
+        print("\tspeed = " + str(self.get("speed")))
+        print("\tsensity = " + str(self.get("sensity")))
+        print("\tpower = " + str(self.get("power")))
+        print("\tagression = " + str(self.get("agression")))
+        print("\tarmor = " + str(self.get("armor")))
+        print("\tweather_resistance_1 = " + str(self.get("weather_resistance_1")))
+        print("\tweather_resistance_2 = " + str(self.get("weather_resistance_2")))
+        print("\tweather_resistance_3 = " + str(self.get("weather_resistance_3")))
+        print("\tpoison_vulnerability = " + str(self.get("poison_vulnerability")))
 
