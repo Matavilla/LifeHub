@@ -17,27 +17,27 @@ class Bot:
         self.Ai = AI()
         self.Curr_direction = 1
         self.Pointer_of_ai = 0
-        self.Life = 300
+        self.Life = 255
         self.set_color()
         # amount of ticks for one move
-        self.TimeSpeed = 6 - self.Dna.get("speed")
+        self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
 
     def set_color(self):
         self.Color = self.Biom_bot_color[self.Dna.Biom]
 
     def get_dir_and_action(self):
-        """ 0..7 - move
-            8..15 - attack
-            16..23 - check
-            24..31 - rotate
-            32..63 - jump
+        """ 0..31 - move
+            32..63 - attack
+            64..95 - check
+            96..127 - rotate
+            128..255 - jump
 
         """
         curr_command = self.Ai.Gens[self.Pointer_of_ai]
         dx, dy, action = 0, 0, None
-        count = 10
-        while 24 <= curr_command <= 63 and count:
-            if 24 <= curr_command <= 31:
+        max_num_of_actions = 10
+        while 96 <= curr_command <= 255 and max_num_of_actions:
+            if 96 <= curr_command <= 127:
                 action = "rotate"
                 self.Curr_direction = (curr_command + 
                                        self.Curr_direction -
@@ -46,13 +46,13 @@ class Bot:
             else:
                 self.Pointer_of_ai = (self.Pointer_of_ai + curr_command) % 64
             curr_command = self.Ai.Gens[self.Pointer_of_ai]
-            count -= 1
+            max_num_of_actions -= 1
 
-        if 0 <= curr_command <= 7:
+        if 0 <= curr_command <= 31:
             action = "move"
-        elif 8 <= curr_command <= 15:
+        elif 32 <= curr_command <= 63:
             action = "attack"
-        elif 16 <= curr_command <= 23:
+        elif 64 <= curr_command <= 95:
             action = "check"
         else:
             action = None
@@ -70,5 +70,5 @@ class AI(GenAlgo):
        
     def set_ai(self):
         for i in range(64):
-            self.Gens.append(random.randint(0, 63))
+            self.Gens.append(random.randint(0, 255))
 
