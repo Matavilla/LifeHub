@@ -59,6 +59,14 @@ class Bot:
         dx, dy = self.Bias_dir[(curr_command + self.Curr_direction - 1) % 8]
         return dx, dy, action
 
+    def print_info(self):
+        print("Curr_direction = " + str(self.Curr_direction))
+        print("Pointer_of_ai  = " + str(self.Pointer_of_ai))
+        print("Life  = " + str(self.Life))
+        self.Dna.print_info()
+        self.Ai.print_info()
+        print("\n\n")
+
 
 class AI(GenAlgo):
     """ Bot artificial intelligence
@@ -72,3 +80,8 @@ class AI(GenAlgo):
         for i in range(64):
             self.Gens.append(random.randint(0, 255))
 
+    def print_info(self):
+        print("Gens AI:")
+        for i in self.Gens:
+            print(i, end=" ")
+        print('\n')
