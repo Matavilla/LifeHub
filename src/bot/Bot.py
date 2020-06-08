@@ -79,7 +79,7 @@ class Bot:
         print("Pointer_of_ai  = " + str(self.Pointer_of_ai))
         print("Life  = " + str(self.Life))
         self.Dna.print_info()
-        # self.Ai.print_info()
+        self.Ai.print_info()
         print("\n\n")
 
     def get_adaptation_value(self):

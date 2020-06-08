@@ -52,7 +52,7 @@ class Handler:
             count -= 1
 
     def spawn_bots(self, biom, count):
-        if len(self.BotPopulation[biom - 1] != count) {
+        if len(self.BotPopulation[biom - 1] != count):
                 count -= len(self.BotPopulation[biom - 1])
                 while count:
                     self.BotPopulation[biom - 1].append(bot.Bot(biom))

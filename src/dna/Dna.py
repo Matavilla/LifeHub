@@ -1,7 +1,7 @@
 import random
 import array
 
-class Dna(GenAlgo):
+class Dna:
     Value_names = ["speed", "sensity", "power",
                    "agression", "armor", "weather_resistance_1",
                    "weather_resistance_2", "weather_resistance_3",
@@ -11,7 +11,6 @@ class Dna(GenAlgo):
         self.Biom = biom
         self.Gens = array.array('B')
         self.Index = dict()
-        # need to init value - may be use random + bounds
         if biom == 1:
             self.set_value("speed", random.randint(0, 103))
             self.set_value("sensity", random.randint(25, 76))
