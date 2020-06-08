@@ -125,20 +125,15 @@ class Handler:
             if action == "move":
                 vulnerability = bot.Dna.get("poison_vulnerability") / 255
                 damage_from_poison = f.Toxic_value * (1 - vulnerability)
-                if f.Food_value < damage_from_poison:
-                    sens = random.randint(1, 255)
-                    if sens > bot.Dna.get("sensity"):
-                        bot.Life -= damage_from_poison - f.Food_value
-                        self.Map.Field[x + dx][y + dy].set_bot(bot)
-                        self.Map.Field[x + dx][y + dy].Food_ref = None
-                        self.Map.Field[x][y].Bot_ref = None
-                        self.BotCoordinates[i] = (x + dx, y + dy)
+                sens = random.randint(1, 255)
+                if sens <= bot.Dna.get("sensity"):
+                    bot.Life += f.Food_value + f.Toxic_value
                 else:
                     bot.Life += f.Food_value - damage_from_poison
-                    self.Map.Field[x + dx][y + dy].set_bot(bot)
-                    self.Map.Field[x + dx][y + dy].Food_ref = None
-                    self.Map.Field[x][y].Bot_ref = None
-                    self.BotCoordinates[i] = (x + dx, y + dy)
+                self.Map.Field[x + dx][y + dy].set_bot(bot)
+                self.Map.Field[x + dx][y + dy].Food_ref = None
+                self.Map.Field[x][y].Bot_ref = None
+                self.BotCoordinates[i] = (x + dx, y + dy)
         else:
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
                                 (bot.Pointer_of_ai + 5) % 64
