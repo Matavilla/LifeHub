@@ -1,7 +1,6 @@
 import random
 import array
 import src.dna as dna
-from src.dna.Algo import GenAlgo
 
 
 class Bot:
@@ -82,7 +81,7 @@ class Bot:
         print("\n\n")
 
 
-class AI(GenAlgo):
+class AI:
     """ Bot artificial intelligence
 
     """

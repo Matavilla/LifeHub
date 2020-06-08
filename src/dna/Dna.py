@@ -1,7 +1,5 @@
 import random
 import array
-from .Algo import GenAlgo
-
 
 class Dna(GenAlgo):
     Value_names = ["speed", "sensity", "power",
