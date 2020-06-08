@@ -47,15 +47,18 @@ class Handler:
             count -= 1
 
     def spawn_bots(self, biom, count):
-        while count:
+        if len(self.BotPopulation[biom - 1] != count) {
+                count -= len(self.BotPopulation[biom - 1])
+                while count:
+                    self.BotPopulation[biom - 1].append(bot.Bot(biom))
+                    count -= 1
+        for i in range(len(self.BotPopulation[biom - 1])):        
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
             while self.Map.Field[x][y].is_bot_here()\
                     or self.Map.Field[x][y].is_food_here():
                 x, y = random.choice(self.Map.Biom_coord[biom - 1])
-            self.Map.Field[x][y].set_bot(bot.Bot(biom))
+            self.Map.Field[x][y].set_bot(self.BotPopulation[biom - 1][i])
             self.BotCoordinates[biom - 1].append((x, y))
-            self.BotPopulation[biom - 1].append(self.Map.Field[x][y].Bot_ref)
-            count -= 1
 
     def actions_of_bots(self):
         for j in range(2):
