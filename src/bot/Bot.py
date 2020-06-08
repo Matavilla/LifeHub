@@ -83,7 +83,10 @@ class Bot:
         print("\n\n")
 
     def get_adaptation_value(self):
-        return self.Age * 100 + self.DeathTick * 10 + self.Life;
+        value = self.Age * 1000
+        value += 2000 if not self.DeathTime else self.DeathTime * 10
+        value += self.Life
+        return value
 
 
 
