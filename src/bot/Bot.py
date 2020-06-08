@@ -15,7 +15,7 @@ class Bot:
     def __init__(self, biom):
         self.Dna = dna.Dna(biom)
         self.Ai = AI()
-        self.Curr_direction = 1
+        self.Curr_direction = random.randint(0, 7)
         self.Pointer_of_ai = 0
         self.Life = 300
         self.set_color()
