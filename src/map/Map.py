@@ -38,6 +38,12 @@ class Map:
         self.Field = [[None for x in range(size)] for y in range(size)]
         self.Biom_coord = [[], [], []]
 
+    def clear():
+        for line in Field:
+            for cell in line:
+                cell.Bot_ref = None
+                cell.Food_red = None
+
     def generate(self):
         REGULARITY_CELL = 2
         dx1, dx2 = 0, 0
