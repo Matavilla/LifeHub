@@ -91,9 +91,9 @@ class Handler:
 
         dx, dy, action = self.Map.Field[x][y].Bot_ref.get_dir_and_action()
         if x + dx >= self.Map.Size or x + dx < 0:
-            dx = 0
+            dx = -dx
         if y + dy >= self.Map.Size or y + dy < 0:
-            dy = 0
+            dy = -dy
 
         if (dx != 0 or dy != 0) and action:
             self.action(i, x, y, dx, dy, action)
