@@ -173,24 +173,43 @@ def ParamWindow(parameters):
     win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
     VidgAccord = dict() #This is the dictionary to match the name of the variable is a class field
  
-    tick, chaos, randTick, randChaos = AddStrOfTable(win, "Тик вселенной", "Момент хаоса", 0, 1, 999)
-    VidgAccord.update({tick:parameters.TickUniverse,chaos:parameters.ChaosMoment})
-    food, poison, randFood, randPoison = AddStrOfTable(win, "Кол-во еды", "Кол-во яда:", 2, 1, 999)
-    VidgAccord.update({food: parameters.AmountOfFood, poison: parameters.AmountOfPoison})
+    tick, chaos, randTick, randChaos = AddStrOfTable(win, 
+                                                     "Тик вселенной", 
+                                                     "Момент хаоса", 
+                                                     0, 1, 999)
+    VidgAccord.update({tick:parameters.TickUniverse,
+                       chaos:parameters.ChaosMoment})
+    food, poison, randFood, randPoison = AddStrOfTable(win, 
+                                                       "Кол-во еды", 
+                                                       "Кол-во яда:", 
+                                                       2, 1, 999)
+    VidgAccord.update({food: parameters.AmountOfFood, 
+                       poison: parameters.AmountOfPoison})
     randTick.bind('<Button>', lambda event: RandValue(tick, 1, 999))
     randChaos.bind('<Button>', lambda event: RandValue(chaos, 1, 999))
     randFood.bind('<Button>', lambda event: RandValue(food, 1, 999))
     randPoison.bind('<Button>', lambda event: RandValue(poison, 1, 999))
 
-    tkinter.Label(win, text="Период генерации еды/яда").grid(row=4, column=3, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Период генерации еды/яда").grid(row=4, 
+                                                             column=3, 
+                                                             sticky='W', 
+                                                             columnspan=2)
 
-    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5,1,999)
+    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, 
+                                                       "Биом 1:", 
+                                                       "Биом 2:", 
+                                                       5,1,999)
     VidgAccord.update({biom1: parameters.T_1, biom2: parameters.T_2})
     # biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 5)
     randBiom1.bind('<Button>', lambda event: RandValue(biom1, 1, 9))
     randBiom2.bind('<Button>', lambda event: RandValue(biom2, 1, 9))
 
-    tkinter.Label(win, text="Биом 3:").grid(row=7, column=0, sticky='W', padx=10, pady=10)
+    tkinter.Label(win, text="Биом 3:").grid(row=7, 
+                                            column=0, 
+                                            sticky='W', 
+                                            padx=10, 
+                                            pady=10)
+
     biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99, textvariable=4)
     biom3.grid(row=7, column=1, padx=10)
     VidgAccord.update({biom3: parameters.T_3})
@@ -199,16 +218,28 @@ def ParamWindow(parameters):
     randBiom3.bind('<Button>', lambda event: RandValue(biom3, 1, 9))
 
 
-    tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, column=3, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8, 
+                                                           column=3, 
+                                                           sticky='W', 
+                                                           columnspan=2)
 
-    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, "Биом 1:", "Биом 2:", 9, 1, 99)
-    VidgAccord.update({numBots1: parameters.NumBots1, numBots2: parameters.NumBots2})
+    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, 
+                                                             "Биом 1:", 
+                                                             "Биом 2:", 
+                                                             9, 1, 99)
+    VidgAccord.update({numBots1: parameters.NumBots1, 
+                       numBots2: parameters.NumBots2})
     numBots1.delete(0, tkinter.END)
     numBots1.insert(0, 2)
     randBots1.bind('<Button>', lambda event: RandValue(numBots1, 1, 99))
     randBots2.bind('<Button>', lambda event: RandValue(numBots2, 1, 99))
 
-    tkinter.Label(win, text="Биом 3:").grid(row=11, column=0, sticky='W', padx=10, pady=10)
+    tkinter.Label(win, text="Биом 3:").grid(row=11, 
+                                            column=0, 
+                                            sticky='W', 
+                                            padx=10, 
+                                            pady=10)
+    
     numBots3 = tkinter.Spinbox(win, width=7, from_=1, to=99)
     VidgAccord.update({numBots3: parameters.NumBots3})
     numBots3.grid(row=11, column=1, padx=10)
@@ -230,22 +261,29 @@ def ParamWindow(parameters):
 
     buttonLittle = tkinter.Button(win, text="Маленький")
     buttonLittle.grid(row=13, column=1)
-    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("little"))
+    buttonLittle.bind('<Button>', 
+                      lambda event: parameters.set_world_size("little"))
 
     buttonLittle = tkinter.Button(win, text="Средний")
     buttonLittle.grid(row=13, column=2)
-    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("medium"))
+    buttonLittle.bind('<Button>', 
+                      lambda event: parameters.set_world_size("medium"))
 
     buttonLittle = tkinter.Button(win, text="Большой")
     buttonLittle.grid(row=13, column=3)
-    buttonLittle.bind('<Button>', lambda event: parameters.set_world_size("large"))
+    buttonLittle.bind('<Button>', 
+                      lambda event: parameters.set_world_size("large"))
 
-    tkinter.Label(win, text="Выберите размер поля").grid(row=12, column=2, sticky='W', columnspan=2)
-    tkinter.Label(win, text="").grid(row=14, column=2, sticky='W', columnspan=2)
+    tkinter.Label(win, text="Выберите размер поля").grid(row=12, 
+                                                         column=2, 
+                                                         sticky='W', 
+                                                         columnspan=2)
+    tkinter.Label(win, text="").grid(row=14, 
+                                     column=2, 
+                                     sticky='W', 
+                                     columnspan=2)
 
     OldVariables(VidgAccord)
-
-
 
 
 def StartMenu(wPar):
@@ -255,7 +293,8 @@ def StartMenu(wPar):
 
     mainWindow.configure(background='black')
     mainWindow.title('LifeHub')
-    mainWindow.protocol("WM_DELETE_WINDOW", lambda: (_ for _ in ()).throw(SystemExit(0)))
+    mainWindow.protocol("WM_DELETE_WINDOW", 
+                        lambda: (_ for _ in ()).throw(SystemExit(0)))
 
     w = mainWindow.winfo_screenwidth()
     h = mainWindow.winfo_screenheight()
@@ -265,12 +304,23 @@ def StartMenu(wPar):
     mainWindow.rowconfigure(1, weight = 1)
     mainWindow.rowconfigure(5, weight = 1)
 
+    startBtn = tkinter.Button(mainWindow, 
+                              text = 'Начать симуляцию', 
+                              font = 'Arial 24', 
+                              bd = 5, width = 25, 
+                              bg = "#FFA500", 
+                              activebackground = "#FFA500")
 
-    startBtn = tkinter.Button(mainWindow, text = 'Начать симуляцию', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
     startBtn.grid(row = 2, column = 2, padx = 20, pady = 20)
     startBtn.bind('<Button>', lambda event: CloseAllWindow())
 
-    paramBtn = tkinter.Button(mainWindow, text = 'Задать параметры вселенной', font = 'Arial 24', bd = 5, width = 25, bg = "#FFA500", activebackground = "#FFA500")
+    paramBtn = tkinter.Button(mainWindow, 
+                              text = 'Задать параметры вселенной', 
+                              font = 'Arial 24', 
+                              bd = 5, width = 25, 
+                              bg = "#FFA500", 
+                              activebackground = "#FFA500")
+
     paramBtn.grid(row = 3, column = 2, padx = 20, pady = 20)
     paramBtn.bind('<Button>', lambda event: ParamWindow(wPar))
 
