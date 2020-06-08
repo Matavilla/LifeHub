@@ -4,6 +4,7 @@ import src.food as food
 import src.bot as bot
 import src.ga as ga
 
+DEBUG = True
 
 class Handler:
     def __init__(self, worldPar):
@@ -67,14 +68,7 @@ class Handler:
     def actions_of_bots(self):
         for j in range(2):
             for i, (x, y) in enumerate(self.BotCoordinates[j]):
-                # output all info
-                print(f"Number of bots = {len(self.BotCoordinates)}")
-                print(f"Coordinates: x = {x}, y = {y}")
-                self.Map.Field[x][y].Bot_ref.print_info()
-
                 self.actions_of_bot(j, i, x, y)
-
-                print(f"Ticks = {self.Tick}")
 
     def actions_of_bot(self, j, i, x, y):
         self.Map.Field[x][y].Bot_ref.Life -= 1
@@ -154,13 +148,68 @@ class Handler:
                 self.Map.Field[x][y].Bot_ref = None
                 self.BotCoordinates[j][i] = (x + dx, y + dy)
 
+
+    def migration_bots(self):
+        self.BotPopulation[0].append(random.choice(self.BotPopulation[1]))
+        self.BotPopulation[0].append(random.choice(self.BotPopulation[2]))
+        self.BotPopulation[0][-1].Dna.Biom, self.BotPopulation[0][-2].Dna.Biom = 1, 1
+            
+        self.BotPopulation[1].append(random.choice(self.BotPopulation[0]))
+        self.BotPopulation[1].append(random.choice(self.BotPopulation[2]))
+        self.BotPopulation[1][-1].Dna.Biom, self.BotPopulation[1][-2].Dna.Biom = 2, 2
+        self.BotPopulation[1][-1].set_color()
+        self.BotPopulation[1][-2].set_color()
+            
+        self.BotPopulation[2].append(random.choice(self.BotPopulation[0]))
+        self.BotPopulation[2].append(random.choice(self.BotPopulation[1]))
+        self.BotPopulation[2][-1].Dna.Biom, self.BotPopulation[2][-2].Dna.Biom = 3, 3
+        self.BotPopulation[2][-1].set_color()
+        self.BotPopulation[2][-2].set_color()
+            
+
     def selection_after_chaos(self):
 
 
-    def seection_before_chaos(self):
+    def selection_before_chaos(self):
+        sort(self.BotPopulation[0], key = lambda bot: return bot.get_adaptation_value())
+        sort(self.BotPopulation[1], key = lambda bot: return bot.get_adaptation_value())
+        sort(self.BotPopulation[2], key = lambda bot: return bot.get_adaptation_value())
+        
+        COUNT_PARENTS = 10
+        del self.BotPopulationp[0][COUNT_PARENTS:]
+        del self.BotPopulationp[1][COUNT_PARENTS:]
+        del self.BotPopulationp[2][COUNT_PARENTS:]
 
-                self.Tick = 0
+        migration_enable = (self.Period % 10) == 0
+        if migration_enable:
+            self.migration_bots()
 
+        if DEBUG:
+            self.print_in_log()
+
+        #selection
+
+        for biomBots in self.BotPopulation:
+            for i, bot in enumerate(biomBots):
+                if migration_enable and i > COUNT_PARENTS + 2:
+                    break
+                elif not migration_enable and i > COUNT_PARENTS:
+                    break
+                bot.Age += 1
+                bot.DeathTick = 0
+        self.Tick = 0
+
+    def print_in_log(self):
+        print(f"Number of bots = {len(self.BotCoordinates)}")
+        print(f"Number of bots = {len(self.BotCoordinates)}")
+        print(f"Number of bots = {len(self.BotCoordinates)}")
+
+        for j in range(2):
+            for i, (x, y) in enumerate(self.BotCoordinates[j]):
+                print(f"Coordinates: x = {x}, y = {y}")
+                self.Map.Field[x][y].Bot_ref.print_info()
+
+        print(f"Ticks = {self.Tick}")
 
     def RunOnTick(self):
         '''Готовит изображение для вывода
@@ -168,11 +217,11 @@ class Handler:
         '''
         if self.Period < self.World_par.ChaosMoment:
             countBots = len(self.BotCoordinates[0]) + len(self.BotCoordinates[1]) + len(self.BotCoordinates[2])
-            if countBots < 0.2 * (self.World_par.NumBots1 + self.World_par.NumBots2 + self.World_par.NumBots3):
+            if countBots < 0.2 * (self.World_par.NumBots1 + self.World_par.NumBots2 + self.World_par.NumBots3) or self.Tick == 1500:
                 self.Period += 1
                 self.Map.clear()
 
-                selection_before_chaos()
+                self.selection_before_chaos()
 
                 self.spawn_bots(1, self.World_par.NumBots1)
                 self.spawn_bots(2, self.World_par.NumBots2)
