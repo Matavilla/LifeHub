@@ -12,14 +12,13 @@ class Handler:
         self.BotCoordinates = [[], [], []]
         self.BotPopulation = [[], [], []]
         self.Tick = 1
+        self.Period = 0
 
     def create_map(self):
         self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
-    def create_world(self):
-        self.create_map()
-
+    def spawn_start_food()
         count = self.World_par.AmountOfFood
         self.spawn_food(1, count)
 
@@ -28,6 +27,11 @@ class Handler:
 
         count = self.World_par.AmountOfFood
         self.spawn_food(3, count)
+
+    def create_world(self):
+        self.create_map()
+        
+        self.spawn_start_food()
 
         count = self.World_par.NumBots1
         self.spawn_bots(1, count)
@@ -108,7 +112,7 @@ class Handler:
         bot = self.Map.Field[x][y].Bot_ref
         cell = self.Map.Field[x + dx][y + dy]
 
-        if self.Tick < self.World_par.ChaosMoment and \
+        if self.Period < self.World_par.ChaosMoment and \
                 self.Map.Field[x][y].Biom != \
                 self.Map.Field[x + dx][y + dy].Biom:
             self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
@@ -150,21 +154,47 @@ class Handler:
                 self.Map.Field[x][y].Bot_ref = None
                 self.BotCoordinates[j][i] = (x + dx, y + dy)
 
+    def selection_after_chaos(self):
+
+
+    def seection_before_chaos(self):
+
+                self.Tick = 0
+
+
     def RunOnTick(self):
         '''Готовит изображение для вывода
 
         '''
+        if self.Period < self.World_par.ChaosMoment:
+            countBots = len(self.BotCoordinates[0]) + len(self.BotCoordinates[1]) + len(self.BotCoordinates[2])
+            if countBots < 0.2 * (self.World_par.NumBots1 + self.World_par.NumBots2 + self.World_par.NumBots3):
+                self.Period += 1
+                self.Map.clear()
+
+                selection_before_chaos()
+
+                self.spawn_bots(1, self.World_par.NumBots1)
+                self.spawn_bots(2, self.World_par.NumBots2)
+                self.spawn_bots(3, self.World_par.NumBots3)
+
+                self.spawn_start_food()
+
+                self.Tick = 0
+        else:
+            self.selection_after_chaos()
+
         if not self.Tick % self.World_par.T_1:
-            count = 3
-            self.spawn_food(1, count)
+          count = 2
+          self.spawn_food(1, count)
 
         if not self.Tick % self.World_par.T_2:
-            count = 4
-            self.spawn_food(2, count)
+          count = 3
+          self.spawn_food(2, count)
 
         if not self.Tick % self.World_par.T_3:
-            count = 5
-            self.spawn_food(3, count)
+          count = 4
+          self.spawn_food(3, count)
 
         self.actions_of_bots()
 
