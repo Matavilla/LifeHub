@@ -8,7 +8,7 @@ class Handler:
     def __init__(self, worldPar):
         self.World_par = worldPar
         self.Map = None
-        self.BotCoordinates = []
+        self.BotCoordinates = [[], [], []]
         self.Tick = 1
 
     def create_map(self):
@@ -51,21 +51,22 @@ class Handler:
                     or self.Map.Field[x][y].is_food_here():
                 x, y = random.choice(self.Map.Biom_coord[biom - 1])
             self.Map.Field[x][y].set_bot(bot.Bot(biom))
-            self.BotCoordinates.append((x, y))
+            self.BotCoordinates[biom - 1].append((x, y))
             count -= 1
 
     def actions_of_bots(self):
-        for i, (x, y) in enumerate(self.BotCoordinates):
-            # output all info
-            print(f"Number of bots = {len(self.BotCoordinates)}")
-            print(f"Coordinates: x = {x}, y = {y}")
-            self.Map.Field[x][y].Bot_ref.print_info()
+        for j in range(2):
+            for i, (x, y) in enumerate(self.BotCoordinates[j]):
+                # output all info
+                print(f"Number of bots = {len(self.BotCoordinates)}")
+                print(f"Coordinates: x = {x}, y = {y}")
+                self.Map.Field[x][y].Bot_ref.print_info()
 
-            self.actions_of_bot(i, x, y)
+                self.actions_of_bot(j, i, x, y)
 
-            print(f"Ticks = {self.Tick}")
+                print(f"Ticks = {self.Tick}")
 
-    def actions_of_bot(self, i, x, y):
+    def actions_of_bot(self, j, i, x, y):
         self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
         bot = self.Map.Field[x][y].Bot_ref
@@ -82,7 +83,7 @@ class Handler:
         speed = bot.Dna.get("speed") // 52
 
         if bot.Life < 0:
-            self.BotCoordinates.pop(i)
+            self.BotCoordinates[j].pop(i)
             self.Map.Field[x][y].Bot_ref = None
             return
         if bot.TimeSpeed > 0:
@@ -132,14 +133,14 @@ class Handler:
             if action == "move":
                 self.Map.Field[x + dx][y + dy].set_bot(bot)
                 self.Map.Field[x][y].Bot_ref = None
-                self.BotCoordinates[i] = (x + dx, y + dy)
+                self.BotCoordinates[j][i] = (x + dx, y + dy)
         else:
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
                 (bot.Pointer_of_ai + 5) % 256
             if action == "move":
                 self.Map.Field[x + dx][y + dy].set_bot(bot)
                 self.Map.Field[x][y].Bot_ref = None
-                self.BotCoordinates[i] = (x + dx, y + dy)
+                self.BotCoordinates[j][i] = (x + dx, y + dy)
 
     def RunOnTick(self):
         '''Готовит изображение для вывода
