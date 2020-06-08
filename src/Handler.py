@@ -10,6 +10,7 @@ class Handler:
         self.World_par = worldPar
         self.Map = None
         self.BotCoordinates = [[], [], []]
+        self.BotPopulation = [[], [], []]
         self.Tick = 1
 
     def create_map(self):
@@ -53,6 +54,7 @@ class Handler:
                 x, y = random.choice(self.Map.Biom_coord[biom - 1])
             self.Map.Field[x][y].set_bot(bot.Bot(biom))
             self.BotCoordinates[biom - 1].append((x, y))
+            self.BotPopulation[biom - 1].append(self.Map.Field[x][y].Bot_ref)
             count -= 1
 
     def actions_of_bots(self):
@@ -85,6 +87,8 @@ class Handler:
 
         if bot.Life < 0:
             self.BotCoordinates[j].pop(i)
+            bot.Life = 0
+            bot.DeathTick = self.Tick
             self.Map.Field[x][y].Bot_ref = None
             return
         if bot.TimeSpeed > 0:

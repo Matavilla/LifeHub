@@ -18,6 +18,8 @@ class Bot:
         self.Pointer_of_ai = 0
         self.Life = 300
         self.set_color()
+        self.DeathTick = 0
+        self.Age = 0  
         # amount of ticks for one move
         self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
 
@@ -79,6 +81,10 @@ class Bot:
         self.Dna.print_info()
         # self.Ai.print_info()
         print("\n\n")
+
+    def get_adaptation_value(self):
+        return self.Age * 100 + self.DeathTick * 10 + self.Life;
+
 
 
 class AI:
