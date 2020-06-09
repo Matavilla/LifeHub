@@ -1,5 +1,5 @@
 import random
-import src.map as map
+import src.map as mp
 import src.food as food
 import src.bot as bot
 
@@ -12,7 +12,7 @@ class Handler:
         self.Tick = 1
 
     def create_map(self):
-        self.Map = map.Map(self.World_par.WorldSize)
+        self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
     def create_world(self):
@@ -57,7 +57,6 @@ class Handler:
     def actions_of_bots(self):
         for i, (x, y) in enumerate(self.BotCoordinates):
             # output all info
-
             print(f"Number of bots = {len(self.BotCoordinates)}")
             print(f"Coordinates: x = {x}, y = {y}")
             self.Map.Field[x][y].Bot_ref.print_info()
@@ -103,13 +102,13 @@ class Handler:
         if self.Tick < self.World_par.ChaosMoment and \
                 self.Map.Field[x][y].Biom != \
                 self.Map.Field[x + dx][y + dy].Biom:
-            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai +
-                                                          2) % 256
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
+                (bot.Pointer_of_ai + 2) % 256
             return
 
         if cell.is_bot_here():
-            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai +
-                                                          3) % 256
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
+                (bot.Pointer_of_ai + 3) % 256
             if action == "attack":
                 agr = random.randint(1, 255)
                 if agr <= bot.Dna.get("agression"):
@@ -136,7 +135,7 @@ class Handler:
                 self.BotCoordinates[i] = (x + dx, y + dy)
         else:
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                                (bot.Pointer_of_ai + 5) % 256
+                (bot.Pointer_of_ai + 5) % 256
             if action == "move":
                 self.Map.Field[x + dx][y + dy].set_bot(bot)
                 self.Map.Field[x][y].Bot_ref = None

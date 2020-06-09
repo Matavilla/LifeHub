@@ -309,8 +309,8 @@ def StartMenu(wPar):
     w = mainWindow.winfo_screenwidth()
     h = mainWindow.winfo_screenheight()
 
-    mainWindow.geometry(
-               f'{w // 2}x{h // 2}+{w // 2 - w // 4}+{h // 2 - h // 4}')
+    geometry_str = f'{w // 2}x{h // 2}+{w // 2 - w // 4}+{h // 2 - h // 4}'
+    mainWindow.geometry(geometry_str)
     mainWindow.columnconfigure(1, weight=1)
     mainWindow.columnconfigure(3, weight=1)
     mainWindow.rowconfigure(1, weight=1)

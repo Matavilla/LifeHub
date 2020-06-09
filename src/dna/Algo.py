@@ -48,9 +48,8 @@ class GenAlgo:
 
     def random_mutation(self, dna):
         SIZE_CHAR = 256
-        dna[random.randint(0, len(dna) - 1)] = random.randint(0,
-                                                              SIZE_CHAR **
-                                                              dna.itemsize - 1)
+        index = random.randint(0, len(dna) - 1)
+        dna[index] = random.randint(0, SIZE_CHAR ** dna.itemsize - 1)
 
     def swap_mutation(self, dna):
         gen_1 = random.randint(0, len(dna) - 1)

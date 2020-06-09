@@ -10,7 +10,7 @@ class Bot:
                       3: (173, 50, 58)}
 
     Bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0),
-                (1, 1),   (0, 1),  (-1, 1), (-1, 0)]
+                (1, 1), (0, 1), (-1, 1), (-1, 0)]
 
     def __init__(self, biom):
         self.Dna = dna.Dna(biom)
@@ -37,10 +37,10 @@ class Bot:
         dx, dy, action = 0, 0, None
         max_num_of_actions = 10
         while 80 <= curr_command <= 255 and max_num_of_actions:
+            num_bias_dir = (curr_command + self.Curr_direction - 1) % 8
             if curr_command < 120:
-                # check
-                dx, dy = self.Bias_dir[(curr_command +
-                                        self.Curr_direction - 1) % 8]
+                # check command
+                dx, dy = self.Bias_dir[num_bias_dir]
                 if x + dx >= map_.Size or x + dx < 0:
                     dx = -dx
                 if y + dy >= map_.Size or y + dy < 0:
@@ -52,10 +52,8 @@ class Bot:
                 else:
                     self.Pointer_of_ai = (self.Pointer_of_ai + 5) % 256
             if curr_command < 160:
-                # rotate
-                self.Curr_direction = (curr_command +
-                                       self.Curr_direction -
-                                       1) % 8
+                # rotate command
+                self.Curr_direction = num_bias_dir
                 self.Pointer_of_ai = (self.Pointer_of_ai + 1) % 256
             else:
                 self.Pointer_of_ai = (self.Pointer_of_ai + curr_command) % 256
@@ -67,7 +65,8 @@ class Bot:
         elif 40 <= curr_command <= 79:
             action = "attack"
 
-        dx, dy = self.Bias_dir[(curr_command + self.Curr_direction - 1) % 8]
+        num_bias_dir = (curr_command + self.Curr_direction - 1) % 8
+        dx, dy = self.Bias_dir[num_bias_dir]
         if x + dx >= map_.Size or x + dx < 0:
             dx = -dx
         if y + dy >= map_.Size or y + dy < 0:
