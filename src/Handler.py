@@ -57,6 +57,7 @@ class Handler:
     def actions_of_bots(self):
         for i, (x, y) in enumerate(self.BotCoordinates):
             # output all info
+
             print(f"Number of bots = {len(self.BotCoordinates)}")
             print(f"Coordinates: x = {x}, y = {y}")
             self.Map.Field[x][y].Bot_ref.print_info()
@@ -89,7 +90,8 @@ class Handler:
             return
         self.Map.Field[x][y].Bot_ref.TimeSpeed = 5 - speed
 
-        dx, dy, action = self.Map.Field[x][y].Bot_ref.get_dir_and_action(x, y, self.Map)
+        dx, dy, action = self.Map.Field[x][y].Bot_ref. \
+                         get_dir_and_action(x, y, self.Map)
 
         if (dx != 0 or dy != 0) and action:
             self.action(i, x, y, dx, dy, action)

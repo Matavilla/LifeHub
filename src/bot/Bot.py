@@ -39,7 +39,8 @@ class Bot:
         while 80 <= curr_command <= 255 and max_num_of_actions:
             if curr_command < 120:
                 # check
-                dx, dy = self.Bias_dir[(curr_command + self.Curr_direction - 1) % 8]
+                dx, dy = self.Bias_dir[(curr_command + 
+                         self.Curr_direction - 1) % 8]
                 if x + dx >= map_.Size or x + dx < 0:
                     dx = -dx
                 if y + dy >= map_.Size or y + dy < 0:
