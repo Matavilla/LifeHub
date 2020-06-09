@@ -5,11 +5,11 @@ from src.dna.Algo import GenAlgo
 
 
 class Bot:
-    Biom_bot_color = {1 : (25, 23, 163), 
-                      2 : (176, 163, 42), 
-                      3 : (173, 50, 58)}
+    Biom_bot_color = {1: (25, 23, 163),
+                      2: (176, 163, 42),
+                      3: (173, 50, 58)}
 
-    Bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0), 
+    Bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0),
                 (1, 1),   (0, 1),  (-1, 1), (-1, 0)]
 
     def __init__(self, biom):
@@ -39,8 +39,8 @@ class Bot:
         while 80 <= curr_command <= 255 and max_num_of_actions:
             if curr_command < 120:
                 # check
-                dx, dy = self.Bias_dir[(curr_command + 
-                         self.Curr_direction - 1) % 8]
+                dx, dy = self.Bias_dir[(curr_command +
+                                        self.Curr_direction - 1) % 8]
                 if x + dx >= map_.Size or x + dx < 0:
                     dx = -dx
                 if y + dy >= map_.Size or y + dy < 0:
@@ -53,7 +53,7 @@ class Bot:
                     self.Pointer_of_ai = (self.Pointer_of_ai + 5) % 256
             if curr_command < 160:
                 # rotate
-                self.Curr_direction = (curr_command + 
+                self.Curr_direction = (curr_command +
                                        self.Curr_direction -
                                        1) % 8
                 self.Pointer_of_ai = (self.Pointer_of_ai + 1) % 256
@@ -79,7 +79,7 @@ class Bot:
         print("Pointer_of_ai  = " + str(self.Pointer_of_ai))
         print("Life  = " + str(self.Life))
         self.Dna.print_info()
-        #self.Ai.print_info()
+        # self.Ai.print_info()
         print("\n\n")
 
 
@@ -90,7 +90,7 @@ class AI(GenAlgo):
     def __init__(self):
         self.Gens = array.array('B')
         self.set_ai()
-       
+
     def set_ai(self):
         for i in range(256):
             self.Gens.append(random.randint(0, 255))

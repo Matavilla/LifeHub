@@ -4,7 +4,7 @@ import src.food as food
 import src.bot as bot
 
 
-class Handler:   
+class Handler:
     def __init__(self, worldPar):
         self.World_par = worldPar
         self.Map = None
@@ -46,7 +46,7 @@ class Handler:
 
     def spawn_bots(self, biom, count):
         while count:
-            x, y = random.choice(self.Map.Biom_coord[biom-1])
+            x, y = random.choice(self.Map.Biom_coord[biom - 1])
             while self.Map.Field[x][y].is_bot_here()\
                     or self.Map.Field[x][y].is_food_here():
                 x, y = random.choice(self.Map.Biom_coord[biom - 1])
@@ -90,8 +90,8 @@ class Handler:
             return
         self.Map.Field[x][y].Bot_ref.TimeSpeed = 5 - speed
 
-        dx, dy, action = self.Map.Field[x][y].Bot_ref. \
-                         get_dir_and_action(x, y, self.Map)
+        dx, dy, action = self.Map.Field[x][y].Bot_ref.\
+            get_dir_and_action(x, y, self.Map)
 
         if (dx != 0 or dy != 0) and action:
             self.action(i, x, y, dx, dy, action)
@@ -101,25 +101,26 @@ class Handler:
         cell = self.Map.Field[x + dx][y + dy]
 
         if self.Tick < self.World_par.ChaosMoment and \
-           self.Map.Field[x][y].Biom != self.Map.Field[x + dx][y + dy].Biom:
-            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai + 
+                self.Map.Field[x][y].Biom != \
+                self.Map.Field[x + dx][y + dy].Biom:
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai +
                                                           2) % 256
             return
 
         if cell.is_bot_here():
-            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai + 
+            self.Map.Field[x][y].Bot_ref.Pointer_of_ai = (bot.Pointer_of_ai +
                                                           3) % 256
             if action == "attack":
                 agr = random.randint(1, 255)
                 if agr <= bot.Dna.get("agression"):
                     armor = cell.Bot_ref.Dna.get("armor") / 255
                     self.Map.Field[x + dx][y + dy].Bot_ref.Life -= \
-                                                        (1 - armor) * \
-                                                        bot.Dna.get("power")
+                        (1 - armor) * \
+                        bot.Dna.get("power")
         elif cell.is_food_here():
             f = cell.Food_ref
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                                (bot.Pointer_of_ai + 4) % 256
+                (bot.Pointer_of_ai + 4) % 256
             vulnerability = bot.Dna.get("poison_vulnerability") / 255
             damage_from_poison = f.Toxic_value * (1 - vulnerability)
             sens = random.randint(1, 255)
@@ -142,18 +143,20 @@ class Handler:
                 self.BotCoordinates[i] = (x + dx, y + dy)
 
     def RunOnTick(self):
-        '''Готовит изображение для вывода'''
+        '''Готовит изображение для вывода
+
+        '''
         if not self.Tick % self.World_par.T_1:
-          count = 3
-          self.spawn_food(1, count)
+            count = 3
+            self.spawn_food(1, count)
 
         if not self.Tick % self.World_par.T_2:
-          count = 4
-          self.spawn_food(2, count)
+            count = 4
+            self.spawn_food(2, count)
 
         if not self.Tick % self.World_par.T_3:
-          count = 5
-          self.spawn_food(3, count)
+            count = 5
+            self.spawn_food(3, count)
 
         self.actions_of_bots()
 

@@ -2,17 +2,18 @@ import random
 import array
 from src.dna.Algo import GenAlgo
 
+
 class Dna(GenAlgo):
-    Value_names = ["speed", "sensity", "power", 
+    Value_names = ["speed", "sensity", "power",
                    "agression", "armor", "weather_resistance_1",
-                   "weather_resistance_2", "weather_resistance_3"
-                   "poison_vulnerability"] #names - speed...
+                   "weather_resistance_2", "weather_resistance_3",
+                   "poison_vulnerability"]  # names - speed...
 
     def __init__(self, biom):
         self.Biom = biom
         self.Gens = array.array('B')
         self.Index = dict()
-#need to init value - may be use random + bounds
+        # need to init value - may be use random + bounds
         if biom == 1:
             self.set_value("speed", random.randint(0, 103))
             self.set_value("sensity", random.randint(25, 76))
@@ -59,8 +60,11 @@ class Dna(GenAlgo):
         print("\tpower = " + str(self.get("power")))
         print("\tagression = " + str(self.get("agression")))
         print("\tarmor = " + str(self.get("armor")))
-        print("\tweather_resistance_1 = " + str(self.get("weather_resistance_1")))
-        print("\tweather_resistance_2 = " + str(self.get("weather_resistance_2")))
-        print("\tweather_resistance_3 = " + str(self.get("weather_resistance_3")))
-        print("\tpoison_vulnerability = " + str(self.get("poison_vulnerability")))
-
+        s = "\tweather_resistance_1 = " + str(self.get("weather_resistance_1"))
+        print(s)
+        s = "\tweather_resistance_2 = " + str(self.get("weather_resistance_2"))
+        print(s)
+        s = "\tweather_resistance_3 = " + str(self.get("weather_resistance_3"))
+        print(s)
+        s = "\tpoison_vulnerability = " + str(self.get("poison_vulnerability"))
+        print(s)
