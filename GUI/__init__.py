@@ -1,2 +1,3 @@
-from GUI.MainMenu import *
-from GUI.Field import *
+from GUI.MainMenu import StartMenu
+from GUI.MainMenu import WorldParameters
+from GUI.Field import StartGame
