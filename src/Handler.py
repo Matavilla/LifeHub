@@ -167,7 +167,45 @@ class Handler:
         self.BotPopulation[2][-2].set_color()
             
 
+    def get_full_population(self):
+        while len(self.BotPopuation[0]) < self.World_par.NumBots1:
+            self.BotPopulation[0].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[0]), ga.Selection.get_parent(self.BotPopulation[0]))
+
+        while len(self.BotPopuation[1]) < self.World_par.NumBots1:
+            self.BotPopulation[1].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[1]), ga.Selection.get_parent(self.BotPopulation[1]))
+
+        while len(self.BotPopuation[2]) < self.World_par.NumBots1:
+            self.BotPopulation[2].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[2]), ga.Selection.get_parent(self.BotPopulation[2]))
+
+
     def selection_after_chaos(self):
+        i, j, k = len(self.BotPopulation[0]), len(self.BotPopulation[1]), len(self.BotPopulation[2])
+
+        self.get_full_population()
+
+        while i < len(self.BotPopulation[0]):
+            x, y = random.choice(self.Map.Biom_coord[0])
+            while self.Map.Field[x][y].is_bot_here()\
+                    or self.Map.Field[x][y].is_food_here():
+                x, y = random.choice(self.Map.Biom_coord[0])
+            self.Map.Field[x][y].set_bot(self.BotPopulation[0][i])
+            self.BotCoordinates[0].append((x, y))
+
+        while j < len(self.BotPopulation[1]):
+            x, y = random.choice(self.Map.Biom_coord[1])
+            while self.Map.Field[x][y].is_bot_here()\
+                    or self.Map.Field[x][y].is_food_here():
+                x, y = random.choice(self.Map.Biom_coord[1])
+            self.Map.Field[x][y].set_bot(self.BotPopulation[1][j])
+            self.BotCoordinates[1].append((x, y))
+
+        while k < len(self.BotPopulation[2]):
+            x, y = random.choice(self.Map.Biom_coord[2])
+            while self.Map.Field[x][y].is_bot_here()\
+                    or self.Map.Field[x][y].is_food_here():
+                x, y = random.choice(self.Map.Biom_coord[2])
+            self.Map.Field[x][y].set_bot(self.BotPopulation[2][k])
+            self.BotCoordinates[2].append((x, y))
 
 
     def selection_before_chaos(self):
@@ -187,7 +225,7 @@ class Handler:
         if DEBUG:
             self.print_in_log()
 
-        #selection
+        self.get_full_population()
 
         for biomBots in self.BotPopulation:
             for i, bot in enumerate(biomBots):
@@ -197,7 +235,6 @@ class Handler:
                     break
                 bot.Age += 1
                 bot.DeathTick = 0
-        self.Tick = 0
 
     def print_in_log(self):
         print(f"Number of bots = {len(self.BotCoordinates)}")
@@ -231,7 +268,8 @@ class Handler:
 
                 self.Tick = 0
         else:
-            self.selection_after_chaos()
+            if self.Tick % 100 == 0:
+                self.selection_after_chaos()
 
         if not self.Tick % self.World_par.T_1:
           count = 2
