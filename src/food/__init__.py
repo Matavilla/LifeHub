@@ -1,1 +1,1 @@
-from src.food.Food import Food
+from src.food.Food import Food  # noqa: F401

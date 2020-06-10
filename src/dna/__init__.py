@@ -1,1 +1,1 @@
-from src.dna.Dna import Dna
+from src.dna.Dna import Dna  # noqa: F401

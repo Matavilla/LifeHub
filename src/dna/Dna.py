@@ -1,6 +1,6 @@
 import random
 import array
-from src.dna.Algo import GenAlgo
+from .Algo import GenAlgo
 
 
 class Dna(GenAlgo):

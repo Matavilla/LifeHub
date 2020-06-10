@@ -1,1 +1,1 @@
-from src.bot.Bot import Bot
+from src.bot.Bot import Bot  # noqa: F401
