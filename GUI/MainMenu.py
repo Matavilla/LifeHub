@@ -103,16 +103,19 @@ def AddStrOfTable(win, _text1, _text2, _row, _from=1, _to=99):
     tkinter.Label(win, text=_text1).grid(row=_row, column=0, sticky='W',
                                          padx=10, pady=10)
     winParam1 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
-    winParam1.grid(row=_row, column=1, padx=10)
+    winParam1.grid(row=_row, column=1, padx=10, pady=10)
     randButton1 = tkinter.Button(win, text="rand", width=4)
-    randButton1.grid(row=_row, column=2, sticky='W')
-    tkinter.Label(win, text=_text2).grid(row=_row, column=3, sticky='E')
+    randButton1.grid(row=_row, column=2, sticky='W',
+                                         padx=10, pady=10)
+    tkinter.Label(win, text=_text2).grid(row=_row, column=4, sticky='E')
     winParam2 = tkinter.Spinbox(win, width=7, from_=_from, to=_to)
-    winParam2.grid(row=_row, column=4, sticky='W', padx=10)
+    winParam2.grid(row=_row, column=5, sticky='W',
+                                         padx=10, pady=10)
     randButton2 = tkinter.Button(win, text="rand", width=4)
-    randButton2.grid(row=_row, column=5, sticky='W')
+    randButton2.grid(row=_row, column=6, sticky='W',
+                                         padx=10, pady=10)
     # I KNOW IT IS BAD, I WILL FIX IT LATER
-    tkinter.Label(win, text="").grid(row=_row, column=6, sticky='W',
+    tkinter.Label(win, text="").grid(row=_row, column=7, sticky='W',
                                      padx=10, pady=10)
     return winParam1, winParam2, randButton1, randButton2
 
@@ -169,6 +172,16 @@ def ParamWindow(parameters):
 
         SaveParameters(parameters)
 
+    def MakeWindowResizable(window,columns, lines):
+        '''Делает окно растягиваемым '''
+        for i in range(columns):
+            window.grid_columnconfigure(i,weight=1)
+        for i in range(lines):
+            window.grid_rowconfigure(i,weight=1)
+
+
+
+
     global COUNT, WINDOWS
     COUNT += 1
     if COUNT > 1:
@@ -176,6 +189,7 @@ def ParamWindow(parameters):
         return
 
     win = tkinter.Tk()
+    MakeWindowResizable(win,7,13)
     WINDOWS.append(win)
 
     win.title('Parameters window')
@@ -201,10 +215,9 @@ def ParamWindow(parameters):
     randFood.bind('<Button>', lambda event: RandValue(food, 1, 999))
     randPoison.bind('<Button>', lambda event: RandValue(poison, 1, 999))
 
-    tkinter.Label(win, text="Период генерации еды/яда").grid(row=4,
-                                                             column=3,
-                                                             sticky='W',
-                                                             columnspan=2)
+    tst = tkinter.Label(win, text="Период генерации еды/яда")
+    tst.grid(row=4,column=2, sticky='NS',columnspan=3)
+    # tst.grid_configure(4,weight = 1)
 
     biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win,
                                                        "Биом 1:",
@@ -231,6 +244,8 @@ def ParamWindow(parameters):
     tkinter.Label(win, text="Начальное кол-во ботов").grid(row=8,
                                                            column=3,
                                                            sticky='W',
+                                                           padx=10,
+                                                           pady=10,
                                                            columnspan=2)
 
     numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win,
