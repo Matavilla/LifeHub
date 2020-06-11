@@ -36,6 +36,7 @@ tmp_map.Field[0][0].Bot_ref = b1
 tmp_map.Field[2][2].Bot_ref = b2
 tmp_map.Field[0][1].Bot_ref = b3
 
+
 class Test_AI:
     def test_set_ai(self):
         ai_ = AI()
@@ -91,5 +92,3 @@ class Test_Bot:
     def test_get_adaptation_value(self):
         b1.DeathTick, b1.Life, b1.Age = 5, 300, 10
         assert b1.get_adaptation_value() == 10350
-
-

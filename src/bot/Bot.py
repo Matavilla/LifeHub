@@ -18,7 +18,7 @@ class Bot:
         self.Pointer_of_ai = 0
         self.Life = 300
         self.DeathTick = 0
-        self.Age = 0  
+        self.Age = 0
         # amount of ticks for one move
         self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
 
@@ -90,7 +90,6 @@ class Bot:
         value += 2000 if not self.DeathTick else self.DeathTick * 10
         value += self.Life
         return value
-
 
 
 class AI:

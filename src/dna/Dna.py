@@ -1,6 +1,7 @@
 import random
 import array
 
+
 class Dna:
     Value_names = ["speed", "sensity", "power",
                    "agression", "armor", "weather_resistance_1",
@@ -42,7 +43,7 @@ class Dna:
             self.set_value("weather_resistance_3", 255)
             self.set_value("poison_vulnerability", random.randint(12, 38))
 
-    def set_value(self, name : str, value : int) -> None:
+    def set_value(self, name: str, value: int) -> None:
         try:
             self.Gens.append(value)
             self.Index[name] = len(self.Gens) - 1
