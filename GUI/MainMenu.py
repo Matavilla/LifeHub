@@ -248,17 +248,17 @@ def ParamWindow(parameters):
                                                            pady=30,
                                                            columnspan=7)
 
-    buttonLittle = tkinter.Button(win, text="Маленький")
+    buttonLittle = tkinter.Button(win, text="Маленький", height = 1, width = 10)
     buttonLittle.grid(row=13, column=1)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("little"))
 
-    buttonLittle = tkinter.Button(win, text="Средний")
+    buttonLittle = tkinter.Button(win, text="Средний", height = 1, width = 10)
     buttonLittle.grid(row=13, column=3)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("medium"))
 
-    buttonLittle = tkinter.Button(win, text="Большой")
+    buttonLittle = tkinter.Button(win, text="Большой", height = 1, width = 10)
     buttonLittle.grid(row=13, column=5)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("large"))
