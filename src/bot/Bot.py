@@ -51,7 +51,7 @@ class Bot:
                     self.Pointer_of_ai = (self.Pointer_of_ai + 4) % 256
                 else:
                     self.Pointer_of_ai = (self.Pointer_of_ai + 5) % 256
-            if curr_command < 160:
+            elif curr_command < 160:
                 # rotate command
                 self.Curr_direction = num_bias_dir
                 self.Pointer_of_ai = (self.Pointer_of_ai + 1) % 256
