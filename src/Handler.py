@@ -123,6 +123,9 @@ class Handler:
                     self.Map.Field[x + dx][y + dy].Bot_ref.Life -= \
                         (1 - armor) * \
                         bot.Dna.get("power")
+                    if self.Map.Field[x + dx][y + dy].Bot_ref.Life <= 0:
+                        self.Map.Field[x][y].Bot_ref.Life += \
+                            bot.Dna.get("power")
         elif cell.is_food_here():
             f = cell.Food_ref
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
