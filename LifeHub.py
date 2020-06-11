@@ -1,5 +1,7 @@
 import GUI
 import src
+import tkinter
+from tkinter import messagebox
 
 wPar = GUI.WorldParameters()
 GUI.StartMenu(wPar)

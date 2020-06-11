@@ -302,6 +302,12 @@ def ParamWindow(parameters):
 
     OldVariables(VidgAccord)
 
+def Test(wPar):
+    if (wPar):
+        CloseAllWindow()
+    else:
+        messagebox.showerror("Ошибка","Имеются ошибки в параметрах")
+
 
 def StartMenu(wPar):
     global WINDOWS
@@ -331,7 +337,7 @@ def StartMenu(wPar):
                               activebackground="#FFA500")
 
     startBtn.grid(row=2, column=2, padx=20, pady=20)
-    startBtn.bind('<Button>', lambda event: CloseAllWindow())
+    startBtn.bind('<Button>', lambda event: Test(wPar))
 
     paramBtn = tkinter.Button(mainWindow,
                               text='Задать параметры вселенной',
