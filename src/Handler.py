@@ -22,13 +22,13 @@ class Handler:
 
     def spawn_start_food(self):
         count = self.World_par.AmountOfFood
-        self.spawn_food(1, count)
+        self.spawn_food(1, count, False)
 
         count = self.World_par.AmountOfFood
-        self.spawn_food(2, count)
+        self.spawn_food(2, count, False)
 
         count = self.World_par.AmountOfFood
-        self.spawn_food(3, count)
+        self.spawn_food(3, count, False)
 
     def create_world(self):
         self.create_map()
@@ -44,10 +44,11 @@ class Handler:
         count = self.World_par.NumBots3
         self.spawn_bots(3, count)
 
-    def spawn_food(self, biom, count):
+    def spawn_food(self, biom, count, respawn=True):
         while count:
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
-            while self.Map.Field[x][y].is_bot_here():
+            while self.Map.Field[x][y].is_bot_here()\
+                    and (respawn or self.Map.Field[x][y].is_food_here()):
                 x, y = random.choice(self.Map.Biom_coord[biom - 1])
             self.Map.Field[x][y].set_food(food.Food(biom))
             count -= 1
