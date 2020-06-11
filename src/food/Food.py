@@ -11,4 +11,17 @@ class Food:
         self.set_color()
 
     def set_color(self):
-        self.Color = (30, (self.Food_value * 2) % 256, 30)
+        red, green = 0, 0
+        if self.Toxic_value < 50:
+            red = 60
+        elif self.Toxic_value < 100:
+            red = 150
+        else:
+            red = 255
+        if self.Food_value < 50:
+            green = 60
+        elif self.Food_value < 100:
+            green = 150
+        else:
+            green = 255
+        self.Color = (red, green, 0)
