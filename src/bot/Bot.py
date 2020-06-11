@@ -69,8 +69,10 @@ class Bot:
         dx, dy = self.Bias_dir[num_bias_dir]
         if x + dx >= map_.Size or x + dx < 0:
             dx = -dx
+            self.Curr_direction = 3 if dx == 1 else 7
         if y + dy >= map_.Size or y + dy < 0:
             dy = -dy
+            self.Curr_direction = 1 if dy == -1 else 5
         return dx, dy, action
 
     def print_info(self):
