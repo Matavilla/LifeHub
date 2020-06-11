@@ -81,8 +81,8 @@ class WorldParameters:
 def InfoParameters(win):
     window = tkinter.Toplevel(win)
     window.title('Информация')
-    MsgTik="Тик вселенной - время совершения одного действия"
-    tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
+    MsgTik = "Тик вселенной - время совершения одного действия"
+    tkinter.Label(window, text =MsgTik).grid(row=0, column=0, sticky='W',
                                         padx=10, pady=10)
     MsgMeal = "Количество еды - общее количество еды на игровом поле"
     tkinter.Label(window, text=MsgMeal).grid(row=1, column=0, sticky='W',
@@ -125,7 +125,7 @@ def CloseAllWindow():
         CloseWindow(i)
 
 
-def GenField(win,_text, borders, interval = (1,99)):
+def GenField(win, _text , borders , interval = (1,99)):
     '''Вспомогательная функция, делает окно с параметрами'''
     line,col = borders
     tkinter.Label(win, text=_text).grid(row=line, column=col, sticky='W',
@@ -146,7 +146,6 @@ def RandValue(vidget, _from, to):
 
 def OldVariables(allvid: dict) -> None:
     for vidget in allvid:
-        print(vidget)
         vidget.delete(0, tkinter.END)
         vidget.insert(0, allvid[vidget])
 
@@ -192,12 +191,12 @@ def ParamWindow(parameters):
 
         SaveParameters(parameters)
 
-    def MakeWindowResizable(window,columns, lines):
+    def MakeWindowResizable(window, columns, lines):
         '''Делает окно растягиваемым '''
         for i in range(columns):
-            window.grid_columnconfigure(i,weight=1)
+            window.grid_columnconfigure(i, weight=1)
         for i in range(lines):
-            window.grid_rowconfigure(i,weight=1)
+            window.grid_rowconfigure(i, weight=1)
 
 
 
@@ -209,7 +208,7 @@ def ParamWindow(parameters):
         return
 
     win = tkinter.Tk()
-    MakeWindowResizable(win,7,13)
+    MakeWindowResizable(win, 7, 13)
     WINDOWS.append(win)
 
     win.title('Parameters window')
@@ -217,10 +216,10 @@ def ParamWindow(parameters):
 
     VidgAccord = dict()
 
-    tick = GenField(win, "Tик вселенной" ,(0,0), (1,999))
+    tick = GenField(win, "Tик вселенной", (0,0), (1,999))
     VidgAccord.update({tick:parameters.TickUniverse})
 
-    chaos = GenField(win, "Момент хаоса" ,(0,4), (1,999))
+    chaos = GenField(win, "Момент хаоса", (0,4), (1,999))
     VidgAccord.update({chaos: parameters.ChaosMoment})
 
     food = GenField(win, "Кол-во еды", (2,0), (1,999))
@@ -269,8 +268,8 @@ def ParamWindow(parameters):
     buttonRandAll.grid(row=15, column=1)
     buttonRandAll.bind('<Button>', FullRandom)
 
-    buttonInfo = tkinter.Button(win, text="Информация", height = 2, width = 10)
-    buttonInfo.grid(row=15, column=5,padx = 10, pady = 10)
+    buttonInfo = tkinter.Button(win, text="Информация", height=2, width=10)
+    buttonInfo.grid(row=15, column=5,padx=10, pady=10)
     buttonInfo.bind('<Button>', lambda event: InfoParameters(win))
 
     tkinter.Label(win, text="Выберите размер поля").grid(row=12,
@@ -279,17 +278,17 @@ def ParamWindow(parameters):
                                                            pady=30,
                                                            columnspan=7)
 
-    buttonLittle = tkinter.Button(win, text="Маленький", height = 1, width = 10)
+    buttonLittle = tkinter.Button(win, text="Маленький", height=1, width=10)
     buttonLittle.grid(row=13, column=1)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("little"))
 
-    buttonLittle = tkinter.Button(win, text="Средний", height = 1, width = 10)
+    buttonLittle = tkinter.Button(win, text="Средний", height=1, width=10)
     buttonLittle.grid(row=13, column=3)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("medium"))
 
-    buttonLittle = tkinter.Button(win, text="Большой", height = 1, width = 10)
+    buttonLittle = tkinter.Button(win, text="Большой", height=1, width=10)
     buttonLittle.grid(row=13, column=5)
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("large"))
@@ -306,7 +305,7 @@ def Test(wPar):
     if (wPar):
         CloseAllWindow()
     else:
-        messagebox.showerror("Ошибка","Имеются ошибки в параметрах")
+        messagebox.showerror("Ошибка", "Имеются ошибки в параметрах")
 
 
 def StartMenu(wPar):
