@@ -78,8 +78,39 @@ class WorldParameters:
         print('\n')
 
 
-def InfoParameters():
-    messagebox.showinfo("Information", "BLA BLA BLA")
+def InfoParameters(win):
+    window = tkinter.Toplevel(win)
+    window.title('Информация')
+    MsgTik="Тик вселенной - время совершения одного действия"
+    tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
+                                        padx=10, pady=10)
+    MsgMeal = "Количество еды - общее количество еды на игровом поле"
+    tkinter.Label(window, text=MsgMeal).grid(row=1, column=0, sticky='W',
+                                        padx=10, pady=10)
+    MsgPois = "Количество яда - общее количество яда на игровом поле"
+    tkinter.Label(window, text=MsgPois).grid(row=2, column=0, sticky='W',
+                                             padx=10, pady=10)
+
+    MsgChaos = "Момент хаоса - время до начала хаоса"
+    tkinter.Label(window, text=MsgChaos).grid(row=3, column=0, sticky='W',
+                                             padx=10, pady=10)
+
+    MsgGen = "Период генерации еды/яда - как часто в каждом из биомов генерируется еда/яд"
+    tkinter.Label(window, text=MsgGen).grid(row=4, column=0, sticky='W',
+                                             padx=10, pady=10)
+
+    МsgStart = "Начальное количество ботов - сколько ботов в каждом из биомов"
+    tkinter.Label(window, text=МsgStart).grid(row=5, column=0, sticky='W',
+                                             padx=10, pady=10)
+
+    MsgScreen = "Размер поля - общий размер игрового поля"
+    tkinter.Label(window, text=MsgScreen).grid(row=6, column=0, sticky='W',
+                                             padx=10, pady=10)
+
+    EndButton = tkinter.Button(window, text="Ok", width=4)
+    EndButton.grid(row=7, sticky='WE',padx=10, pady=10)
+    EndButton.bind('<Button>', lambda event: window.destroy())
+
 
 
 def CloseWindow(win):
@@ -207,7 +238,7 @@ def ParamWindow(parameters):
     biom1 = GenField(win, "Биом 1:", (5,0), (1,999))
     VidgAccord.update({biom1: parameters.T_1})
 
-    biom2 = GenField(win, "Биом 2", (5,4), (1,999))
+    biom2 = GenField(win, "Биом 2:", (5,4), (1,999))
     VidgAccord.update({biom2:parameters.T_2})
 
     biom3 = GenField(win, "Биом 3:", (7,0),(1,999))
@@ -240,7 +271,7 @@ def ParamWindow(parameters):
 
     buttonInfo = tkinter.Button(win, text="Информация", height = 2, width = 10)
     buttonInfo.grid(row=15, column=5,padx = 10, pady = 10)
-    buttonInfo.bind('<Button>', lambda event: InfoParameters())
+    buttonInfo.bind('<Button>', lambda event: InfoParameters(win))
 
     tkinter.Label(win, text="Выберите размер поля").grid(row=12,
                                                            sticky='WE',
