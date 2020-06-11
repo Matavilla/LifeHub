@@ -54,11 +54,11 @@ class WorldParameters:
             return False
         if not 0 < self.T_3 < 10:
             return False
-        if not 0 < self.NumBots1 < 100:
+        if not 20 < self.NumBots1 < 100:
             return False
-        if not 0 < self.NumBots2 < 100:
+        if not 20 < self.NumBots2 < 100:
             return False
-        if not 0 < self.NumBots3 < 100:
+        if not 20 < self.NumBots3 < 100:
             return False
         print("[LOG] OK")
         return True
@@ -155,7 +155,7 @@ def ParamWindow(parameters):
 
         '''
         RandValue(tick, 1, 999)
-        RandValue(chaos, 1, 999)
+        RandValue(chaos, 1, 99)
         RandValue(food, 1, 999)
         RandValue(poison, 1, 999)
 
@@ -163,9 +163,9 @@ def ParamWindow(parameters):
         RandValue(biom2, 1, 9)
         RandValue(biom3, 1, 9)
 
-        RandValue(numBots1, 1, 99)
-        RandValue(numBots2, 1, 99)
-        RandValue(numBots3, 1, 99)
+        RandValue(numBots1, 21, 99)
+        RandValue(numBots2, 21, 99)
+        RandValue(numBots3, 21, 99)
 
         SaveParameters(parameters)
 
@@ -197,7 +197,7 @@ def ParamWindow(parameters):
     VidgAccord.update({food: parameters.AmountOfFood,
                        poison: parameters.AmountOfPoison})
     randTick.bind('<Button>', lambda event: RandValue(tick, 1, 999))
-    randChaos.bind('<Button>', lambda event: RandValue(chaos, 1, 999))
+    randChaos.bind('<Button>', lambda event: RandValue(chaos, 1, 99))
     randFood.bind('<Button>', lambda event: RandValue(food, 1, 999))
     randPoison.bind('<Button>', lambda event: RandValue(poison, 1, 999))
 
@@ -206,10 +206,10 @@ def ParamWindow(parameters):
                                                              sticky='W',
                                                              columnspan=2)
 
-    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win,
-                                                       "Биом 1:",
-                                                       "Биом 2:",
-                                                       5, 1, 999)
+    biom1, biom2, randBiom1, randBiom2 = AddStrOfTable(win, 
+                                                       "Биом 1:", 
+                                                       "Биом 2:", 
+                                                       5, 1, 9)
     VidgAccord.update({biom1: parameters.T_1, biom2: parameters.T_2})
 
     randBiom1.bind('<Button>', lambda event: RandValue(biom1, 1, 9))
@@ -221,7 +221,7 @@ def ParamWindow(parameters):
                                             padx=10,
                                             pady=10)
 
-    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=99, textvariable=4)
+    biom3 = tkinter.Spinbox(win, width=7, from_=1, to=9, textvariable=4)
     biom3.grid(row=7, column=1, padx=10)
     VidgAccord.update({biom3: parameters.T_3})
     randBiom3 = tkinter.Button(win, text="rand", width=4)
@@ -233,29 +233,28 @@ def ParamWindow(parameters):
                                                            sticky='W',
                                                            columnspan=2)
 
-    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win,
-                                                             "Биом 1:",
-                                                             "Биом 2:",
-                                                             9, 1, 99)
-    VidgAccord.update({numBots1: parameters.NumBots1,
+    numBots1, numBots2, randBots1, randBots2 = AddStrOfTable(win, 
+                                                             "Биом 1:", 
+                                                             "Биом 2:", 
+                                                             9, 21, 99)
+    VidgAccord.update({numBots1: parameters.NumBots1, 
                        numBots2: parameters.NumBots2})
     numBots1.delete(0, tkinter.END)
     numBots1.insert(0, 2)
-    randBots1.bind('<Button>', lambda event: RandValue(numBots1, 1, 99))
-    randBots2.bind('<Button>', lambda event: RandValue(numBots2, 1, 99))
+    randBots1.bind('<Button>', lambda event: RandValue(numBots1, 21, 99))
+    randBots2.bind('<Button>', lambda event: RandValue(numBots2, 21, 99))
 
     tkinter.Label(win, text="Биом 3:").grid(row=11,
                                             column=0,
                                             sticky='W',
                                             padx=10,
                                             pady=10)
-
-    numBots3 = tkinter.Spinbox(win, width=7, from_=1, to=99)
+    numBots3 = tkinter.Spinbox(win, width=7, from_=21, to=99)
     VidgAccord.update({numBots3: parameters.NumBots3})
     numBots3.grid(row=11, column=1, padx=10)
     randBots3 = tkinter.Button(win, text="rand", width=4)
     randBots3.grid(row=11, column=2, sticky='W')
-    randBots3.bind('<Button>', lambda event: RandValue(numBots3, 1, 99))
+    randBots3.bind('<Button>', lambda event: RandValue(numBots3, 21, 99))
 
     buttonSave = tkinter.Button(win, text="Сохранить")
     buttonSave.grid(row=15, column=2)

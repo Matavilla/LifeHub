@@ -14,7 +14,7 @@ class MapCell:
 
     def get_color(self):
         if self.is_bot_here():
-            return self.Bot_ref.Color
+            return self.Bot_ref.color()
         if self.is_food_here():
             return self.Food_ref.Color
         return self.Biom_color[self.Biom]
@@ -37,6 +37,12 @@ class Map:
         self.Size = size
         self.Field = [[None for x in range(size)] for y in range(size)]
         self.Biom_coord = [[], [], []]
+
+    def clear(self):
+        for line in self.Field:
+            for cell in line:
+                cell.Bot_ref = None
+                cell.Food_ref = None
 
     def generate(self):
         REGULARITY_CELL = 2
