@@ -19,7 +19,7 @@ class Handler:
         self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
-    def spawn_start_food()
+    def spawn_start_food(self):
         count = self.World_par.AmountOfFood
         self.spawn_food(1, count)
 
@@ -52,7 +52,7 @@ class Handler:
             count -= 1
 
     def spawn_bots(self, biom, count):
-        if len(self.BotPopulation[biom - 1] != count):
+        if len(self.BotPopulation[biom - 1]) != count:
                 count -= len(self.BotPopulation[biom - 1])
                 while count:
                     self.BotPopulation[biom - 1].append(bot.Bot(biom))
@@ -66,7 +66,7 @@ class Handler:
             self.BotCoordinates[biom - 1].append((x, y))
 
     def actions_of_bots(self):
-        for j in range(2):
+        for j in range(3):
             for i, (x, y) in enumerate(self.BotCoordinates[j]):
                 self.actions_of_bot(j, i, x, y)
 
@@ -100,9 +100,9 @@ class Handler:
             get_dir_and_action(x, y, self.Map)
 
         if (dx != 0 or dy != 0) and action:
-            self.action(i, x, y, dx, dy, action)
+            self.action(i, j, x, y, dx, dy, action)
 
-    def action(self, i, x, y, dx, dy, action):
+    def action(self, i, j, x, y, dx, dy, action):
         bot = self.Map.Field[x][y].Bot_ref
         cell = self.Map.Field[x + dx][y + dy]
 
@@ -157,25 +157,30 @@ class Handler:
         self.BotPopulation[1].append(random.choice(self.BotPopulation[0]))
         self.BotPopulation[1].append(random.choice(self.BotPopulation[2]))
         self.BotPopulation[1][-1].Dna.Biom, self.BotPopulation[1][-2].Dna.Biom = 2, 2
-        self.BotPopulation[1][-1].set_color()
-        self.BotPopulation[1][-2].set_color()
             
         self.BotPopulation[2].append(random.choice(self.BotPopulation[0]))
         self.BotPopulation[2].append(random.choice(self.BotPopulation[1]))
         self.BotPopulation[2][-1].Dna.Biom, self.BotPopulation[2][-2].Dna.Biom = 3, 3
-        self.BotPopulation[2][-1].set_color()
-        self.BotPopulation[2][-2].set_color()
             
 
     def get_full_population(self):
-        while len(self.BotPopuation[0]) < self.World_par.NumBots1:
-            self.BotPopulation[0].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[0]), ga.Selection.get_parent(self.BotPopulation[0]))
+        i = len(self.BotPopulation[0])
+        count = i
+        while i < self.World_par.NumBots1:
+            self.BotPopulation[0].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[0][:count]), ga.Selection.get_parent(self.BotPopulation[0][:count]), 1))
+            i = len(self.BotPopulation[0])
 
-        while len(self.BotPopuation[1]) < self.World_par.NumBots1:
-            self.BotPopulation[1].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[1]), ga.Selection.get_parent(self.BotPopulation[1]))
+        i = len(self.BotPopulation[1])
+        count = i
+        while i < self.World_par.NumBots2:
+            self.BotPopulation[1].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[1][:count]), ga.Selection.get_parent(self.BotPopulation[1][:count]), 2))
+            i = len(self.BotPopulation[1])
 
-        while len(self.BotPopuation[2]) < self.World_par.NumBots1:
-            self.BotPopulation[2].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[2]), ga.Selection.get_parent(self.BotPopulation[2]))
+        i = len(self.BotPopulation[2])
+        count = i
+        while i < self.World_par.NumBots3:
+            self.BotPopulation[2].append(ga.Selection.get_child(ga.Selection.get_parent(self.BotPopulation[2][:count]), ga.Selection.get_parent(self.BotPopulation[2][:count]), 3))
+            i = len(self.BotPopulation[2])
 
 
     def selection_after_chaos(self):
@@ -209,14 +214,18 @@ class Handler:
 
 
     def selection_before_chaos(self):
-        sort(self.BotPopulation[0], key = lambda bot: return bot.get_adaptation_value())
-        sort(self.BotPopulation[1], key = lambda bot: return bot.get_adaptation_value())
-        sort(self.BotPopulation[2], key = lambda bot: return bot.get_adaptation_value())
+        def sort_adaptation(bot):
+            return bot.get_adaptation_value()
+
+
+        self.BotPopulation[0].sort(key=sort_adaptation)
+        self.BotPopulation[1].sort(key=sort_adaptation)
+        self.BotPopulation[2].sort(key=sort_adaptation)
         
         COUNT_PARENTS = 10
-        del self.BotPopulationp[0][COUNT_PARENTS:]
-        del self.BotPopulationp[1][COUNT_PARENTS:]
-        del self.BotPopulationp[2][COUNT_PARENTS:]
+        del self.BotPopulation[0][COUNT_PARENTS:]
+        del self.BotPopulation[1][COUNT_PARENTS:]
+        del self.BotPopulation[2][COUNT_PARENTS:]
 
         migration_enable = (self.Period % 10) == 0
         if migration_enable:
@@ -227,13 +236,14 @@ class Handler:
 
         self.get_full_population()
 
-        for biomBots in self.BotPopulation:
-            for i, bot in enumerate(biomBots):
+        for j in range(3):
+            for i, bot in enumerate(self.BotPopulation[j]):
                 if migration_enable and i > COUNT_PARENTS + 2:
                     break
                 elif not migration_enable and i > COUNT_PARENTS:
                     break
                 bot.Age += 1
+                bot.Life = 300
                 bot.DeathTick = 0
 
     def print_in_log(self):
@@ -241,10 +251,9 @@ class Handler:
         print(f"Number of bots = {len(self.BotCoordinates)}")
         print(f"Number of bots = {len(self.BotCoordinates)}")
 
-        for j in range(2):
-            for i, (x, y) in enumerate(self.BotCoordinates[j]):
-                print(f"Coordinates: x = {x}, y = {y}")
-                self.Map.Field[x][y].Bot_ref.print_info()
+        for j in range(3):
+            for bot in self.BotPopulation[j]:
+                bot.print_info()
 
         print(f"Ticks = {self.Tick}")
 
@@ -257,6 +266,7 @@ class Handler:
             if countBots < 0.2 * (self.World_par.NumBots1 + self.World_par.NumBots2 + self.World_par.NumBots3) or self.Tick == 1500:
                 self.Period += 1
                 self.Map.clear()
+                self.BotCoordinates = [[], [], []]
 
                 self.selection_before_chaos()
 
@@ -268,7 +278,7 @@ class Handler:
 
                 self.Tick = 0
         else:
-            if self.Tick % 100 == 0:
+            if self.Tick % 1 == 0:
                 self.selection_after_chaos()
 
         if not self.Tick % self.World_par.T_1:

@@ -14,7 +14,7 @@ class MapCell:
 
     def get_color(self):
         if self.is_bot_here():
-            return self.Bot_ref.Color
+            return self.Bot_ref.color()
         if self.is_food_here():
             return self.Food_ref.Color
         return self.Biom_color[self.Biom]

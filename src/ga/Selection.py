@@ -12,14 +12,15 @@ class Selection(GenAlgo):
 
         for bot in bots:
             p = bot.get_adaptation_value() / sum_adaptation
-            if v_1 - p <= 0:
+            v_1 -= p
+            if v_1 <= 0:
                 return bot
 
 
     def check_diff(dna_1, dna_2):
         ans = 0
-        for i in len(dna_1):
-            ans += dna_1 ^ dna_2
+        for i in range(len(dna_1)):
+            ans += dna_1[i] ^ dna_2[i]
         return ans
 
 
@@ -37,7 +38,9 @@ class Selection(GenAlgo):
 
         return ans
 
-    def get_child(bot_1, bot_2):
-        child = bot.Bot(4)
-        child.Dna = Selection.crossing(bot_1.Dna, bot_2.Dna)
-        child.Ai = Selection.crossing(bot_1.Ai, bot_2.Ai)
+    def get_child(bot_1, bot_2, biom):
+        child = bot.Bot(biom)
+        child.Dna.Gens = Selection.crossing(bot_1.Dna.Gens, bot_2.Dna.Gens)
+        child.Ai.Gens = Selection.crossing(bot_1.Ai.Gens, bot_2.Ai.Gens)
+
+        return child

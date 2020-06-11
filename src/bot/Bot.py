@@ -17,14 +17,13 @@ class Bot:
         self.Curr_direction = random.randint(0, 7)
         self.Pointer_of_ai = 0
         self.Life = 300
-        self.set_color()
         self.DeathTick = 0
         self.Age = 0  
         # amount of ticks for one move
         self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
 
-    def set_color(self):
-        self.Color = self.Biom_bot_color[self.Dna.Biom]
+    def color(self):
+        return self.Biom_bot_color[self.Dna.Biom]
 
     def get_dir_and_action(self, x, y, map_):
         """ 0..39 - move
@@ -78,13 +77,15 @@ class Bot:
         print("Curr_direction = " + str(self.Curr_direction))
         print("Pointer_of_ai  = " + str(self.Pointer_of_ai))
         print("Life  = " + str(self.Life))
+        print("Age  = " + str(self.Age))
+        print("Death  = " + str(self.DeathTick))
         self.Dna.print_info()
         self.Ai.print_info()
         print("\n\n")
 
     def get_adaptation_value(self):
         value = self.Age * 1000
-        value += 2000 if not self.DeathTime else self.DeathTime * 10
+        value += 2000 if not self.DeathTick else self.DeathTick * 10
         value += self.Life
         return value
 
