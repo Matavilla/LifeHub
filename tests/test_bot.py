@@ -47,9 +47,9 @@ class Test_AI:
 
 class Test_Bot:
     def test_color(self):
-        assert b1.color() == (25, 23, 163)
-        assert b2.color() == (176, 163, 42)
-        assert b3.color() == (173, 50, 58)
+        assert b1.color() == (0, 0, 255)
+        assert b2.color() == (255, 255, 224)
+        assert b3.color() == (255, 0, 255)
 
     def test_get_dir_and_action(self):
         dx1, dy1, action1 = b1.get_dir_and_action(0, 0, tmp_map)
