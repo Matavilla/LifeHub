@@ -125,7 +125,7 @@ def CloseAllWindow():
         CloseWindow(i)
 
 
-def GenField(win, _text , borders , interval = (1,99)):
+def GenField(win, _text, borders, interval=(1,99)):
     '''Вспомогательная функция, делает окно с параметрами'''
     line,col = borders
     tkinter.Label(win, text=_text).grid(row=line, column=col, sticky='W',
