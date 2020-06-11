@@ -11,7 +11,7 @@ class GenAlgo:
             return random.choice(GenAlgo.two_point_crossover(dna_1, dna_2))
         elif tmp == 2:
             return random.choice(GenAlgo.uniform_crossover(dna_1, dna_2))
-    
+
     def mutation(dna, p):
         tmp = random.randint(0, 3)
         if tmp == 0:
@@ -28,7 +28,7 @@ class GenAlgo:
                     GenAlgo.inversion_mutation(dna)
         elif tmp == 3:
             if random.randint(0, 100) < p:
-                 GenAlgo.shuffle_mutation(dna)
+                GenAlgo.shuffle_mutation(dna)
 
     def single_point_crossover(dna_1, dna_2):
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()

@@ -1,5 +1,6 @@
-from GUI import Field, StartGame
+from GUI import Field, StartGame # noqa : F401
 from src.map import Map
+
 
 class Test_Field:
     def test_create_grid(self) -> None:

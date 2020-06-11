@@ -8,6 +8,6 @@ class Test_Food:
         f2.Food_value, f2.Toxic_value = 120, 30
         f3.Food_value, f3.Toxic_value = 30, 200
         f1.set_color(), f2.set_color(), f3.set_color()
-        assert f1.Color == (30, 200, 30)
-        assert f2.Color == (30, 240, 30)
-        assert f3.Color == (30, 60, 30)
+        assert f1.Color == (255, 255, 0)
+        assert f2.Color == (60, 255, 0)
+        assert f3.Color == (255, 60, 0)

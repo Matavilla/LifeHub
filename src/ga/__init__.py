@@ -1,1 +1,1 @@
-from src.ga.Selection import Selection
+from src.ga.Selection import Selection # noqa : F401
