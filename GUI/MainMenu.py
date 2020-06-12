@@ -163,7 +163,7 @@ def ParamWindow(parameters):
                           numBots2.get(),
                           numBots3.get())
         if not parameters:
-            messagebox.showerror("Error", "Wrong value of parameters")
+            messagebox.showerror("Ошибка", "Неверное значение параметров")
 
     def FullRandom(*args, **kwargs):
         '''Установка рандомных параметров в заданных
