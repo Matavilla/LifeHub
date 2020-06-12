@@ -22,7 +22,6 @@ class WorldParameters:
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
-        # self.AmountOfPoison = int(poison)
 
         # generation period of food and poison
         self.T_1 = int(t_1)
@@ -201,7 +200,7 @@ def ParamWindow(parameters):
         return
 
     win = tkinter.Tk()
-    MakeWindowResizable(win, 7, 13)
+    MakeWindowResizable(win, 7, 10)
     WINDOWS.append(win)
 
     win.title('Окно параметров')
@@ -332,11 +331,5 @@ def StartMenu(wPar):
 
     paramBtn.grid(row=3, column=2, padx=20, pady=20)
     paramBtn.bind('<Button>', lambda event: ParamWindow(wPar))
-
-    # btn = tkinter.Button(mainWindow,
-    #                      text='Начать симуляцию',
-    #                      font='Arial 24',
-    #                      bd=5, width=25)
-    # btn.grid(row=4, column=2, padx=20, pady=20)
 
     mainWindow.mainloop()
