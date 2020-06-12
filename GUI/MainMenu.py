@@ -51,11 +51,11 @@ class WorldParameters:
             return False
         if not 0 < self.T_3 < 10:
             return False
-        if not 0 < self.NumBots1 < 100:
+        if not 20 < self.NumBots1 < 150:
             return False
-        if not 0 < self.NumBots2 < 100:
+        if not 20 < self.NumBots2 < 150:
             return False
-        if not 0 < self.NumBots3 < 100:
+        if not 20 < self.NumBots3 < 150:
             return False
         print("[LOG] OK")
         return True
@@ -170,16 +170,16 @@ def ParamWindow(parameters):
 
         '''
         RandValue(tick, 1, 999)
-        RandValue(chaos, 1, 999)
+        RandValue(chaos, 1, 99)
         RandValue(food, 1, 999)
 
         RandValue(biom1, 1, 9)
         RandValue(biom2, 1, 9)
         RandValue(biom3, 1, 9)
 
-        RandValue(numBots1, 1, 99)
-        RandValue(numBots2, 1, 99)
-        RandValue(numBots3, 1, 99)
+        RandValue(numBots1, 21, 149)
+        RandValue(numBots2, 21, 149)
+        RandValue(numBots3, 21, 149)
 
         SaveParameters(parameters)
 
@@ -232,6 +232,7 @@ def ParamWindow(parameters):
 
     biom3 = GenField(win, "Биом 3:", (4,0),(1,999))
     VidgAccord.update({biom3: parameters.T_3})
+
 
 
     tkinter.Label(win, text="Начальное кол-во ботов:").grid(row=5,

@@ -3,7 +3,34 @@ import array
 
 
 class GenAlgo:
-    def single_point_crossover(self, dna_1, dna_2):
+    def crossover(dna_1, dna_2):
+        tmp = random.randint(0, 2)
+        if tmp == 0:
+            return random.choice(GenAlgo.single_point_crossover(dna_1, dna_2))
+        elif tmp == 1:
+            return random.choice(GenAlgo.two_point_crossover(dna_1, dna_2))
+        elif tmp == 2:
+            return random.choice(GenAlgo.uniform_crossover(dna_1, dna_2))
+
+    def mutation(dna, p):
+        tmp = random.randint(0, 3)
+        if tmp == 0:
+            for i in range(random.randint(1, len(dna))):
+                if random.randint(0, 100) < p:
+                    GenAlgo.random_mutation(dna)
+        elif tmp == 1:
+            for i in range(random.randint(1, len(dna))):
+                if random.randint(0, 100) < p:
+                    GenAlgo.swap_mutation(dna)
+        elif tmp == 2:
+            for i in range(random.randint(1, len(dna))):
+                if random.randint(0, 100) < p:
+                    GenAlgo.inversion_mutation(dna)
+        elif tmp == 3:
+            if random.randint(0, 100) < p:
+                GenAlgo.shuffle_mutation(dna)
+
+    def single_point_crossover(dna_1, dna_2):
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -14,7 +41,7 @@ class GenAlgo:
 
         return (res_dna_1, res_dna_2)
 
-    def two_point_crossover(self, dna_1, dna_2):
+    def two_point_crossover(dna_1, dna_2):
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -28,7 +55,7 @@ class GenAlgo:
 
         return (res_dna_1, res_dna_2)
 
-    def uniform_crossover(self, dna_1, dna_2):
+    def uniform_crossover(dna_1, dna_2):
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -46,23 +73,23 @@ class GenAlgo:
 
         return (res_dna_1, res_dna_2)
 
-    def random_mutation(self, dna):
+    def random_mutation(dna):
         SIZE_CHAR = 256
         index = random.randint(0, len(dna) - 1)
         dna[index] = random.randint(0, SIZE_CHAR ** dna.itemsize - 1)
 
-    def swap_mutation(self, dna):
+    def swap_mutation(dna):
         gen_1 = random.randint(0, len(dna) - 1)
         gen_2 = random.randint(0, len(dna) - 1)
         tmp = dna[gen_1]
         dna[gen_1] = dna[gen_2]
         dna[gen_2] = tmp
 
-    def inversion_mutation(self, dna):
+    def inversion_mutation(dna):
         gen = random.randint(0, len(dna) - 1)
-        dna[gen] = abs(~dna[gen])  # why not
+        dna[gen] = abs(~dna[gen]) % 256  # why not
 
-    def shuffle_mutation(self, dna):
+    def shuffle_mutation(dna):
         point_1 = random.randint(0, len(dna) // 2)
         point_2 = random.randint(point_1 + 1, len(dna))
         tmp = dna[point_1:point_2].tolist()
