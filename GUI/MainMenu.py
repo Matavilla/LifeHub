@@ -17,7 +17,7 @@ class WorldParameters:
         self.update()
         self.set_world_size('little')
 
-    def update(self, tick=0, chaos=0, food=0, poison=0,
+    def update(self, tick=0, chaos=0, food=0,
                t_1=0, t_2=0, t_3=0, numB1=0, numB2=0, numB3=0):
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
