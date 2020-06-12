@@ -102,7 +102,7 @@ def InfoParameters(win):
     tkinter.Label(window, text=MsgScreen).grid(row=5, column=0, sticky='W',
                                              padx=10, pady=10)
 
-    EndButton = tkinter.Button(window, text="Ok", width=4)
+    EndButton = tkinter.Button(window, text="Ясно", width=4)
     EndButton.grid(row=6, sticky='WE',padx=10, pady=10)
     EndButton.bind('<Button>', lambda event: window.destroy())
 
@@ -271,15 +271,15 @@ def ParamWindow(parameters):
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("large"))
 
-    buttonSave = tkinter.Button(win, text="Сохранить", height=1, width=10, background = "#555",foreground = "#ccc")
+    buttonSave = tkinter.Button(win, text="Сохранить", height=1, width=10, background="#555",foreground="#ccc")
     buttonSave.grid(row=10, column=3,padx=30, pady=30)
     buttonSave.bind('<Button>', lambda event: SaveParameters(parameters))
 
-    buttonRandAll = tkinter.Button(win, text="На удачу!", height=1, width=10, background = "#555",foreground = "#ccc")
+    buttonRandAll = tkinter.Button(win, text="На удачу!", height=1, width=10, background="#555",foreground="#ccc")
     buttonRandAll.grid(row=10, column=1, padx=30, pady=30)
     buttonRandAll.bind('<Button>', FullRandom)
 
-    buttonInfo = tkinter.Button(win, text="Информация", height=1, width=10, background = "#555",foreground = "#ccc")
+    buttonInfo = tkinter.Button(win, text="Информация", height=1, width=10, background="#555",foreground="#ccc")
     buttonInfo.grid(row=10, column=5, padx=30, pady=30)
     buttonInfo.bind('<Button>', lambda event: InfoParameters(win))
 
