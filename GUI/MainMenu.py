@@ -1,3 +1,8 @@
+"""
+Данный модуль отвечает за вывод стартового меню на экран, а также за ввод
+всех необходимых параметров вселенной.
+"""
+
 import tkinter
 from tkinter import messagebox
 from random import randint
