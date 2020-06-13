@@ -1,4 +1,4 @@
-Генерация еды (src.food package)
+Еда (src.food package)
 =================================
 
 src.food.Food module

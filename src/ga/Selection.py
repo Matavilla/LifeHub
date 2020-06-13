@@ -4,12 +4,13 @@ from src.ga.GenAlgo import GenAlgo
 
 
 class Selection(GenAlgo):
-    """ Класс отвечающий за селекцию между клетками ботов
+    """ Класс, осуществляющий селекцию ботов.
     """
     def get_parent(bots):
-        """ Возвращает отца
+        """ Функция выбора родителя - "колесо фортуны".
 
-        :return:
+        :param bots: Популяция ботов.
+        :return bot: Родитель.
         """
         v_1 = random.randint(0, 99) / 100
         sum_adaptation = 0
@@ -23,10 +24,10 @@ class Selection(GenAlgo):
                 return bot
 
     def check_diff(dna_1, dna_2):
-        """ Находим разницу между ДНК
+        """ Функция, определяющая расстояние Хемминга 2 массивов.
 
-        :param dna_2: ДНК второй клетки при селекции
-        :return:
+        :param dna: Массивы битов.
+        :return R: Расстояние Хемминга.
         """
         ans = 0
         for i in range(len(dna_1)):
@@ -34,10 +35,10 @@ class Selection(GenAlgo):
         return ans
 
     def crossing(gens_1, gens_2):
-        """ Селекция между клетками
+        """ Функция скрещивания 2 генотипов.
 
-        :param gens_2: гены второй клетки при селекции
-        :return:
+        :param gens: Генотипы.
+        :return gen: Генотип после скрещивания.
         """
         p_mut = 20
         dif = Selection.check_diff(gens_1, gens_2)
@@ -53,11 +54,11 @@ class Selection(GenAlgo):
         return ans
 
     def get_child(bot_1, bot_2, biom):
-        """ Что-то с ребёнком
+        """ Функция создания бота-ребенка от 2 родителей.
 
-        :param bot_2:
-        :param biom:
-        :return:
+        :param bot: Родители бота.
+        :param biom: Биом ботов.
+        :return child: Ребенок-бот.
         """
         child = bot.Bot(biom)
         child.Dna.Gens = Selection.crossing(bot_1.Dna.Gens, bot_2.Dna.Gens)

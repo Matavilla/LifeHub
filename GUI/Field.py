@@ -2,7 +2,7 @@ import pygame
 
 
 class Field:
-    """ Данный класс описывает игровое поле
+    """ Класс, который выводит игровое поле в окно.
     """
     def __init__(self, w: int, h: int, world_size: int) -> None:
         self.LengthWindow = min((3 * w) // 4, (3 * h) // 4)
@@ -13,10 +13,9 @@ class Field:
                                                self.LengthWindow))
 
     def create_grid(self, Map) -> None:
-        """ Обновляет сетку и красит её в соответующие цвета
+        """ Функция, выводящая игровое поле в окно.
 
-        :param Map: Сетка игрового поля
-        :return: Обновляет сетку игрового поля
+        :param Map: Игровое поле.
         """
         for y in range(Map.Size):
             for x in range(Map.Size):
@@ -27,10 +26,9 @@ class Field:
 
 
 def StartGame(handler):
-    """ Начинает игру и проверяет валидность параметров
+    """ Класс, создающий окно.
 
-    :param handler: Обработчик вселенной
-    :return: Приступает к началу игры
+    :param handler: Обработчик вселенной.
     """
     pygame.init()
     clock = pygame.time.Clock()

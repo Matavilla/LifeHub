@@ -3,14 +3,12 @@ import array
 
 
 class GenAlgo:
-    """ Класс отвечающий за генетический алгоритм
-
+    """ Контейнер алгоритмов кроссинговера и мутаций.
     """
     def crossover(dna_1, dna_2):
-        """ Скрещивание текущей днк и днк2.
+        """ Шаблон выбора случайного кроссинговера для скрещивания.
 
-        :param dna_2: днк того, с кем идёт скрещивание.
-        :return: Результат работы генетического алгоритма по скрещиванию.
+        :param dna: Генотипы для скрещивания.
         """
         tmp = random.randint(0, 2)
         if tmp == 0:
@@ -21,10 +19,10 @@ class GenAlgo:
             return random.choice(GenAlgo.uniform_crossover(dna_1, dna_2))
 
     def mutation(dna, p):
-        """ Мутация текущей клетки днк
+        """ Шаблон выбора случайной мутации для генотипа.
 
-        :param p: ?
-        :return: Результат работы генетического алгоритма по скрешиванию
+        :param dna: Генотип для мутации.
+        :param p: Вероятность мутации.
         """
         tmp = random.randint(0, 3)
         if tmp == 0:
@@ -44,9 +42,10 @@ class GenAlgo:
                 GenAlgo.shuffle_mutation(dna)
 
     def single_point_crossover(dna_1, dna_2):
-        """ Halp
+        """ Функция одноточечного кроссинговера.
 
-        :return:
+        :param dna: Генотипы для кроссинговера.
+        :return (dna_1, dna_2): Результаты скрещивания. 
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
@@ -59,9 +58,10 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def two_point_crossover(dna_1, dna_2):
-        """ Halp
+        """ Функция двухточечного кроссинговера.
 
-        :return:
+        :param dna: Генотипы для кроссинговера.
+        :return (dna_1, dna_2): Результаты скрещивания. 
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
@@ -77,9 +77,10 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def uniform_crossover(dna_1, dna_2):
-        """ Halp
+        """ Функция равномерного кроссинговера.
 
-        :return:
+        :param dna: Генотипы для кроссинговера.
+        :return (dna_1, dna_2): Результаты скрещивания. 
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
@@ -99,18 +100,18 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def random_mutation(dna):
-        """ Halp
+        """ Функция случайной мутации.
 
-        :return:
+        :param dna: Генотип для мутации.
         """
         SIZE_CHAR = 256
         index = random.randint(0, len(dna) - 1)
         dna[index] = random.randint(0, SIZE_CHAR ** dna.itemsize - 1)
 
     def swap_mutation(dna):
-        """ Halp
+        """ Функция мутации перестановкой.
 
-        :return:
+        :param dna: Генотип для мутации.
         """
         gen_1 = random.randint(0, len(dna) - 1)
         gen_2 = random.randint(0, len(dna) - 1)
@@ -119,17 +120,17 @@ class GenAlgo:
         dna[gen_2] = tmp
 
     def inversion_mutation(dna):
-        """ Halp
+        """ Функция инверсной мутации.
 
-        :return:
+        :param dna: Генотип для мутации.
         """
         gen = random.randint(0, len(dna) - 1)
         dna[gen] = abs(~dna[gen]) % 256  # why not
 
     def shuffle_mutation(dna):
-        """ Halp
+        """ Функция мутации перстановками.
 
-        :return:
+        :param dna: Генотип для мутации.
         """
         point_1 = random.randint(0, len(dna) // 2)
         point_2 = random.randint(point_1 + 1, len(dna))

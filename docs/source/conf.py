@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = u'LifeHub'
-copyright = u'2020, Voland'
-author = u'Voland'
+copyright = u'2020, LifeHubTeam'
+author = u'LifeHubTeam'
 
 # The short X.Y version
 version = u''
@@ -130,7 +130,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'LifeHub.tex', u'LifeHub Documentation',
-     u'Voland', 'manual'),
+     u'LifeHubTeam', 'manual'),
 ]
 
 
