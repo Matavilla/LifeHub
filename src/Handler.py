@@ -28,8 +28,6 @@ class Handler:
         """ Функция, создающая игровое поле.
 
 >>> from GUI.MainMenu import WorldParameters
-pygame 1.9.6
-Hello from the pygame community. https://www.pygame.org/contribute.html
 >>> world_par = WorldParameters()
 >>> world_par.update(100, 10, 50, 9, 9, 9, 50, 50, 50)
 >>> world_par.update(100, 10, 50, 9, 9, 9, 2, 2, 2)
@@ -278,6 +276,29 @@ True
        :param x,y: Координаты бота
        :param dx,dy: Смещение бота.
        :param action: Действие бота.
+
+>>> from GUI.MainMenu import WorldParameters
+pygame 1.9.6
+Hello from the pygame community. https://www.pygame.org/contribute.html
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 1, 9, 9, 9, 1, 1, 1)
+>>> world_par.WorldSize = 100
+>>> hr = Handler(world_par)
+>>> hr.create_map()
+>>> hr.Map.Field[0][0].Bot_ref = bot.Bot(1)
+>>> hr.Map.Field[2][2].Bot_ref = bot.Bot(1)
+>>> hr.Map.Field[0][1].Bot_ref = bot.Bot(1)
+>>> hr.BotCoordinates = {1: [(0, 0), (0, 0), (0, 0), (0, 0)]}
+>>> hr.action(0, 1, 2, 2, -1, -1, "move")
+>>> hr.Map.Field[1][1].Bot_ref is not None
+True
+>>> hr.Map.Field[2][2].Bot_ref is None
+True
+>>> hr.action(0, 1, 0, 0, 0, 1, "move")
+>>> hr.Map.Field[0][0].Bot_ref is not None
+True
+>>> hr.Map.Field[0][1].Bot_ref is None
+False
        """
 
         bot = self.Map.Field[x][y].Bot_ref
