@@ -3,6 +3,8 @@ import array
 
 
 class Dna:
+    """ Класс описывающий ДНК
+    """
     Value_names = ["speed", "sensity", "power",
                    "agression", "armor", "weather_resistance_1",
                    "weather_resistance_2", "weather_resistance_3",
@@ -44,6 +46,15 @@ class Dna:
             self.set_value("poison_vulnerability", random.randint(12, 38))
 
     def set_value(self, name: str, value: int) -> None:
+        """ Устанавливает значения
+
+        :param name:
+        :type name: str
+        :param value:
+        :type value: int
+        :raise Exception: if Shit happen
+        :return: Устанавливает заданные значение
+        """
         try:
             self.Gens.append(value)
             self.Index[name] = len(self.Gens) - 1
@@ -54,6 +65,10 @@ class Dna:
         return self.Gens[self.Index[name]]
 
     def print_info(self):
+        """ Выводит отладочную информацию о ДНК
+
+        :return:
+        """
         print("Biom = " + str(self.Biom))
         print("Gens Dna: ")
         print("\tspeed = " + str(self.get("speed")))

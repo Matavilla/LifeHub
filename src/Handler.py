@@ -8,6 +8,13 @@ DEBUG = True
 
 
 class Handler:
+    """ Обработчик вселенной.
+
+    Выполняет все действия вселенной за один тик времени.
+
+    Хранит игровое поле со всеми объектами
+
+    """
     def __init__(self, worldPar):
         self.World_par = worldPar
         self.Map = None
@@ -17,10 +24,18 @@ class Handler:
         self.Period = 0
 
     def create_map(self):
+        """ Создает игровое поле
+
+        :return: Сгенерированное игровое поле
+        """
         self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
     def spawn_start_food(self):
+        """ Генерирует еду в начальный момент времени во всех биомах
+
+        :return: Еда на сгенерированном поле в начальный момент времени
+        """
         count = self.World_par.AmountOfFood
         self.spawn_food(1, count, False)
 
@@ -31,6 +46,10 @@ class Handler:
         self.spawn_food(3, count, False)
 
     def create_world(self):
+        """ Объединяет ботов, игровое поле и еду для начала игры
+
+        :return: Готовое игровое поле
+        """
         self.create_map()
 
         self.spawn_start_food()
@@ -45,6 +64,14 @@ class Handler:
         self.spawn_bots(3, count)
 
     def spawn_food(self, biom, count, respawn=True):
+        """ Генерирует еду в биоме
+
+        :param biom: биом в котором генерируется еда
+        :param count: количество еды в данном биоме
+        :param respawn: может ли функция сработать несколько раз?
+        :return: В каждом биоме генерируется еда
+
+        """
         while count:
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
             while self.Map.Field[x][y].is_bot_here()\
@@ -54,6 +81,12 @@ class Handler:
             count -= 1
 
     def spawn_bots(self, biom, count):
+        """ Генерирует ботов в биоме
+
+        :param biom: биом в котором генерируется бот
+        :param count: количество ботов в данном биоме
+        :return: Боты сгенерируются в каждом биоме в определенном количестве
+        """
         if len(self.BotPopulation[biom - 1]) != count:
                 count -= len(self.BotPopulation[biom - 1])
                 while count:
@@ -68,11 +101,31 @@ class Handler:
             self.BotCoordinates[biom - 1].append((x, y))
 
     def actions_of_bots(self):
+        """ Определеляет действия ботов
+
+        :return: Дальнейшие действия ботов
+        """
         for j in range(3):
             for i, (x, y) in enumerate(self.BotCoordinates[j]):
                 self.actions_of_bot(j, i, x, y)
 
     def actions_of_bot(self, j, i, x, y):
+        """ Определеяет действия каждого из ботов
+
+        :param j: biom number - 1
+        :type j: int
+
+        :param i: index of bot position in auxiliaty list
+        :type i: int
+
+        :param x: x coordinate of bot
+        :type x: int
+
+        :param y: y coordinate of bot
+        :type y: int
+
+        :return:
+        """
         self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
         bot = self.Map.Field[x][y].Bot_ref
@@ -105,6 +158,30 @@ class Handler:
             self.action(i, j, x, y, dx, dy, action)
 
     def action(self, i, j, x, y, dx, dy, action):
+        """ Perform an action of bot in corresponding with his AI.
+
+       :param j: biom number - 1
+       :type j: int
+
+       :param i: index of bot position in auxiliaty list
+       :type i: int
+
+       :param x: x coordinate of bot
+       :type x: int
+
+       :param y: y coordinate of bot
+       :type y: int
+
+       :param dx: bias of bot in map in direction of x coordinate
+       :type dx: int
+
+       :param dy: bias of bot in map in direction of y coordinate
+       :type dy: int
+
+       :param action: move or attack
+       :type action: str
+       """
+
         bot = self.Map.Field[x][y].Bot_ref
         cell = self.Map.Field[x + dx][y + dy]
 
@@ -154,6 +231,10 @@ class Handler:
                 self.BotCoordinates[j][i] = (x + dx, y + dy)
 
     def migration_bots(self):
+        """ Определяет перемещение ботов
+
+        :return: Итоговая позиция ботов
+        """
         self.BotPopulation[0].append(random.choice(self.BotPopulation[1]))
         self.BotPopulation[0].append(random.choice(self.BotPopulation[2]))
         self.BotPopulation[0][-1].Dna.Biom = 1
@@ -170,6 +251,10 @@ class Handler:
         self.BotPopulation[2][-2].Dna.Biom = 3
 
     def get_full_population(self):
+        """ Получение полной популяции (Я хз как перевести)
+
+        :return: (Я просто ХЗ ЧТО ПИСАТЬ ТУТ)
+        """
         i = len(self.BotPopulation[0])
         count = i
         while i < self.World_par.NumBots1:
@@ -198,6 +283,10 @@ class Handler:
             i = len(self.BotPopulation[2])
 
     def selection_after_chaos(self):
+        """ Определяет происходящее после момента селекции
+
+        :return: Новые виды клеток с новыми параметрами
+        """
         i, j = len(self.BotPopulation[0]), len(self.BotPopulation[1])
         k = len(self.BotPopulation[2])
 
@@ -228,6 +317,10 @@ class Handler:
             self.BotCoordinates[2].append((x, y))
 
     def selection_before_chaos(self):
+        """ Определяет селекцию до пикового момента
+
+        :return: Новые виды клеток с новыми параметрами
+        """
         def sort_adaptation(bot):
             return bot.get_adaptation_value()
 
@@ -260,6 +353,10 @@ class Handler:
                 bot.DeathTick = 0
 
     def print_in_log(self):
+        """ Дебажная функция выводящая информацию о ботах
+
+        :return: Логи с информацией
+        """
         print(f"Number of bots = {len(self.BotCoordinates)}")
         print(f"Number of bots = {len(self.BotCoordinates)}")
         print(f"Number of bots = {len(self.BotCoordinates)}")
@@ -271,9 +368,10 @@ class Handler:
         print(f"Ticks = {self.Tick}")
 
     def RunOnTick(self):
-        '''Готовит изображение для вывода
+        """Готовит изображение для вывода
 
-        '''
+        :return: Новое изображение
+        """
         if self.Period < self.World_par.ChaosMoment:
             countBots = len(self.BotCoordinates[0])
             countBots += len(self.BotCoordinates[1])

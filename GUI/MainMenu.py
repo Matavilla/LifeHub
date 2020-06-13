@@ -7,18 +7,44 @@ WINDOWS = list()
 
 
 class WorldParameters:
-    '''Параметры вселенной
+    """ Основной класс описывающий параметры мира содержащий глобальный словарь Scale
 
-    '''
+    :param Scale: Словарь соотносящий название с коэффицентом отношения """
+
 
     Scale = {'little': 4, 'medium': 2, 'large': 1}
+    # Scale.__doc__ = "Словарь соотносящий название с коэффицентом отношения"
 
     def __init__(self):
+
         self.update()
         self.set_world_size('little')
 
     def update(self, tick=0, chaos=0, food=0,
                t_1=0, t_2=0, t_3=0, numB1=0, numB2=0, numB3=0):
+        """ Обновление информации о составляющих мира
+
+        :param tick: Тик вселенной
+        :type tick: int
+        :param chaos: Момент хаоса
+        :type chaos: int
+        :param food: Количество еды
+        :type food: int
+        :param t_1: Период генирации еды в первом биоме
+        :type t_1: int
+        :param t_2: Период генерации еды во втором биоме
+        :type t_2: int
+        :param t_3: Период генерации еды в третьем биоме
+        :type t_3: int
+        :param numB1: Начальное количество клеток в первом биоме
+        :type numB1: int
+        :param numB2: Начальное количество клеток во втором биоме
+        :type numB2: int
+        :param numB3: Начальное количество клеток в третьем биоме
+        :type numB3: int
+        :rtype: None
+        :return: Обновляет информацию о мире
+        """
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
@@ -34,10 +60,20 @@ class WorldParameters:
         self.NumBots3 = int(numB3)
 
     def set_world_size(self, mode):
+        """ Устанавливает размер игровой карты в зависимости от параметра
+
+        :param mode: Переменная характризующая размер
+        :return: Сохрнаяет размер карты внутри класса
+        """
         MAX_WORLD_SIZE = 400
         self.WorldSize = MAX_WORLD_SIZE // self.Scale[mode]
 
     def __bool__(self):
+        """Проверка валидности введённых параметров
+
+        :rtype: True/False
+        :return: Возвращает информацию о том, верно ли были введены параметры
+        """
         print("[LOG] Проверка параметров")
         if not 0 < self.TickUniverse < 1000:
             return False
@@ -61,6 +97,10 @@ class WorldParameters:
         return True
 
     def print_in_log(self):
+        """Функция для отладки
+
+        :return: Возврашает в поток вывода всю информацию класса
+        """
         print(f'TickOfUniverse = {self.TickUniverse}')
         print(f'ChaosMoment = {self.ChaosMoment}')
         print(f'AmountOfFood = {self.AmountOfFood}')
@@ -75,6 +115,13 @@ class WorldParameters:
 
 
 def InfoParameters(win):
+    """ Информация о параметрах меню настроек
+
+    :param win: Окно tkinter
+    :type win: <class 'tkinter.Tk'>
+    :return: None
+    """
+    print(type(win))
     window = tkinter.Toplevel(win)
     window.title('Информация')
     MsgTik = "Тик вселенной - как быстро происходит действия в игровом мире."
@@ -108,19 +155,43 @@ def InfoParameters(win):
 
 
 def CloseWindow(win):
+    """Закрытие указанного окна
+
+    :param win: Окно tkinter
+    :type win: <class 'tkinter.Tk'>
+    :rtype: None
+    :return: Закрывает указанное существующее окно
+    """
     global COUNT
     COUNT = 0
     win.destroy()
 
 
 def CloseAllWindow():
+    """ Закрытие всех существующих окон
+
+    :rtype: None
+    :return: Закрывает все окна
+    """
     global WINDOWS
     for i in WINDOWS:
         CloseWindow(i)
 
 
-def GenField(win, _text, borders, interval=(1,99)):
-    '''Вспомогательная функция, делает окно с параметрами'''
+def GenField(win, _text, borders, interval=(1,999)):
+    """ Вспомогательная функция, создает окно с параметрами, scrollbox и кнопку random
+
+    :param win: Окно tkinter
+    :type win: <class 'tkinter.Tk'>
+    :param _text: Текст сообщения
+    :type _text: str
+    :param borders: Кортеж данных, характеризующий (raw,column) для grid
+    :type borders: tuple
+    :param interval: Интервал чисел в котором кнопка random генерирует числа
+    :type interval: tuple
+    :rtype: None
+    :return: Добавляет в окно win дополнительное поле
+    """
     line,col = borders
     tkinter.Label(win, text=_text).grid(row=line, column=col, sticky='W',
                                          padx=10, pady=10)
@@ -134,24 +205,47 @@ def GenField(win, _text, borders, interval=(1,99)):
     return winParam
 
 def RandValue(vidget, _from, to):
+    """ Задаёт реакцию на нажатие кнопки random
+
+    :param vidget: виджет
+    :param _from: начало интервала для генерации случайного числа
+    :type _from: int
+    :param to: конец интервала для генерации случайных чисел
+    :rtype to: int
+    :return: Меняет значение в поле виджета на случайное сгенерированное число из интервала
+    """
+    print(type(vidget))
     vidget.delete(0, tkinter.END)
     vidget.insert(0, randint(_from, to))
 
 
-def OldVariables(allvid: dict) -> None:
+def OldVariables(allvid) -> None:
+    """ При открытие окна показывает сохраненные параметры при предыдущей генерации
+
+    :param allvid: Словарь значений всех переменных класса
+    :type allvid: dict
+    :rtype: None
+    :return: Возвращает старые параметры генерации
+    """
+
     for vidget in allvid:
         vidget.delete(0, tkinter.END)
         vidget.insert(0, allvid[vidget])
 
 
 def ParamWindow(parameters):
-    '''Создание окна с параметрами вселенной и сохранение параметров
+    """ Создание окна с параметрами вселенной и сохранение параметров
 
-    '''
+    :param parameters: параметры вселенной
+    :return: Обновленные параметры вселенной
+    """
+
     def SaveParameters(parameters):
-        '''Сохранить параметры
+        """ Сохранение параметров вселенной
 
-        '''
+        :param parameters: параметры вселенной
+        :return: Сохраняет параметры
+        """
         parameters.update(tick.get(),
                           chaos.get(),
                           food.get(),
@@ -165,10 +259,10 @@ def ParamWindow(parameters):
             messagebox.showerror("Ошибка", "Неверное значение параметров")
 
     def FullRandom(*args, **kwargs):
-        '''Установка рандомных параметров в заданных
-        интервалах
+        """ Делает параметры класса случайными величинами
 
-        '''
+        :return: Задаёт все параметрами случайными в допустимых интервалах
+        """
         RandValue(tick, 1, 999)
         RandValue(chaos, 1, 99)
         RandValue(food, 1, 999)
@@ -184,7 +278,14 @@ def ParamWindow(parameters):
         SaveParameters(parameters)
 
     def MakeWindowResizable(window, columns, lines):
-        '''Делает окно растягиваемым '''
+        """ Добавляет окну возможность растягиваться
+
+        :param win: Окно tkinter
+        :type win: <class 'tkinter.Tk'>
+        :param columns: Количество grid-колонок в окне
+        :param lines: Количество grid-линий в окне
+        :return: Делает окно растягиваемым
+        """
         for i in range(columns):
             window.grid_columnconfigure(i, weight=1)
         for i in range(lines):
@@ -208,13 +309,13 @@ def ParamWindow(parameters):
 
     VidgAccord = dict()
 
-    tick = GenField(win, "Tик вселенной:", (0,0), (1,999))
+    tick = GenField(win, "Tик вселенной:", (0,0))
     VidgAccord.update({tick:parameters.TickUniverse})
 
-    chaos = GenField(win, "Момент хаоса:", (0,4), (1,999))
+    chaos = GenField(win, "Момент хаоса:", (0,4))
     VidgAccord.update({chaos: parameters.ChaosMoment})
 
-    food = GenField(win, "Кол-во еды:", (1,0), (1,999))
+    food = GenField(win, "Кол-во еды:", (1,0))
     VidgAccord.update({food: parameters.AmountOfFood})
 
 
@@ -224,13 +325,13 @@ def ParamWindow(parameters):
                                                            pady=10,
                                                            columnspan=7)
 
-    biom1 = GenField(win, "Биом 1:", (3,0), (1,999))
+    biom1 = GenField(win, "Биом 1:", (3,0), (1,9))
     VidgAccord.update({biom1: parameters.T_1})
 
-    biom2 = GenField(win, "Биом 2:", (3,4), (1,999))
+    biom2 = GenField(win, "Биом 2:", (3,4), (1,9))
     VidgAccord.update({biom2:parameters.T_2})
 
-    biom3 = GenField(win, "Биом 3:", (4,0),(1,999))
+    biom3 = GenField(win, "Биом 3:", (4,0),(1,9))
     VidgAccord.update({biom3: parameters.T_3})
 
 
@@ -241,13 +342,13 @@ def ParamWindow(parameters):
                                                            pady=10,
                                                            columnspan=7)
 
-    numBots1 = GenField(win, "Биом 1:", (6,0))
+    numBots1 = GenField(win, "Биом 1:", (6,0),(21,149))
     VidgAccord.update({numBots1: parameters.NumBots1})
 
-    numBots2 = GenField(win, "Биом 2:", (6,4))
+    numBots2 = GenField(win, "Биом 2:", (6,4),(21,149))
     VidgAccord.update({numBots2: parameters.NumBots2})
 
-    numBots3 = GenField(win, "Биом 3:", (7,0))
+    numBots3 = GenField(win, "Биом 3:", (7,0),(21,149))
     VidgAccord.update({numBots3: parameters.NumBots3})
 
     tkinter.Label(win, text="Выберите размер поля:").grid(row=8,
@@ -286,7 +387,13 @@ def ParamWindow(parameters):
     OldVariables(VidgAccord)
 
 
-def Test(wPar):
+def StartReact(wPar):
+    """ Реакция на нажатие кнопки StartGame
+
+    :param wPar: Проверка валидности параметров
+    :type wPar: bool
+    :return: Закрывает окно и начинает игру или возвращает сообщение о ошибке
+    """
     if (wPar):
         CloseAllWindow()
     else:
@@ -321,7 +428,7 @@ def StartMenu(wPar):
                               activebackground="#FFA500")
 
     startBtn.grid(row=2, column=2, padx=20, pady=20)
-    startBtn.bind('<Button>', lambda event: Test(wPar))
+    startBtn.bind('<Button>', lambda event: StartReact(wPar))
 
     paramBtn = tkinter.Button(mainWindow,
                               text='Задать параметры вселенной',

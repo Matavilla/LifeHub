@@ -3,7 +3,15 @@ import array
 
 
 class GenAlgo:
+    """ Класс отвечающий за генетический алгоритм
+
+    """
     def crossover(dna_1, dna_2):
+        """ Скрещивание текущей днк и днк2.
+
+        :param dna_2: днк того, с кем идёт скрещивание.
+        :return: Результат работы генетического алгоритма по скрещиванию.
+        """
         tmp = random.randint(0, 2)
         if tmp == 0:
             return random.choice(GenAlgo.single_point_crossover(dna_1, dna_2))
@@ -13,6 +21,11 @@ class GenAlgo:
             return random.choice(GenAlgo.uniform_crossover(dna_1, dna_2))
 
     def mutation(dna, p):
+        """ Мутация текущей клетки днк
+
+        :param p: ?
+        :return: Результат работы генетического алгоритма по скрешиванию
+        """
         tmp = random.randint(0, 3)
         if tmp == 0:
             for i in range(random.randint(1, len(dna))):
@@ -31,6 +44,10 @@ class GenAlgo:
                 GenAlgo.shuffle_mutation(dna)
 
     def single_point_crossover(dna_1, dna_2):
+        """ Halp
+
+        :return:
+        """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -42,6 +59,10 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def two_point_crossover(dna_1, dna_2):
+        """ Halp
+
+        :return:
+        """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -56,6 +77,10 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def uniform_crossover(dna_1, dna_2):
+        """ Halp
+
+        :return:
+        """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
         res_dna_2 = array.array(dna_1.typecode)
@@ -74,11 +99,19 @@ class GenAlgo:
         return (res_dna_1, res_dna_2)
 
     def random_mutation(dna):
+        """ Halp
+
+        :return:
+        """
         SIZE_CHAR = 256
         index = random.randint(0, len(dna) - 1)
         dna[index] = random.randint(0, SIZE_CHAR ** dna.itemsize - 1)
 
     def swap_mutation(dna):
+        """ Halp
+
+        :return:
+        """
         gen_1 = random.randint(0, len(dna) - 1)
         gen_2 = random.randint(0, len(dna) - 1)
         tmp = dna[gen_1]
@@ -86,10 +119,18 @@ class GenAlgo:
         dna[gen_2] = tmp
 
     def inversion_mutation(dna):
+        """ Halp
+
+        :return:
+        """
         gen = random.randint(0, len(dna) - 1)
         dna[gen] = abs(~dna[gen]) % 256  # why not
 
     def shuffle_mutation(dna):
+        """ Halp
+
+        :return:
+        """
         point_1 = random.randint(0, len(dna) // 2)
         point_2 = random.randint(point_1 + 1, len(dna))
         tmp = dna[point_1:point_2].tolist()
