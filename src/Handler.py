@@ -26,12 +26,69 @@ class Handler:
 
     def create_map(self):
         """ Функция, создающая игровое поле.
+
+>>> from GUI.MainMenu import WorldParameters
+pygame 1.9.6
+Hello from the pygame community. https://www.pygame.org/contribute.html
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 50, 9, 9, 9, 50, 50, 50)
+>>> world_par.update(100, 10, 50, 9, 9, 9, 2, 2, 2)
+>>> world_par.WorldSize = 4
+>>> hr = Handler(world_par)
+>>> hr.create_map()
+>>> for line in hr.Map.Field:
+...     for el in line:
+...             el.Biom in range(1, 4)
+...
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
         """
         self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
     def spawn_start_food(self):
         """ Функция, генерирущая стартовое количество еды.
+
+>>> from GUI.MainMenu import WorldParameters
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 5, 9, 9, 9, 21, 21, 21)
+>>> world_par.WorldSize = 100
+>>> hr = Handler(world_par)
+>>> hr.create_map()
+>>> hr.spawn_start_food()
+>>> count1 = 0
+>>> count2 = 0
+>>> count3 = 0
+>>> for line in hr.Map.Field:
+...     for el in line:
+...             if el.Biom == 1 and el.is_food_here():
+...                  count1 += 1
+...             elif el.Biom == 2 and el.is_food_here():
+...                  count2 += 1
+...             elif el.Biom == 3 and el.is_food_here():
+...                  count3 += 1               
+...
+...
+>>> count1
+5
+>>> count2
+5
+>>> count3
+5
         """
         count = self.World_par.AmountOfFood
         self.spawn_food(1, count, False)
@@ -44,6 +101,32 @@ class Handler:
 
     def create_world(self):
         """ Функция создания вселенной.
+
+>>> from GUI.MainMenu import WorldParameters
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 5, 9, 9, 9, 21, 22, 23)
+>>> world_par.WorldSize = 100
+>>> hr = Handler(world_par)
+>>> hr.create_world()
+>>> count1 = 0
+>>> count2 = 0
+>>> count3 = 0
+>>> for line in hr.Map.Field:
+...     for el in line:
+...             if el.Biom == 1 and el.is_bot_here():
+...                  count1 += 1
+...             elif el.Biom == 2 and el.is_bot_here():
+...                  count2 += 1
+...             elif el.Biom == 3 and el.is_bot_here():
+...                  count3 += 1               
+...
+...
+>>> count1
+21
+>>> count2
+22
+>>> count3
+23
         """
         self.create_map()
 
@@ -64,6 +147,33 @@ class Handler:
         :param biom: Номер биома.
         :param count: Количество генерируемой еды.
         :param respawn: флаг повторной генерации еды в 1 точке.
+
+>>> from GUI.MainMenu import WorldParameters
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 5, 9, 9, 9, 21, 21, 21)
+>>> world_par.WorldSize = 100
+>>> hr = Handler(world_par)
+>>> hr.create_map()
+>>> hr.spawn_food(1, 10)
+>>> count1 = 0
+>>> count2 = 0
+>>> count3 = 0
+>>> for line in hr.Map.Field:
+...     for el in line:
+...             if el.Biom == 1 and el.is_food_here():
+...                  count1 += 1
+...             elif el.Biom == 2 and el.is_food_here():
+...                  count2 += 1
+...             elif el.Biom == 3 and el.is_food_here():
+...                  count3 += 1               
+...
+...
+>>> count1
+10
+>>> count2
+0
+>>> count3
+0
         """
         while count:
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
@@ -78,6 +188,33 @@ class Handler:
 
         :param biom: Номер боима.
         :param count: Количество ботов.
+
+>>> from GUI.MainMenu import WorldParameters
+>>> world_par = WorldParameters()
+>>> world_par.update(100, 10, 5, 9, 9, 9, 21, 21, 21)
+>>> world_par.WorldSize = 100
+>>> hr = Handler(world_par)
+>>> hr.create_map()
+>>> hr.spawn_bots(1, 10)
+>>> count1 = 0
+>>> count2 = 0
+>>> count3 = 0
+>>> for line in hr.Map.Field:
+...     for el in line:
+...             if el.Biom == 1 and el.is_bot_here():
+...                  count1 += 1
+...             elif el.Biom == 2 and el.is_bot_here():
+...                  count2 += 1
+...             elif el.Biom == 3 and el.is_bot_here():
+...                  count3 += 1               
+...
+...
+>>> count1
+10
+>>> count2
+0
+>>> count3
+0
         """
         if len(self.BotPopulation[biom - 1]) != count:
                 count -= len(self.BotPopulation[biom - 1])
