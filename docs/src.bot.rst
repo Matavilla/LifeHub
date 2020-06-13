@@ -2,19 +2,10 @@
 =====================
 
 
-src.bot.Bot module
-------------------
+Бот + ИИ (src.bot.Bot module)
+-----------------------------
 
 .. automodule:: src.bot.Bot
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: src.bot
     :members:
     :undoc-members:
     :show-inheritance:

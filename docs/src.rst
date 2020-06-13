@@ -1,8 +1,8 @@
 Пакет с основными объектами (src package)
 =========================================
 
-Subpackages
------------
+Подпакеты
+---------
 
 .. toctree::
 
@@ -13,19 +13,10 @@ Subpackages
     src.map
 
 
-src.Handler module
-------------------
+Обработчик (src.Handler module)
+-------------------------------
 
 .. automodule:: src.Handler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: src
     :members:
     :undoc-members:
     :show-inheritance:
