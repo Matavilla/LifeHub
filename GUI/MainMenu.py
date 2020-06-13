@@ -7,35 +7,55 @@ WINDOWS = list()
 
 
 class WorldParameters:
-    '''Параметры вселенной
-
-    '''
-
-    Scale = {'little': 4, 'medium': 2, 'large': 1}
-
+    """ Класс, содержащий параметры вселенной.
+    """
     def __init__(self):
+
         self.update()
         self.set_world_size('little')
 
     def update(self, tick=0, chaos=0, food=0,
                t_1=0, t_2=0, t_3=0, numB1=0, numB2=0, numB3=0):
+        """
+        :param tick: Число действий в 1 секунду (тик вселенной).
+        :type tick: int
+        :param chaos: Число периодов отбора.
+        :type chaos: int
+        :param food: Количество еды.
+        :type food: int
+        :param t_1: Период генерации еды в первом биоме.
+        :type t_1: int
+        :param t_2: Период генерации еды во втором биоме.
+        :type t_2: int
+        :param t_3: Период генерации еды в третьем биоме.
+        :type t_3: int
+        :param numB1: Число ботов в первом биоме.
+        :type numB1: int
+        :param numB2: Число ботов во втором биоме.
+        :type numB2: int
+        :param numB3: Число ботов в третьем биоме.
+        :type numB3: int
+        """
         self.TickUniverse = int(tick)
         self.ChaosMoment = int(chaos)
         self.AmountOfFood = int(food)
 
-        # generation period of food and poison
         self.T_1 = int(t_1)
         self.T_2 = int(t_2)
         self.T_3 = int(t_3)
 
-        # start number of bots in each bioms
         self.NumBots1 = int(numB1)
         self.NumBots2 = int(numB2)
         self.NumBots3 = int(numB3)
 
     def set_world_size(self, mode):
+        """ Функция, которая устанавливает размер игрового поля.
+
+        :param mode: Размер поля.
+        """
+        scale = {'little': 4, 'medium': 2, 'large': 1}
         MAX_WORLD_SIZE = 400
-        self.WorldSize = MAX_WORLD_SIZE // self.Scale[mode]
+        self.WorldSize = MAX_WORLD_SIZE // scale[mode]
 
     def __bool__(self):
         print("[LOG] Проверка параметров")
@@ -75,33 +95,37 @@ class WorldParameters:
 
 
 def InfoParameters(win):
+    """Функция создания окна с информацией по параметрам вселенной. 
+
+    :param win: Окно tkinter.
+    :type win: <class 'tkinter.Tk'>
+    """
     window = tkinter.Toplevel(win)
     window.title('Информация')
-    MsgTik = "Тик вселенной - как быстро происходит действия в игровом мире."
+    MsgTik = "Тик вселенной - число действий в 1 секунду."
     tkinter.Label(window, text =MsgTik).grid(row=0, column=0, sticky='W',
                                         padx=10, pady=10)
-    MsgMeal = "Количество еды - общее количество еды в соответствующем биоме."
+    MsgMeal = "Количество еды - начальное количество еды в каждом биоме."
     tkinter.Label(window, text=MsgMeal).grid(row=1, column=0, sticky='W',
                                         padx=10, pady=10)
 
-    MsgChaos = "Момент хаоса - момент времени в который боты смогут покинуть свой биом."
+    MsgChaos = "Число периодов отбора - количество периодов отбора."
     tkinter.Label(window, text=MsgChaos).grid(row=2, column=0, sticky='W',
                                              padx=10, pady=10)
 
-    MsgGen = "Период генерации еды - как часто в каждом из биомов генерируется еда."
+    MsgGen = "Период генерации еды - время генерации еды в биомах."
     tkinter.Label(window, text=MsgGen).grid(row=3, column=0, sticky='W',
                                              padx=10, pady=10)
 
-    МsgStart = "Начальное количество ботов - сколько ботов находится в начальный момент " \
-                                                            "в каждом из биомов."
+    МsgStart = "Начальное количество ботов - начальное число ботов."
     tkinter.Label(window, text=МsgStart).grid(row=4, column=0, sticky='W',
                                              padx=10, pady=10)
 
-    MsgScreen = "Размер поля - общий размер игрового поля."
+    MsgScreen = "Размер поля - размер игрового поля."
     tkinter.Label(window, text=MsgScreen).grid(row=5, column=0, sticky='W',
                                              padx=10, pady=10)
 
-    EndButton = tkinter.Button(window, text="Ясно", width=4)
+    EndButton = tkinter.Button(window, text="Закрыть", width=4)
     EndButton.grid(row=6, sticky='WE',padx=10, pady=10)
     EndButton.bind('<Button>', lambda event: window.destroy())
 
@@ -114,19 +138,31 @@ def CloseWindow(win):
 
 
 def CloseAllWindow():
+    """ Функция, закрывающая созданные окна.
+    """
     global WINDOWS
     for i in WINDOWS:
         CloseWindow(i)
 
 
-def GenField(win, _text, borders, interval=(1,99)):
-    '''Вспомогательная функция, делает окно с параметрами'''
+def GenField(win, _text, borders, interval=(1, 999)):
+    """ Функция, создающая поле для ввода.
+
+    :param win: Окно tkinter.
+    :type win: <class 'tkinter.Tk'>
+    :param _text: Текст сообщения.
+    :type _text: str
+    :param borders: Кортеж данных, характеризующий (raw, column) для grid.
+    :type borders: tuple
+    :param interval: Интервал генерации чисел.
+    :type interval: tuple
+    """
     line,col = borders
     tkinter.Label(win, text=_text).grid(row=line, column=col, sticky='W',
                                          padx=10, pady=10)
     winParam = tkinter.Spinbox(win, width=7, from_=interval[0], to=interval[1])
     winParam.grid(row=line, column=col+1, padx=10, pady=10)
-    randButton = tkinter.Button(win, text="Рандом", width=5)
+    randButton = tkinter.Button(win, text="Случайное значение", width=18)
     randButton.grid(row=line, column=col+2, sticky='W',
                                          padx=10, pady=10)
     randButton.bind('<Button>', lambda event: RandValue(winParam, interval[0], interval[1]))
@@ -134,24 +170,36 @@ def GenField(win, _text, borders, interval=(1,99)):
     return winParam
 
 def RandValue(vidget, _from, to):
+    """ Функция, меняющая значение в виджете на случайное сгенерированное число.
+
+    :param vidget: Виджет.
+    :param _from: Начало интервала для генерации случайного числа.
+    :type _from: int
+    :param to: Конец интервала для генерации случайного числа.
+    """
     vidget.delete(0, tkinter.END)
     vidget.insert(0, randint(_from, to))
 
 
-def OldVariables(allvid: dict) -> None:
+def OldVariables(allvid) -> None:
+    """ Функция, которая задает начальные значения для каждого виджета.
+
+    :param allvid: Словарь виджетов.
+    :type allvid: dict
+    """
+
     for vidget in allvid:
         vidget.delete(0, tkinter.END)
         vidget.insert(0, allvid[vidget])
 
 
 def ParamWindow(parameters):
-    '''Создание окна с параметрами вселенной и сохранение параметров
+    """ Функция, которая создает окно для ввода параметров вселенной.
 
-    '''
+    :param parameters: Параметры вселенной.
+    """
+
     def SaveParameters(parameters):
-        '''Сохранить параметры
-
-        '''
         parameters.update(tick.get(),
                           chaos.get(),
                           food.get(),
@@ -165,10 +213,8 @@ def ParamWindow(parameters):
             messagebox.showerror("Ошибка", "Неверное значение параметров")
 
     def FullRandom(*args, **kwargs):
-        '''Установка рандомных параметров в заданных
-        интервалах
-
-        '''
+        """ Функция, которая задает случайные параметры вселенной.
+        """
         RandValue(tick, 1, 999)
         RandValue(chaos, 1, 99)
         RandValue(food, 1, 999)
@@ -184,13 +230,17 @@ def ParamWindow(parameters):
         SaveParameters(parameters)
 
     def MakeWindowResizable(window, columns, lines):
-        '''Делает окно растягиваемым '''
+        """ Функция, делающая разметку окна.
+
+        :param win: Окно tkinter.
+        :type win: <class 'tkinter.Tk'>
+        :param columns: Количество grid-колонок в окне.
+        :param lines: Количество grid-линий в окне.
+        """
         for i in range(columns):
             window.grid_columnconfigure(i, weight=1)
         for i in range(lines):
             window.grid_rowconfigure(i, weight=1)
-
-
 
 
     global COUNT, WINDOWS
@@ -208,13 +258,13 @@ def ParamWindow(parameters):
 
     VidgAccord = dict()
 
-    tick = GenField(win, "Tик вселенной:", (0,0), (1,999))
+    tick = GenField(win, "Tик вселенной:", (0, 0))
     VidgAccord.update({tick:parameters.TickUniverse})
 
-    chaos = GenField(win, "Момент хаоса:", (0,4), (1,999))
+    chaos = GenField(win, "Число периодов отбора:", (0, 4))
     VidgAccord.update({chaos: parameters.ChaosMoment})
 
-    food = GenField(win, "Кол-во еды:", (1,0), (1,999))
+    food = GenField(win, "Кол-во еды:", (1, 0))
     VidgAccord.update({food: parameters.AmountOfFood})
 
 
@@ -224,13 +274,13 @@ def ParamWindow(parameters):
                                                            pady=10,
                                                            columnspan=7)
 
-    biom1 = GenField(win, "Биом 1:", (3,0), (1,999))
+    biom1 = GenField(win, "Биом 1:", (3, 0), (1, 9))
     VidgAccord.update({biom1: parameters.T_1})
 
-    biom2 = GenField(win, "Биом 2:", (3,4), (1,999))
+    biom2 = GenField(win, "Биом 2:", (3, 4), (1, 9))
     VidgAccord.update({biom2:parameters.T_2})
 
-    biom3 = GenField(win, "Биом 3:", (4,0),(1,999))
+    biom3 = GenField(win, "Биом 3:", (4, 0), (1, 9))
     VidgAccord.update({biom3: parameters.T_3})
 
 
@@ -241,13 +291,13 @@ def ParamWindow(parameters):
                                                            pady=10,
                                                            columnspan=7)
 
-    numBots1 = GenField(win, "Биом 1:", (6,0))
+    numBots1 = GenField(win, "Биом 1:", (6, 0), (21, 149))
     VidgAccord.update({numBots1: parameters.NumBots1})
 
-    numBots2 = GenField(win, "Биом 2:", (6,4))
+    numBots2 = GenField(win, "Биом 2:", (6, 4), (21, 149))
     VidgAccord.update({numBots2: parameters.NumBots2})
 
-    numBots3 = GenField(win, "Биом 3:", (7,0))
+    numBots3 = GenField(win, "Биом 3:", (7, 0), (21, 149))
     VidgAccord.update({numBots3: parameters.NumBots3})
 
     tkinter.Label(win, text="Выберите размер поля:").grid(row=8,
@@ -286,7 +336,7 @@ def ParamWindow(parameters):
     OldVariables(VidgAccord)
 
 
-def Test(wPar):
+def StartReact(wPar):
     if (wPar):
         CloseAllWindow()
     else:
@@ -294,6 +344,10 @@ def Test(wPar):
 
 
 def StartMenu(wPar):
+    """ Функция, создающая стартовое окно.
+
+    :param wPar: Параметры вселенной.
+    """
     global WINDOWS
     mainWindow = tkinter.Tk()
     WINDOWS.append(mainWindow)
@@ -321,7 +375,7 @@ def StartMenu(wPar):
                               activebackground="#FFA500")
 
     startBtn.grid(row=2, column=2, padx=20, pady=20)
-    startBtn.bind('<Button>', lambda event: Test(wPar))
+    startBtn.bind('<Button>', lambda event: StartReact(wPar))
 
     paramBtn = tkinter.Button(mainWindow,
                               text='Задать параметры вселенной',

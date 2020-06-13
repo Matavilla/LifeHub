@@ -2,22 +2,22 @@ import random
 
 
 class MapCell:
-    # 1 - north, 2 - mid, 3 - south
-    Biom_color = {1: (102, 205, 170),
-                  2: (152, 251, 152),
-                  3: (255, 222, 173)}
-
+    """ Класс, описывающий клетку игрового поля.
+    """    
     def __init__(self, num_biom):
         self.Biom = num_biom
         self.Bot_ref = None
         self.Food_ref = None
 
     def get_color(self):
+        biom_color = {1: (102, 205, 170),
+                      2: (152, 251, 152),
+                      3: (255, 222, 173)}
         if self.is_bot_here():
             return self.Bot_ref.color()
         if self.is_food_here():
             return self.Food_ref.Color
-        return self.Biom_color[self.Biom]
+        return biom_color[self.Biom]
 
     def set_bot(self, bot):
         self.Bot_ref = bot
@@ -33,6 +33,8 @@ class MapCell:
 
 
 class Map:
+    """ Класс, описывающий карту игрового поля.
+    """
     def __init__(self, size):
         self.Size = size
         self.Field = [[None for x in range(size)] for y in range(size)]
@@ -45,6 +47,8 @@ class Map:
                 cell.Food_ref = None
 
     def generate(self):
+        """Функция, генерирующая карту игрового поля.
+        """
         REGULARITY_CELL = 2
         dx1, dx2 = 0, 0
         bound1 = random.randint(self.Size // 4, self.Size // 3)

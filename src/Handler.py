@@ -8,6 +8,8 @@ DEBUG = True
 
 
 class Handler:
+    """ Обработчик вселенной, который обрабатывает происходящее во вселенной за 1 тик.
+    """
     def __init__(self, worldPar):
         self.World_par = worldPar
         self.Map = None
@@ -17,10 +19,14 @@ class Handler:
         self.Period = 0
 
     def create_map(self):
+        """ Функция, создающая игровое поле.
+        """
         self.Map = mp.Map(self.World_par.WorldSize)
         self.Map.generate()
 
     def spawn_start_food(self):
+        """ Функция, генерирущая стартовое количество еды.
+        """
         count = self.World_par.AmountOfFood
         self.spawn_food(1, count, False)
 
@@ -31,6 +37,8 @@ class Handler:
         self.spawn_food(3, count, False)
 
     def create_world(self):
+        """ Функция создания вселенной.
+        """
         self.create_map()
 
         self.spawn_start_food()
@@ -45,6 +53,12 @@ class Handler:
         self.spawn_bots(3, count)
 
     def spawn_food(self, biom, count, respawn=True):
+        """ Функция, генерирующая еду.
+
+        :param biom: Номер биома.
+        :param count: Количество генерируемой еды.
+        :param respawn: флаг повторной генерации еды в 1 точке.
+        """
         while count:
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
             while self.Map.Field[x][y].is_bot_here()\
@@ -54,6 +68,11 @@ class Handler:
             count -= 1
 
     def spawn_bots(self, biom, count):
+        """ Функция, создающая стартовую популяцию ботов.
+
+        :param biom: Номер боима.
+        :param count: Количество ботов.
+        """
         if len(self.BotPopulation[biom - 1]) != count:
                 count -= len(self.BotPopulation[biom - 1])
                 while count:
@@ -73,6 +92,11 @@ class Handler:
                 self.actions_of_bot(j, i, x, y)
 
     def actions_of_bot(self, j, i, x, y):
+        """ Функция, задающая действие бота.
+
+        :param j,i: Номер бота.
+        :param x,y: Координата бота.
+        """
         self.Map.Field[x][y].Bot_ref.Life -= 1
         self.Map.Field[x][y].Bot_ref.TimeSpeed -= 1
         bot = self.Map.Field[x][y].Bot_ref
@@ -105,6 +129,14 @@ class Handler:
             self.action(i, j, x, y, dx, dy, action)
 
     def action(self, i, j, x, y, dx, dy, action):
+        """ Функция, осуществляющая действие бота.
+
+       :param j,i: Номер бота.
+       :param x,y: Координаты бота
+       :param dx,dy: Смещение бота.
+       :param action: Действие бота.
+       """
+
         bot = self.Map.Field[x][y].Bot_ref
         cell = self.Map.Field[x + dx][y + dy]
 
@@ -154,6 +186,8 @@ class Handler:
                 self.BotCoordinates[j][i] = (x + dx, y + dy)
 
     def migration_bots(self):
+        """ Функция миграции ботов.
+        """
         self.BotPopulation[0].append(random.choice(self.BotPopulation[1]))
         self.BotPopulation[0].append(random.choice(self.BotPopulation[2]))
         self.BotPopulation[0][-1].Dna.Biom = 1
@@ -170,6 +204,8 @@ class Handler:
         self.BotPopulation[2][-2].Dna.Biom = 3
 
     def get_full_population(self):
+        """ Функция, которая дополняет популяции до полных.
+        """
         i = len(self.BotPopulation[0])
         count = i
         while i < self.World_par.NumBots1:
@@ -198,6 +234,8 @@ class Handler:
             i = len(self.BotPopulation[2])
 
     def selection_after_chaos(self):
+        """ Функция селекции, после завершения периодов отбора.
+        """
         i, j = len(self.BotPopulation[0]), len(self.BotPopulation[1])
         k = len(self.BotPopulation[2])
 
@@ -228,6 +266,8 @@ class Handler:
             self.BotCoordinates[2].append((x, y))
 
     def selection_before_chaos(self):
+        """ Функция, осуществляющая селекцию во время периода отбора.
+        """
         def sort_adaptation(bot):
             return bot.get_adaptation_value()
 
@@ -271,9 +311,8 @@ class Handler:
         print(f"Ticks = {self.Tick}")
 
     def RunOnTick(self):
-        '''Готовит изображение для вывода
-
-        '''
+        """Функция обработки происходящего во вселенной за 1 тик.
+        """
         if self.Period < self.World_par.ChaosMoment:
             countBots = len(self.BotCoordinates[0])
             countBots += len(self.BotCoordinates[1])

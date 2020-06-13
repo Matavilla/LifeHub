@@ -3,11 +3,8 @@ import array
 
 
 class Dna:
-    Value_names = ["speed", "sensity", "power",
-                   "agression", "armor", "weather_resistance_1",
-                   "weather_resistance_2", "weather_resistance_3",
-                   "poison_vulnerability"]  # names - speed...
-
+    """ Класс генотипа параметров ботов.
+    """
     def __init__(self, biom=1):
         self.Biom = biom
         self.Gens = array.array('B')
@@ -43,12 +40,9 @@ class Dna:
             self.set_value("weather_resistance_3", 255)
             self.set_value("poison_vulnerability", random.randint(12, 38))
 
-    def set_value(self, name: str, value: int) -> None:
-        try:
-            self.Gens.append(value)
-            self.Index[name] = len(self.Gens) - 1
-        except Exception as ms:
-            print(ms)
+    def set_value(self, name, value):
+        self.Gens.append(value)
+        self.Index[name] = len(self.Gens) - 1
 
     def get(self, name):
         return self.Gens[self.Index[name]]

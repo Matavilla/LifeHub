@@ -4,13 +4,8 @@ import src.dna as dna
 
 
 class Bot:
-    Biom_bot_color = {1: (0, 0, 255),
-                      2: (255, 255, 224),
-                      3: (255, 0, 255)}
-
-    Bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0),
-                (1, 1), (0, 1), (-1, 1), (-1, 0)]
-
+    """ Класс, описывающий бота.
+    """
     def __init__(self, biom):
         self.Dna = dna.Dna(biom)
         self.Ai = AI()
@@ -23,16 +18,25 @@ class Bot:
         self.TimeSpeed = 5 - (self.Dna.get("speed") // 52)
 
     def color(self):
-        return self.Biom_bot_color[self.Dna.Biom]
+        biom_bot_color = {1: (0, 0, 255),
+                          2: (255, 255, 224),
+                          3: (255, 0, 255)}
+
+        return biom_bot_color[self.Dna.Biom]
 
     def get_dir_and_action(self, x, y, map_):
-        """ 0..39 - move
-            40..79 - attack or catch
-            80..119 - check
-            120..159 - rotate
-            160..255 - jump
+        """ Функция, определяющая действие бота и его направление.
 
+        :param x,y: Координаты вселенной.
+        :param map_: Карта вселенной.
+        :type map_: Map from map.Map.py
+
+        :return dx,dy: - Смещение бота.
+        :return action: - Действие бота.
         """
+        bias_dir = [(-1, -1), (0, -1), (1, -1), (1, 0),
+                    (1, 1), (0, 1), (-1, 1), (-1, 0)]
+
         curr_command = self.Ai.Gens[self.Pointer_of_ai]
         dx, dy, action = 0, 0, None
         max_num_of_actions = 10
@@ -40,7 +44,7 @@ class Bot:
             num_bias_dir = (curr_command + self.Curr_direction - 1) % 8
             if curr_command < 120:
                 # check command
-                dx, dy = self.Bias_dir[num_bias_dir]
+                dx, dy = bias_dir[num_bias_dir]
                 if x + dx >= map_.Size or x + dx < 0:
                     dx = -dx
                 if y + dy >= map_.Size or y + dy < 0:
@@ -66,7 +70,7 @@ class Bot:
             action = "attack"
 
         num_bias_dir = (curr_command + self.Curr_direction - 1) % 8
-        dx, dy = self.Bias_dir[num_bias_dir]
+        dx, dy = bias_dir[num_bias_dir]
         if x + dx >= map_.Size or x + dx < 0:
             dx = -dx
             self.Curr_direction = 3 if dx == 1 else 7
@@ -93,14 +97,15 @@ class Bot:
 
 
 class AI:
-    """ Bot artificial intelligence
-
+    """ Класс генотипа ИИ бота.
     """
     def __init__(self):
         self.Gens = array.array('B')
         self.set_ai()
 
     def set_ai(self):
+        """ Функция, задающая случайные значения генов.
+        """
         for i in range(256):
             self.Gens.append(random.randint(0, 255))
 

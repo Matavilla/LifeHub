@@ -2,9 +2,8 @@ import pygame
 
 
 class Field:
-    '''Print world
-
-    '''
+    """ Класс, который выводит игровое поле в окно.
+    """
     def __init__(self, w: int, h: int, world_size: int) -> None:
         self.LengthWindow = min((3 * w) // 4, (3 * h) // 4)
         self.LengthWindow -= self.LengthWindow % world_size
@@ -14,6 +13,10 @@ class Field:
                                                self.LengthWindow))
 
     def create_grid(self, Map) -> None:
+        """ Функция, выводящая игровое поле в окно.
+
+        :param Map: Игровое поле.
+        """
         for y in range(Map.Size):
             for x in range(Map.Size):
                 Rect = (x * self.CellSize, y * self.CellSize,
@@ -23,6 +26,10 @@ class Field:
 
 
 def StartGame(handler):
+    """ Класс, создающий окно.
+
+    :param handler: Обработчик вселенной.
+    """
     pygame.init()
     clock = pygame.time.Clock()
 
