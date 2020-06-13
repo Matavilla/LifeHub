@@ -12,6 +12,7 @@ Welcome to LifeHub's documentation!
 
 
    GUI.rst
+   src.rst
    LifeHub.rst
    src.bot.rst
    src.dna.rst

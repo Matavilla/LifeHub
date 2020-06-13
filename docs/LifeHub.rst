@@ -1,5 +1,5 @@
 LifeHub module
-===============
+==============
 
 .. automodule:: LifeHub
     :members:
