@@ -5,9 +5,13 @@
 
 import GUI
 import src
+import os
+import sys
+import gettext
+
 
 def main():
-
+    gettext.install("locale", os.path.dirname(sys.argv[0]), names=("ngettext",))
     wPar = GUI.WorldParameters()
     GUI.StartMenu(wPar)
     if not wPar:
@@ -18,5 +22,6 @@ def main():
     handler.create_world()
     GUI.StartGame(handler)
 
+    
 if __name__ == '__main__':
     main()
