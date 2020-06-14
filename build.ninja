@@ -1,0 +1,20 @@
+generates = docs/_build build dist LifeHub.egg-info
+
+
+rule builddoc
+  command = PYTHONPATH='pwd' sphinx-build -M html "./docs" "./docs/_build"
+
+rule distclean
+  command = rm -rf $generates; ninja -t clean
+
+rule wheelbuild
+  command = python3 setup.py bdist_wheel
+
+
+build createdoc: builddoc
+
+build distclean: distclean
+
+build wheel: wheelbuild
+
+default wheel
