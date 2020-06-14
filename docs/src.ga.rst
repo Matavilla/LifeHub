@@ -5,7 +5,7 @@
 Генетический алгоритм (src.ga.GenAlgo module)
 ---------------------------------------------
 
-.. automodule:: src.ga.GenAlgo
+.. automodule:: LifeHub.src.ga.GenAlgo
     :members:
     :undoc-members:
     :show-inheritance:
@@ -13,7 +13,7 @@
 Селекция (src.ga.Selection module)
 ----------------------------------
 
-.. automodule:: src.ga.Selection
+.. automodule:: LifeHub.src.ga.Selection
     :members:
     :undoc-members:
     :show-inheritance:

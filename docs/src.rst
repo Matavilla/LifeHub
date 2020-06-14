@@ -16,7 +16,7 @@
 Обработчик (src.Handler module)
 -------------------------------
 
-.. automodule:: src.Handler
+.. automodule:: LifeHub.src.Handler
     :members:
     :undoc-members:
     :show-inheritance:

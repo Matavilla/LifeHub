@@ -5,7 +5,7 @@
 Гены бота (LifeHub.dna.Dna module)
 ----------------------------------
 
-.. automodule:: src.dna.Dna
+.. automodule:: LifeHub.src.dna.Dna
     :members:
     :undoc-members:
     :show-inheritance:

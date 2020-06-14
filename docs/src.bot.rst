@@ -5,7 +5,7 @@
 Бот + ИИ (src.bot.Bot module)
 -----------------------------
 
-.. automodule:: src.bot.Bot
+.. automodule:: LifeHub.src.bot.Bot
     :members:
     :undoc-members:
     :show-inheritance:

@@ -5,7 +5,7 @@
 Отрисовка карты (GUI.Field module)
 ----------------------------------
 
-.. automodule:: GUI.Field
+.. automodule:: LifeHub.GUI.Field
     :members:
     :undoc-members:
     :show-inheritance:
@@ -13,7 +13,7 @@
 Основное меню (GUI.MainMenu module)
 -----------------------------------
 
-.. automodule:: GUI.MainMenu
+.. automodule:: LifeHub.GUI.MainMenu
     :members:
     :undoc-members:
     :show-inheritance:

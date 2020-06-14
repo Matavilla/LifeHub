@@ -5,7 +5,7 @@
 
 import random
 import array
-import src.dna as dna
+import LifeHub.src.dna as dna
 
 
 class Bot:

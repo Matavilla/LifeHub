@@ -1,7 +1,7 @@
 Инициализация параметров и запуск игры (LifeHub module)
 =======================================================
 
-.. automodule:: LifeHub
+.. automodule:: LifeHub.LifeHub
     :members:
     :undoc-members:
     :show-inheritance:

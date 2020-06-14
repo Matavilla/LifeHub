@@ -5,7 +5,7 @@
 Карта (src.map.Map module)
 --------------------------
 
-.. automodule:: src.map.Map
+.. automodule:: LifeHub.src.map.Map
     :members:
     :undoc-members:
     :show-inheritance:

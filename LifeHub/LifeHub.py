@@ -6,8 +6,8 @@
 import os
 import sys
 import gettext
-import GUI
-import src
+from LifeHub import GUI
+from LifeHub import src
 
 
 def main():
