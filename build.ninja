@@ -10,11 +10,21 @@ rule distclean
 rule wheelbuild
   command = python3 setup.py sdist bdist_wheel
 
+rule doctest_testing_handler
+  command = python3 -m doctest -v LifeHub/src/Handler.py
+
+rule pytest_testing
+  command = python3 -m pytest -v tests
+
 
 build builddoc: createdoc
 
 build distclean: distclean
 
 build wheel: wheelbuild
+
+build doctest: doctest_testing_handler
+
+build test: pytest_testing || doctest
 
 default wheel
