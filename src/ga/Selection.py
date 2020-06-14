@@ -1,3 +1,7 @@
+"""
+Данный модуль содержит класс, отвечающий за селекцию ботов.
+"""
+
 import random
 import src.bot as bot
 from src.ga.GenAlgo import GenAlgo

@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+"""
+Данный модуль отвечает за вывод стартового меню на экран, а также за ввод
+всех необходимых параметров вселенной.
+"""
+
 import tkinter
 from tkinter import messagebox
 from random import randint
@@ -96,7 +102,7 @@ class WorldParameters:
 
 
 def InfoParameters(win):
-    """Функция создания окна с информацией по параметрам вселенной. 
+    """Функция создания окна с информацией по параметрам вселенной.
 
     :param win: Окно tkinter.
     :type win: <class 'tkinter.Tk'>
@@ -104,32 +110,31 @@ def InfoParameters(win):
     window = tkinter.Toplevel(win)
     window.title(_("Информация"))
     MsgTik = _("Тик вселенной - число действий в 1 секунду.")
-    tkinter.Label(window, text =MsgTik).grid(row=0, column=0, sticky='W',
-                                        padx=10, pady=10)
+    tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
+                                            padx=10, pady=10)
     MsgMeal = _("Количество еды - начальное количество еды в каждом биоме.")
     tkinter.Label(window, text=MsgMeal).grid(row=1, column=0, sticky='W',
-                                        padx=10, pady=10)
+                                             padx=10, pady=10)
 
     MsgChaos = _("Число периодов отбора - количество периодов отбора.")
     tkinter.Label(window, text=MsgChaos).grid(row=2, column=0, sticky='W',
-                                             padx=10, pady=10)
+                                              padx=10, pady=10)
 
     MsgGen = _("Период генерации еды - время генерации еды в биомах.")
     tkinter.Label(window, text=MsgGen).grid(row=3, column=0, sticky='W',
-                                             padx=10, pady=10)
+                                            padx=10, pady=10)
 
     МsgStart = _("Начальное количество ботов - начальное число ботов.")
     tkinter.Label(window, text=МsgStart).grid(row=4, column=0, sticky='W',
-                                             padx=10, pady=10)
+                                              padx=10, pady=10)
 
     MsgScreen = _("Размер поля - размер игрового поля.")
     tkinter.Label(window, text=MsgScreen).grid(row=5, column=0, sticky='W',
-                                             padx=10, pady=10)
+                                               padx=10, pady=10)
 
     EndButton = tkinter.Button(window, text=_("Закрыть"), width=4)
-    EndButton.grid(row=6, sticky='WE',padx=10, pady=10)
+    EndButton.grid(row=6, sticky='WE', padx=10, pady=10)
     EndButton.bind('<Button>', lambda event: window.destroy())
-
 
 
 def CloseWindow(win):
@@ -158,20 +163,22 @@ def GenField(win, _text, borders, interval=(1, 999)):
     :param interval: Интервал генерации чисел.
     :type interval: tuple
     """
-    line,col = borders
+    line, col = borders
     tkinter.Label(win, text=_text).grid(row=line, column=col, sticky='W',
-                                         padx=10, pady=10)
+                                        padx=10, pady=10)
     winParam = tkinter.Spinbox(win, width=7, from_=interval[0], to=interval[1])
     winParam.grid(row=line, column=col+1, padx=10, pady=10)
     randButton = tkinter.Button(win, text=_("Случайное значение"), width=18)
-    randButton.grid(row=line, column=col+2, sticky='W',
-                                         padx=10, pady=10)
-    randButton.bind('<Button>', lambda event: RandValue(winParam, interval[0], interval[1]))
+    randButton.grid(row=line, column=col+2, sticky='W', padx=10, pady=10)
+    randButton.bind('<Button>', lambda event: RandValue(winParam, interval[0],
+                                                        interval[1]))
 
     return winParam
 
+
 def RandValue(vidget, _from, to):
-    """ Функция, меняющая значение в виджете на случайное сгенерированное число.
+    """ Функция, меняющая значение в виджете на случайное
+        сгенерированное число.
 
     :param vidget: Виджет.
     :param _from: Начало интервала для генерации случайного числа.
@@ -211,7 +218,8 @@ def ParamWindow(parameters):
                           numBots2.get(),
                           numBots3.get())
         if not parameters:
-            messagebox.showerror(_("Ошибка"), _("Неверное значение параметров"))
+            messagebox.showerror(_("Ошибка"),
+                                 _("Неверное значение параметров"))
 
     def FullRandom(*args, **kwargs):
         """ Функция, которая задает случайные параметры вселенной.
@@ -243,7 +251,6 @@ def ParamWindow(parameters):
         for i in range(lines):
             window.grid_rowconfigure(i, weight=1)
 
-
     global COUNT, WINDOWS
     COUNT += 1
     if COUNT > 1:
@@ -260,7 +267,7 @@ def ParamWindow(parameters):
     VidgAccord = dict()
 
     tick = GenField(win, _("Tик вселенной:"), (0, 0))
-    VidgAccord.update({tick:parameters.TickUniverse})
+    VidgAccord.update({tick: parameters.TickUniverse})
 
     chaos = GenField(win, _("Число периодов отбора:"), (0, 4))
     VidgAccord.update({chaos: parameters.ChaosMoment})
@@ -268,29 +275,24 @@ def ParamWindow(parameters):
     food = GenField(win, _("Кол-во еды:"), (1, 0))
     VidgAccord.update({food: parameters.AmountOfFood})
 
-
-    tkinter.Label(win, text=_("Период генерации еды в каждом из биомов:")).grid(row=2,
-                                                           sticky='WE',
-                                                           padx=10,
-                                                           pady=10,
-                                                           columnspan=7)
+    txt = _("Период генерации еды в каждом из биомов:")
+    tkinter.Label(win, text=txt).grid(row=2, sticky='WE', padx=10,
+                                      pady=10, columnspan=7)
 
     biom1 = GenField(win, _("Биом 1:"), (3, 0), (1, 9))
     VidgAccord.update({biom1: parameters.T_1})
 
     biom2 = GenField(win, _("Биом 2:"), (3, 4), (1, 9))
-    VidgAccord.update({biom2:parameters.T_2})
+    VidgAccord.update({biom2: parameters.T_2})
 
     biom3 = GenField(win, _("Биом 3:"), (4, 0), (1, 9))
     VidgAccord.update({biom3: parameters.T_3})
 
-
-
     tkinter.Label(win, text=_("Начальное кол-во ботов:")).grid(row=5,
-                                                           sticky='WE',
-                                                           padx=10,
-                                                           pady=10,
-                                                           columnspan=7)
+                                                               sticky='WE',
+                                                               padx=10,
+                                                               pady=10,
+                                                               columnspan=7)
 
     numBots1 = GenField(win, _("Биом 1:"), (6, 0), (21, 149))
     VidgAccord.update({numBots1: parameters.NumBots1})
@@ -302,10 +304,10 @@ def ParamWindow(parameters):
     VidgAccord.update({numBots3: parameters.NumBots3})
 
     tkinter.Label(win, text=_("Выберите размер поля:")).grid(row=8,
-                                                           sticky='WE',
-                                                           padx=30,
-                                                           pady=30,
-                                                           columnspan=7)
+                                                             sticky='WE',
+                                                             padx=30,
+                                                             pady=30,
+                                                             columnspan=7)
 
     buttonLittle = tkinter.Button(win, text=_("Маленький"), height=1, width=10)
     buttonLittle.grid(row=9, column=1)
@@ -322,15 +324,21 @@ def ParamWindow(parameters):
     buttonLittle.bind('<Button>',
                       lambda event: parameters.set_world_size("large"))
 
-    buttonSave = tkinter.Button(win, text=_("Сохранить"), height=1, width=10, background="#555",foreground="#ccc")
-    buttonSave.grid(row=10, column=3,padx=30, pady=30)
+    buttonSave = tkinter.Button(win, text=_("Сохранить"), height=1, width=10,
+                                background="#555", foreground="#ccc")
+    buttonSave.grid(row=10, column=3, padx=30, pady=30)
     buttonSave.bind('<Button>', lambda event: SaveParameters(parameters))
 
-    buttonRandAll = tkinter.Button(win, text=_("На удачу!"), height=1, width=10, background="#555",foreground="#ccc")
+    buttonRandAll = tkinter.Button(win,
+                                   text=_("На удачу!"),
+                                   height=1, width=10,
+                                   background="#555", foreground="#ccc")
+
     buttonRandAll.grid(row=10, column=1, padx=30, pady=30)
     buttonRandAll.bind('<Button>', FullRandom)
 
-    buttonInfo = tkinter.Button(win, text=_("Информация"), height=1, width=10, background="#555",foreground="#ccc")
+    buttonInfo = tkinter.Button(win, text=_("Информация"), height=1, width=10,
+                                background="#555", foreground="#ccc")
     buttonInfo.grid(row=10, column=5, padx=30, pady=30)
     buttonInfo.bind('<Button>', lambda event: InfoParameters(win))
 
