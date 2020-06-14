@@ -16,6 +16,9 @@ rule doctest_testing_handler
 rule pytest_testing
   command = python3 -m pytest -v tests
 
+rule flake8_check
+  command = python3 -m flake8 LifeHub --builtins="_"
+
 
 build builddoc: createdoc
 
@@ -26,5 +29,7 @@ build wheel: wheelbuild
 build doctest: doctest_testing_handler
 
 build test: pytest_testing || doctest
+
+build codestyle: flake8_check
 
 default wheel
