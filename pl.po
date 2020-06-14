@@ -1,0 +1,139 @@
+# Polish translations for PACKAGE package.
+# Copyright (C) 2020 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Voland <voland@ubuntu>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-13 14:44-0700\n"
+"PO-Revision-Date: 2020-06-13 14:45-0700\n"
+"Last-Translator: Voland <voland@ubuntu>\n"
+"Language-Team: Polish\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: GUI/MainMenu.py:105 GUI/MainMenu.py:333
+msgid "Информация"
+msgstr "Informacja"
+
+#: GUI/MainMenu.py:106
+msgid "Тик вселенной - число действий в 1 секунду."
+msgstr "Kleszczem wszechświata jest liczba akcji w jednej sekundzie."
+
+#: GUI/MainMenu.py:109
+msgid "Количество еды - начальное количество еды в каждом биоме."
+msgstr "Ilość żywności - początkowa ilość żywności w każdej biomasie."
+
+#: GUI/MainMenu.py:113
+msgid "Число периодов отбора - количество периодов отбора."
+msgstr "Liczba okresów selekcji - ilość okresów selekcji."
+
+#: GUI/MainMenu.py:117
+msgid "Период генерации еды - время генерации еды в биомах."
+msgstr "Okres wytwarzania żywności - czas wytwarzania żywności w biomasie."
+
+#: GUI/MainMenu.py:121
+msgid "Начальное количество ботов - начальное число ботов."
+msgstr "Początkowa liczba botów- to początkowa ilość botów."
+
+#: GUI/MainMenu.py:125
+msgid "Размер поля - размер игрового поля."
+msgstr "Wielkość pola - rozmiar pola gry."
+
+#: GUI/MainMenu.py:129
+msgid "Закрыть"
+msgstr "Blisko"
+
+#: GUI/MainMenu.py:166
+msgid "Случайное значение"
+msgstr "Wartość losowa"
+
+#: GUI/MainMenu.py:214 GUI/MainMenu.py:344
+msgid "Ошибка"
+msgstr "Błąd"
+
+#: GUI/MainMenu.py:214
+msgid "Неверное значение параметров"
+msgstr "Nieprawidłowa wartość parametru"
+
+#: GUI/MainMenu.py:257
+msgid "Окно параметров"
+msgstr "Okno parametrów"
+
+#: GUI/MainMenu.py:262
+msgid "Tик вселенной:"
+msgstr "Tik wszechświata:"
+
+#: GUI/MainMenu.py:265
+msgid "Число периодов отбора:"
+msgstr "Liczba okresów selekcji:"
+
+#: GUI/MainMenu.py:268
+msgid "Кол-во еды:"
+msgstr "Ilość jedzenia:"
+
+#: GUI/MainMenu.py:272
+msgid "Период генерации еды в каждом из биомов:"
+msgstr "Okres wytwarzania żywności w każdym z biomów:"
+
+#: GUI/MainMenu.py:278 GUI/MainMenu.py:295
+msgid "Биом 1:"
+msgstr "Biome 1:"
+
+#: GUI/MainMenu.py:281 GUI/MainMenu.py:298
+msgid "Биом 2:"
+msgstr "Biome 2:"
+
+#: GUI/MainMenu.py:284 GUI/MainMenu.py:301
+msgid "Биом 3:"
+msgstr "Biome 3:"
+
+#: GUI/MainMenu.py:289
+msgid "Начальное кол-во ботов:"
+msgstr "Wstępna liczba botów:"
+
+#: GUI/MainMenu.py:304
+msgid "Выберите размер поля:"
+msgstr "Wybierz wielkość pola:"
+
+#: GUI/MainMenu.py:310
+msgid "Маленький"
+msgstr "Mały"
+
+#: GUI/MainMenu.py:315
+msgid "Средний"
+msgstr "Środkowy"
+
+#: GUI/MainMenu.py:320
+msgid "Большой"
+msgstr "Duży"
+
+#: GUI/MainMenu.py:325
+msgid "Сохранить"
+msgstr "Zapisać"
+
+#: GUI/MainMenu.py:329
+msgid "На удачу!"
+msgstr "Kurwa!"
+
+#: GUI/MainMenu.py:344
+msgid "Имеются ошибки в параметрах"
+msgstr "Występują błędy w parametrach"
+
+#: GUI/MainMenu.py:356
+msgid "black"
+msgstr "red"
+
+#: GUI/MainMenu.py:372
+msgid "Начать симуляцию"
+msgstr "Rozpocznij symulację"
+
+#: GUI/MainMenu.py:382
+msgid "Задать параметры вселенной"
+msgstr "Ustawienia"
