@@ -28,6 +28,8 @@ build wheel: wheelbuild
 
 build doctest: doctest_testing_handler
 
+build pytest: pytest_testing
+
 build test: pytest_testing || doctest
 
 build codestyle: flake8_check
