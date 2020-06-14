@@ -49,7 +49,7 @@ class GenAlgo:
         """ Функция одноточечного кроссинговера.
 
         :param dna: Генотипы для кроссинговера.
-        :return (dna_1, dna_2): Результаты скрещивания. 
+        :return (dna_1, dna_2): Результаты скрещивания.
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
@@ -65,7 +65,7 @@ class GenAlgo:
         """ Функция двухточечного кроссинговера.
 
         :param dna: Генотипы для кроссинговера.
-        :return (dna_1, dna_2): Результаты скрещивания. 
+        :return (dna_1, dna_2): Результаты скрещивания.
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)
@@ -84,7 +84,7 @@ class GenAlgo:
         """ Функция равномерного кроссинговера.
 
         :param dna: Генотипы для кроссинговера.
-        :return (dna_1, dna_2): Результаты скрещивания. 
+        :return (dna_1, dna_2): Результаты скрещивания.
         """
         bytes_1, bytes_2 = dna_1.tobytes(), dna_2.tobytes()
         res_dna_1 = array.array(dna_1.typecode)

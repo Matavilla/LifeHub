@@ -14,7 +14,8 @@ DEBUG = True
 
 
 class Handler:
-    """ Обработчик вселенной, который обрабатывает происходящее во вселенной за 1 тик.
+    """ Обработчик вселенной, который обрабатывает происходящее во
+        вселенной за 1 тик.
     """
     def __init__(self, worldPar):
         self.World_par = worldPar
@@ -78,7 +79,7 @@ True
 ...             elif el.Biom == 2 and el.is_food_here():
 ...                  count2 += 1
 ...             elif el.Biom == 3 and el.is_food_here():
-...                  count3 += 1               
+...                  count3 += 1
 ...
 ...
 >>> count1
@@ -116,7 +117,7 @@ True
 ...             elif el.Biom == 2 and el.is_bot_here():
 ...                  count2 += 1
 ...             elif el.Biom == 3 and el.is_bot_here():
-...                  count3 += 1               
+...                  count3 += 1
 ...
 ...
 >>> count1
@@ -163,7 +164,7 @@ True
 ...             elif el.Biom == 2 and el.is_food_here():
 ...                  count2 += 1
 ...             elif el.Biom == 3 and el.is_food_here():
-...                  count3 += 1               
+...                  count3 += 1
 ...
 ...
 >>> count1
@@ -204,7 +205,7 @@ True
 ...             elif el.Biom == 2 and el.is_bot_here():
 ...                  count2 += 1
 ...             elif el.Biom == 3 and el.is_bot_here():
-...                  count3 += 1               
+...                  count3 += 1
 ...
 ...
 >>> count1
@@ -215,10 +216,10 @@ True
 0
         """
         if len(self.BotPopulation[biom - 1]) != count:
-                count -= len(self.BotPopulation[biom - 1])
-                while count:
-                    self.BotPopulation[biom - 1].append(bot.Bot(biom))
-                    count -= 1
+            count -= len(self.BotPopulation[biom - 1])
+            while count:
+                self.BotPopulation[biom - 1].append(bot.Bot(biom))
+                count -= 1
         for i in range(len(self.BotPopulation[biom - 1])):
             x, y = random.choice(self.Map.Biom_coord[biom - 1])
             while self.Map.Field[x][y].is_bot_here()\

@@ -9,7 +9,7 @@ import random
 
 class MapCell:
     """ Класс, описывающий клетку игрового поля.
-    """    
+    """
     def __init__(self, num_biom):
         self.Biom = num_biom
         self.Bot_ref = None
