@@ -1,4 +1,4 @@
-from src.food import Food
+from LifeHub.src.food import Food
 
 
 class Test_Food:

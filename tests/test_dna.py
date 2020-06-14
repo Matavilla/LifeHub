@@ -1,4 +1,4 @@
-from src.dna import Dna
+from LifeHub.src.dna import Dna
 
 
 class Test_Dna:

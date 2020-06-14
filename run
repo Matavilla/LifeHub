@@ -1,1 +1,1 @@
-python3 LifeHub.py > log.txt
+python3 run.py > log.txt

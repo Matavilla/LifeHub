@@ -1,0 +1,3 @@
+import LifeHub
+
+LifeHub.main()

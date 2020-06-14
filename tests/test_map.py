@@ -1,4 +1,4 @@
-from src.map import Map, MapCell
+from LifeHub.src.map import Map, MapCell
 
 
 class Test_Map:

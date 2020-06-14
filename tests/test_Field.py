@@ -1,5 +1,5 @@
-from GUI import Field, StartGame # noqa : F401
-from src.map import Map
+from LifeHub.GUI import Field, StartGame
+from LifeHub.src.map import Map
 
 
 class Test_Field:
