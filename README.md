@@ -50,9 +50,10 @@ ____
 <a name="4"></a> 
 
 Схема GUI:
+![Примерная схема GUI проекта](https://github.com/Matavilla/LifeHub/blob/master/Схема%20GUI.bmp)
 
 Схема архитектуры программы:
-![Примерная схема проекта](https://github.com/Matavilla/LifeHub/blob/master/Схема%20проекта.bmp)
+![Примерная архитектура проекта](https://github.com/Matavilla/LifeHub/blob/master/Схема%20проекта.bmp)
 
 [Оглавление](#6)
 ____
