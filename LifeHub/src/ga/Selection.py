@@ -3,8 +3,11 @@
 """
 
 import random
-import LifeHub.src.bot as bot
-from LifeHub.src.ga.GenAlgo import GenAlgo
+from .. import bot
+from .GenAlgo import GenAlgo
+
+# import LifeHub.src.bot as bot
+# from LifeHub.src.ga.GenAlgo import GenAlgo
 
 
 class Selection(GenAlgo):

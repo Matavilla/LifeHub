@@ -1,3 +1,3 @@
 if __name__ == "__main__":
-    from LifeHub.LifeHub import main
+    from .LifeHub import main
     main()
