@@ -73,13 +73,11 @@ ninja
 ### Выбор локализации
 После установки пакета, для запуска на английской локализации можно использовать:
 ```
-LANG=en_US.UTF-8 
-python3 -m LifeHub
+LANG=en_US.UTF-8 python3 -m LifeHub
 ```
 Для запуска на польской локализации:
 ```
-LANG=pl_PL.UTF-8 
-python3 -m LifeHub
+LANG=pl_PL.UTF-8 python3 -m LifeHub
 ```
 
 ### Запуск тестов, сборки документации и проверки CodeStyle
