@@ -1,4 +1,7 @@
 import array
+# from ..LifeHub.src.bot import Bot, AI
+# from ..LifeHub.src import map
+
 from LifeHub.src.bot import Bot, AI
 import LifeHub.src.map as mp
 

@@ -1,3 +1,5 @@
+# from ..LifeHub.src.food import Food
+
 from LifeHub.src.food import Food
 
 

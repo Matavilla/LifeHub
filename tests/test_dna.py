@@ -1,3 +1,5 @@
+# from ..LifeHub.src.dna import Dna
+
 from LifeHub.src.dna import Dna
 
 
