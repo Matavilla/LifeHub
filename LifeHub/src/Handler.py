@@ -65,7 +65,7 @@ True
         self.Map.generate()
 
     def spawn_start_food(self):
-        """ Функция, генерирущая стартовое количество еды.
+        """ Функция, генерирущая начальное количество еды.
 
 >>> from LifeHub.GUI.MainMenu import WorldParameters
 >>> world_par = WorldParameters()
