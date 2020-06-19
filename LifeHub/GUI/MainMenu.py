@@ -358,11 +358,13 @@ def ParamWindow(parameters):
 
 def StartReact(wPar, win):
     if (wPar):
-        print("!")
         CloseAllWindow()
     else:
         messagebox.showerror(_("Ошибка"), _("Имеются ошибки в параметрах"))
 
+#def CloseMain(win):
+#    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+#        win.destroy()TypeError: <lambda>() missing 1 required positional argument: 'event'
 
 
 def StartMenu(wPar):
@@ -408,5 +410,5 @@ def StartMenu(wPar):
 
     paramBtn.grid(row=3, column=2, padx=20, pady=20)
     paramBtn.bind('<Button>', lambda event: ParamWindow(wPar))
-
+    #mainWindow.protocol("WM_DELETE_WINDOW", lambda: CloseMain(mainWindow))
     mainWindow.mainloop()
