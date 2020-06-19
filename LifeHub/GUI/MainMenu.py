@@ -108,6 +108,12 @@ def InfoParameters(win):
     :type win: <class 'tkinter.Tk'>
     """
     window = tkinter.Toplevel(win)
+
+    for i in range(6):
+        window.grid_rowconfigure(i, weight=1)
+    window.grid_columnconfigure(0, weight=1)
+
+
     window.title(_("Информация"))
     MsgTik = _("Тик вселенной - число действий в 1 секунду.")
     tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
