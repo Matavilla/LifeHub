@@ -107,14 +107,15 @@ def InfoParameters(win):
     :param win: Окно tkinter.
     :type win: <class 'tkinter.Tk'>
     """
+    
     window = tkinter.Toplevel(win)
-
+    
     for i in range(6):
         window.grid_rowconfigure(i, weight=1)
     window.grid_columnconfigure(0, weight=1)
 
-
     window.title(_("Информация"))
+    
     MsgTik = _("Тик вселенной - число действий в 1 секунду.")
     tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
                                             padx=10, pady=10)
@@ -143,9 +144,14 @@ def InfoParameters(win):
     EndButton.bind('<Button>', lambda event: window.destroy())
 
 
-def CloseWindow(win):
+def CloseWindow(win, single):
     global COUNT
+    global WINDOWS
     COUNT = 0
+    
+    if single:
+        WINDOWS.remove(win)
+    
     win.destroy()
 
 
@@ -154,8 +160,7 @@ def CloseAllWindow():
     """
     global WINDOWS
     for i in WINDOWS:
-        CloseWindow(i)
-
+        CloseWindow(i, False)
 
 def GenField(win, _text, borders, interval=(1, 999)):
     """ Функция, создающая поле для ввода.
@@ -268,7 +273,7 @@ def ParamWindow(parameters):
     WINDOWS.append(win)
 
     win.title(_("Окно параметров"))
-    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win, True))
 
     VidgAccord = dict()
 
@@ -353,9 +358,11 @@ def ParamWindow(parameters):
 
 def StartReact(wPar, win):
     if (wPar):
-        CloseWindow(win)
+        print("!")
+        CloseAllWindow()
     else:
         messagebox.showerror(_("Ошибка"), _("Имеются ошибки в параметрах"))
+
 
 
 def StartMenu(wPar):
