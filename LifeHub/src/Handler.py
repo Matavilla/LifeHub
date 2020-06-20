@@ -307,13 +307,13 @@ False
                 self.Map.Field[x][y].Biom != \
                 self.Map.Field[x + dx][y + dy].Biom:
             self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                (bot.Pointer_of_ai + 2) % 256
+                (bot.Pointer_of_ai + random.randint(0, 5)) % len(bot.Ai)
             return
 
         if cell.is_bot_here():
             self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                (bot.Pointer_of_ai + 3) % 256
-            if action == "attack":
+                (bot.Pointer_of_ai + random.randint(0, 5)) % len(bot.Ai)
+            if False and action == "attack":
                 agr = random.randint(1, 255)
                 if agr <= bot.Dna.get("agression"):
                     armor = cell.Bot_ref.Dna.get("armor") / 255
@@ -326,7 +326,7 @@ False
         elif cell.is_food_here():
             f = cell.Food_ref
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                (bot.Pointer_of_ai + 4) % 256
+                (bot.Pointer_of_ai + random.randint(0, 5)) % len(bot.Ai)
             vulnerability = bot.Dna.get("poison_vulnerability") / 255
             damage_from_poison = f.Toxic_value * (1 - vulnerability)
             sens = random.randint(1, 255)
@@ -342,7 +342,7 @@ False
                 self.BotCoordinates[j][i] = (x + dx, y + dy)
         else:
             bot.Pointer_of_ai = self.Map.Field[x][y].Bot_ref.Pointer_of_ai = \
-                (bot.Pointer_of_ai + 5) % 256
+                (bot.Pointer_of_ai + 5) % len(bot.Ai)
             if action == "move":
                 self.Map.Field[x + dx][y + dy].set_bot(bot)
                 self.Map.Field[x][y].Bot_ref = None
@@ -351,18 +351,18 @@ False
     def migration_bots(self):
         """ Функция миграции ботов.
         """
-        self.BotPopulation[0].append(random.choice(self.BotPopulation[1]))
-        self.BotPopulation[0].append(random.choice(self.BotPopulation[2]))
+        self.BotPopulation[0].append(self.BotPopulation[1][0])
+        self.BotPopulation[0].append(self.BotPopulation[2][0])
         self.BotPopulation[0][-1].Dna.Biom = 1
         self.BotPopulation[0][-2].Dna.Biom = 1
 
-        self.BotPopulation[1].append(random.choice(self.BotPopulation[0]))
-        self.BotPopulation[1].append(random.choice(self.BotPopulation[2]))
+        self.BotPopulation[1].append(self.BotPopulation[0][0])
+        self.BotPopulation[1].append(self.BotPopulation[2][0])
         self.BotPopulation[1][-1].Dna.Biom = 2
         self.BotPopulation[1][-2].Dna.Biom = 2
 
-        self.BotPopulation[2].append(random.choice(self.BotPopulation[0]))
-        self.BotPopulation[2].append(random.choice(self.BotPopulation[1]))
+        self.BotPopulation[2].append(self.BotPopulation[0][0])
+        self.BotPopulation[2].append(self.BotPopulation[1][0])
         self.BotPopulation[2][-1].Dna.Biom = 3
         self.BotPopulation[2][-2].Dna.Biom = 3
 
@@ -448,7 +448,9 @@ False
             self.migration_bots()
 
         if DEBUG:
+            print("=" * 20)
             self.print_in_log()
+            print("=" * 20)
 
         self.get_full_population()
 
@@ -459,8 +461,9 @@ False
                 elif not migration_enable and i > COUNT_PARENTS:
                     break
                 bot.Age += 1
-                bot.Life = 300
+                bot.Life = 600
                 bot.DeathTick = 0
+                bot.Point_of_ai = 0
 
     def print_in_log(self):
         print(f"Number of bots = {len(self.BotCoordinates)}")
@@ -476,7 +479,7 @@ False
     def RunOnTick(self):
         """Функция обработки происходящего во вселенной за 1 тик.
         """
-        if self.Period < self.World_par.ChaosMoment:
+        if True:# and self.Period < self.World_par.ChaosMoment:
             countBots = len(self.BotCoordinates[0])
             countBots += len(self.BotCoordinates[1])
             countBots += len(self.BotCoordinates[2])
@@ -503,11 +506,11 @@ False
                 self.selection_after_chaos()
 
         if not self.Tick % self.World_par.T_1:
-            count = 2
+            count = 4
             self.spawn_food(1, count)
 
         if not self.Tick % self.World_par.T_2:
-            count = 3
+            count = 4
             self.spawn_food(2, count)
 
         if not self.Tick % self.World_par.T_3:
