@@ -9,7 +9,6 @@ import tkinter
 from tkinter import messagebox
 from random import randint
 
-COUNT = 0
 WINDOWS = list()
 
 
@@ -108,6 +107,11 @@ def InfoParameters(win):
     :type win: <class 'tkinter.Tk'>
     """
     window = tkinter.Toplevel(win)
+    
+    for i in range(6):
+        window.grid_rowconfigure(i, weight=1)
+    window.grid_columnconfigure(0, weight=1)
+
     window.title(_("Информация"))
     MsgTik = _("Тик вселенной - число действий в 1 секунду.")
     tkinter.Label(window, text=MsgTik).grid(row=0, column=0, sticky='W',
@@ -137,9 +141,12 @@ def InfoParameters(win):
     EndButton.bind('<Button>', lambda event: window.destroy())
 
 
-def CloseWindow(win):
-    global COUNT
-    COUNT = 0
+def CloseWindow(win, single):
+    global WINDOWS
+    
+    if single:
+        WINDOWS.remove(win)
+
     win.destroy()
 
 
@@ -148,7 +155,7 @@ def CloseAllWindow():
     """
     global WINDOWS
     for i in WINDOWS:
-        CloseWindow(i)
+        CloseWindow(i, False)
 
 
 def GenField(win, _text, borders, interval=(1, 999)):
@@ -251,18 +258,14 @@ def ParamWindow(parameters):
         for i in range(lines):
             window.grid_rowconfigure(i, weight=1)
 
-    global COUNT, WINDOWS
-    COUNT += 1
-    if COUNT > 1:
-        COUNT -= 1
-        return
+    global WINDOWS
 
     win = tkinter.Tk()
     MakeWindowResizable(win, 7, 10)
     WINDOWS.append(win)
 
     win.title(_("Окно параметров"))
-    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win, True))
 
     VidgAccord = dict()
 
