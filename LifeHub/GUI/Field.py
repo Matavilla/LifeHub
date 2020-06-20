@@ -4,7 +4,7 @@
 """
 
 import pygame
-
+import os
 
 class Field:
     """ Класс, который выводит игровое поле в окно.
@@ -36,6 +36,11 @@ def StartGame(handler):
     :param handler: Обработчик вселенной.
     """
     pygame.init()
+    Path = os.path.dirname(os.path.abspath(__file__))
+    pygame.mixer.music.load(Path+'/../../Sounds/Test.wav')
+   
+    pygame.mixer.music.play()
+
     clock = pygame.time.Clock()
 
     w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
