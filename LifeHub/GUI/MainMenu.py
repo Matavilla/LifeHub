@@ -9,7 +9,6 @@ import tkinter
 from tkinter import messagebox
 from random import randint
 
-COUNT = 0
 WINDOWS = list()
 
 
@@ -143,10 +142,8 @@ def InfoParameters(win):
 
 
 def CloseWindow(win, single):
-    global COUNT
     global WINDOWS
-    COUNT = 0
-
+    
     if single:
         WINDOWS.remove(win)
 
@@ -261,11 +258,7 @@ def ParamWindow(parameters):
         for i in range(lines):
             window.grid_rowconfigure(i, weight=1)
 
-    global COUNT, WINDOWS
-    COUNT += 1
-    if COUNT > 1:
-        COUNT -= 1
-        return
+    global WINDOWS
 
     win = tkinter.Tk()
     MakeWindowResizable(win, 7, 10)
