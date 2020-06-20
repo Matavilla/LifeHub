@@ -13,7 +13,8 @@ setup(
     long_description=long_description,
     install_requires=["pygame"],
     package_data={
-        "LifeHub": ["en/LC_MESSAGES/*.mo", "pl/LC_MESSAGES/*.mo"],
+        "LifeHub": ["en/LC_MESSAGES/*.mo", "pl/LC_MESSAGES/*.mo", 
+        "Sounds/*.wav"],
     },
     # metadata to display on PyPI
     author="Владимир Шапошников, Владимир Рябченков, Андрей Морквин",
