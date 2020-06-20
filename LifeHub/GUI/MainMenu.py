@@ -107,7 +107,7 @@ def InfoParameters(win):
     :type win: <class 'tkinter.Tk'>
     """
     window = tkinter.Toplevel(win)
-    
+
     for i in range(6):
         window.grid_rowconfigure(i, weight=1)
     window.grid_columnconfigure(0, weight=1)
@@ -143,7 +143,7 @@ def InfoParameters(win):
 
 def CloseWindow(win, single):
     global WINDOWS
-    
+
     if single:
         WINDOWS.remove(win)
 

@@ -41,9 +41,9 @@ class Test_AI:
     def test_set_ai(self):
         ai_ = AI()
         r = range(256)
-        assert len(ai_.Gens) == 256
-        for i in r:
-            assert ai_.Gens[i] in r
+        assert len(ai_.Gens) == 73
+        for i in ai_.Gens:
+            assert i in r
 
 
 class Test_Bot:
@@ -61,16 +61,16 @@ class Test_Bot:
         b1.Pointer_of_ai = 85
         dx1, dy1, action1 = b1.get_dir_and_action(0, 0, tmp_map)
         assert dx1 == 1
-        assert dy1 == 1
-        assert action1 is None
-        assert b1.Pointer_of_ai == 121
-        assert b1.Curr_direction == 4
+        assert dy1 == 0
+        assert action1 is "move"
+        assert b1.Pointer_of_ai == 95
+        assert b1.Curr_direction == 5
 
         b1.Pointer_of_ai = 46
         dx1, dy1, action1 = b1.get_dir_and_action(0, 0, tmp_map)
-        assert dx1 == 0
+        assert dx1 == 1
         assert dy1 == 1
-        assert action1 == "attack"
+        assert action1 == "move"
 
         dx2, dy2, action2 = b2.get_dir_and_action(2, 2, tmp_map)
         assert dx2 == -1
@@ -82,7 +82,7 @@ class Test_Bot:
         dx2, dy2, action2 = b2.get_dir_and_action(2, 2, tmp_map)
         assert dx2 == -1
         assert dy2 == -1
-        assert action2 == "attack"
+        assert action2 == "move"
 
         dx3, dy3, action3 = b3.get_dir_and_action(0, 1, tmp_map)
         assert dx3 == 0
