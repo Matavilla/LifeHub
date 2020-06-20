@@ -44,12 +44,12 @@ class Selection(GenAlgo):
         :param gens: Генотипы.
         :return gen: Генотип после скрещивания.
         """
-        p_mut = 20
+        p_mut = 10
         dif = Selection.check_diff(gens_1, gens_2)
         if dif < (len(gens_1) * 8) // 2:
-            p_mut = 40
+            p_mut = 20
         elif dif < (len(gens_1) * 8) // 3:
-            p_mut = 60
+            p_mut = 30
 
         ans = Selection.crossover(gens_1, gens_2)
 

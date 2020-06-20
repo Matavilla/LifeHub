@@ -30,15 +30,15 @@ class GenAlgo:
         """
         tmp = random.randint(0, 3)
         if tmp == 0:
-            for i in range(random.randint(1, len(dna))):
+            for i in range(random.randint(1, len(dna) - 4)):
                 if random.randint(0, 100) < p:
                     GenAlgo.random_mutation(dna)
         elif tmp == 1:
-            for i in range(random.randint(1, len(dna))):
+            for i in range(random.randint(1, len(dna) - 4)):
                 if random.randint(0, 100) < p:
                     GenAlgo.swap_mutation(dna)
         elif tmp == 2:
-            for i in range(random.randint(1, len(dna))):
+            for i in range(random.randint(1, len(dna) - 4)):
                 if random.randint(0, 100) < p:
                     GenAlgo.inversion_mutation(dna)
         elif tmp == 3:
