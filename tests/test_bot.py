@@ -72,12 +72,6 @@ class Test_Bot:
         assert dy1 == 1
         assert action1 == "move"
 
-        dx2, dy2, action2 = b2.get_dir_and_action(2, 2, tmp_map)
-        assert dx2 == -1
-        assert dy2 == -1
-        assert action2 == "move"
-        assert b2.Pointer_of_ai == 255
-
         b2.Pointer_of_ai = 215
         dx2, dy2, action2 = b2.get_dir_and_action(2, 2, tmp_map)
         assert dx2 == -1
