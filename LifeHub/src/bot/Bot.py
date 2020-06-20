@@ -55,17 +55,22 @@ class Bot:
                 if y + dy >= map_.Size or y + dy < 0:
                     dy = -dy
                 if map_.Field[x + dx][y + dy].is_bot_here():
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1)\
+                                         % len(self.Ai)
                 elif map_.Field[x + dx][y + dy].is_food_here():
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1)\
+                                         % len(self.Ai)
                 else:
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1)\
+                                         % len(self.Ai)
             elif curr_command < 230:
                 # rotate command
                 self.Curr_direction = num_bias_dir
                 self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
             else:
-                self.Pointer_of_ai = (self.Pointer_of_ai + random.randint(0, 5) + curr_command) % len(self.Ai)
+                self.Pointer_of_ai += random.randint(0, 5)
+                self.Pointer_of_ai += curr_command
+                self.Pointer_of_ai %= len(self.Ai)
             curr_command = self.Ai.Gens[self.Pointer_of_ai]
             max_num_of_actions -= 1
 

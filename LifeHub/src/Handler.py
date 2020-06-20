@@ -10,7 +10,7 @@ import LifeHub.src.food as food
 import LifeHub.src.bot as bot
 import LifeHub.src.ga as ga
 
-DEBUG = True
+DEBUG = False
 
 
 class Handler:
@@ -479,7 +479,7 @@ False
     def RunOnTick(self):
         """Функция обработки происходящего во вселенной за 1 тик.
         """
-        if True:# and self.Period < self.World_par.ChaosMoment:
+        if True:  # and self.Period < self.World_par.ChaosMoment:
             countBots = len(self.BotCoordinates[0])
             countBots += len(self.BotCoordinates[1])
             countBots += len(self.BotCoordinates[2])
