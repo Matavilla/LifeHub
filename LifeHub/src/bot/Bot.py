@@ -16,7 +16,7 @@ class Bot:
         self.Ai = AI()
         self.Curr_direction = random.randint(0, 7)
         self.Pointer_of_ai = 0
-        self.Life = 300
+        self.Life = 600
         self.DeathTick = 0
         self.Age = 0
         # amount of ticks for one move
@@ -47,7 +47,7 @@ class Bot:
         max_num_of_actions = 10
         while 80 <= curr_command <= 255 and max_num_of_actions:
             num_bias_dir = (curr_command + self.Curr_direction - 1) % 8
-            if curr_command < 120:
+            if curr_command < 180:
                 # check command
                 dx, dy = bias_dir[num_bias_dir]
                 if x + dx >= map_.Size or x + dx < 0:
@@ -55,21 +55,21 @@ class Bot:
                 if y + dy >= map_.Size or y + dy < 0:
                     dy = -dy
                 if map_.Field[x + dx][y + dy].is_bot_here():
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 3) % 256
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
                 elif map_.Field[x + dx][y + dy].is_food_here():
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 4) % 256
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
                 else:
-                    self.Pointer_of_ai = (self.Pointer_of_ai + 5) % 256
-            elif curr_command < 160:
+                    self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
+            elif curr_command < 230:
                 # rotate command
                 self.Curr_direction = num_bias_dir
-                self.Pointer_of_ai = (self.Pointer_of_ai + 1) % 256
+                self.Pointer_of_ai = (self.Pointer_of_ai + 1) % len(self.Ai)
             else:
-                self.Pointer_of_ai = (self.Pointer_of_ai + curr_command) % 256
+                self.Pointer_of_ai = (self.Pointer_of_ai + random.randint(0, 5) + curr_command) % len(self.Ai)
             curr_command = self.Ai.Gens[self.Pointer_of_ai]
             max_num_of_actions -= 1
 
-        if 0 <= curr_command <= 39:
+        if 0 <= curr_command <= 130:
             action = "move"
         elif 40 <= curr_command <= 79:
             action = "attack"
@@ -96,7 +96,7 @@ class Bot:
 
     def get_adaptation_value(self):
         value = self.Age * 1000
-        value += 2000 if not self.DeathTick else self.DeathTick * 10
+        value += 15001 if not self.DeathTick else self.DeathTick * 10
         value += self.Life
         return value
 
@@ -108,10 +108,13 @@ class AI:
         self.Gens = array.array('B')
         self.set_ai()
 
+    def __len__(self):
+        return len(self.Gens)
+
     def set_ai(self):
         """ Функция, задающая случайные значения генов.
         """
-        for i in range(256):
+        for i in range(73):
             self.Gens.append(random.randint(0, 255))
 
     def print_info(self):
