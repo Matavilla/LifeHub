@@ -142,9 +142,14 @@ def InfoParameters(win):
     EndButton.bind('<Button>', lambda event: window.destroy())
 
 
-def CloseWindow(win):
+def CloseWindow(win, single):
     global COUNT
+    global WINDOWS
     COUNT = 0
+
+    if single:
+        WINDOWS.remove(win)
+
     win.destroy()
 
 
@@ -153,7 +158,7 @@ def CloseAllWindow():
     """
     global WINDOWS
     for i in WINDOWS:
-        CloseWindow(i)
+        CloseWindow(i, False)
 
 
 def GenField(win, _text, borders, interval=(1, 999)):
@@ -267,7 +272,7 @@ def ParamWindow(parameters):
     WINDOWS.append(win)
 
     win.title(_("Окно параметров"))
-    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win))
+    win.protocol("WM_DELETE_WINDOW", lambda: CloseWindow(win, True))
 
     VidgAccord = dict()
 
