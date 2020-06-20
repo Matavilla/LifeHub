@@ -31,16 +31,21 @@ class Field:
                 pygame.draw.rect(self.Screen, color, Rect)
 
 
+def SoundPlay(song):
+    Path = os.path.dirname(os.path.abspath(__file__))
+    sounds = ["Test", "Kitten", "Odium", "Group", "Moss"]
+    num = song % 5
+    pygame.mixer.music.load(Path + '/../Sounds/' + sounds[num] + '.wav')
+    pygame.mixer.music.play()
+
+
 def StartGame(handler):
     """ Класс, создающий окно.
 
     :param handler: Обработчик вселенной.
     """
     pygame.init()
-    Path = os.path.dirname(os.path.abspath(__file__))
-    pygame.mixer.music.load(Path + '/../Sounds/Test.wav')
-
-    pygame.mixer.music.play()
+    time = 0
 
     clock = pygame.time.Clock()
 
@@ -52,6 +57,9 @@ def StartGame(handler):
     running = True
     tick = handler.World_par.TickUniverse
     while running:
+        if not pygame.mixer.music.get_busy():
+            SoundPlay(time)
+            time += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 raise SystemExit(0)
