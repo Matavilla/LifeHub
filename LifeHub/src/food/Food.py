@@ -11,8 +11,8 @@ class Food:
     """ Класс, описывающий еду ботов.
     """
     def __init__(self, biom):
-        biom_food_bound = {1: (0, 200), 2: (0, 100), 3: (0, 30)}
-        biom_toxic_bound = {1: (0, 30), 2: (0, 100), 3: (0, 200)}
+        biom_food_bound = {1: (0, 200), 2: (0, 200), 3: (0, 200)}
+        biom_toxic_bound = {1: (0, 60), 2: (0, 100), 3: (0, 100)}
 
         self.Food_value = random.randint(*biom_food_bound[biom])
         self.Toxic_value = random.randint(*biom_toxic_bound[biom])
