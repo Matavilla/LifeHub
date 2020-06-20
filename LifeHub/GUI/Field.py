@@ -37,7 +37,7 @@ def StartGame(handler):
     """
     pygame.init()
     Path = os.path.dirname(os.path.abspath(__file__))
-    pygame.mixer.music.load(Path+'/../../Sounds/Test.wav')
+    pygame.mixer.music.load(Path+'/../Sounds/Test.wav')
    
     pygame.mixer.music.play()
 
